@@ -22,7 +22,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
   const [costType, setCostType] = useState("Harajat turi");
   const [costValue, setCostValue] = useState();
   const [infoValue, setInfoValue] = useState("");
-  const [tolovType, setTolovType] = useState("To'lov turi");
+  const [tolovType, setTolovType] = useState("To`lov turi");
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
