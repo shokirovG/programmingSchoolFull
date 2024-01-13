@@ -111,6 +111,7 @@ app.post("/chiqimlar", async (req, res) => {
 app.use("/", (req, res) => {
   res.send("hello school");
 });
-app.listen(5000, () => {
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
   console.log(" port listen");
 });
