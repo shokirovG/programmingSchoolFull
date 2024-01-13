@@ -103,6 +103,6 @@ app.post("/chiqimlar", async (req, res) => {
   }
   res.json({ name: "asd" });
 });
-app.listen(5000, () => {
+app.listen(4000, () => {
   console.log("5000 port listen");
 });
