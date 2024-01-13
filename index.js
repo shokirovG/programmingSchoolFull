@@ -16,9 +16,14 @@ app.use(
     origin: process.env.URL_FRONT,
   })
 );
-mongoose.connect(
-  "mongodb+srv://muhammad:jVGUTNpQ9RPA7Shd@cluster0.k4oof.mongodb.net/"
-);
+mongoose
+  .connect(
+    "mongodb+srv://muhammad:jVGUTNpQ9RPA7Shd@cluster0.k4oof.mongodb.net/"
+  )
+  .then(() => {
+    console.log("bazaga ulandi...");
+  })
+  .catch((err) => console.log("baza ulanmadi!"));
 
 // app.use(express.urlencoded({extended: true}))
 app.get("/", (req, res) => {
@@ -103,6 +108,9 @@ app.post("/chiqimlar", async (req, res) => {
   }
   res.json({ name: "asd" });
 });
-app.listen(4000, () => {
-  console.log("5000 port listen");
+app.use("/", (req, res) => {
+  res.send("hello school");
+});
+app.listen(5000, () => {
+  console.log(" port listen");
 });
