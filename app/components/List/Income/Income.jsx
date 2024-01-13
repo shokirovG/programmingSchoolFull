@@ -107,8 +107,8 @@ function Income(props) {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                ILTIMOS HISOBOTDA BELGILANGAN OY BILAN SIZ YARATMOQCHI BO'LGAN
-                OY BIR BO'LSIN!
+                ILTIMOS HISOBOTDA BELGILANGAN OY BILAN SIZ YARATMOQCHI BO`LGAN
+                OY BIR BO`LSIN!
               </h5>
               <button
                 type="button"

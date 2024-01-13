@@ -155,7 +155,7 @@ function ForcedExit(props) {
                       type="button"
                       onClick={addChiqim}
                     >
-                      Qo'shish
+                      Qo`shish
                     </button>
                   )}
                 </div>
@@ -168,7 +168,7 @@ function ForcedExit(props) {
                       {" "}
                       <span>{elem.chiqimNomi}</span>{" "}
                       <span className="text-blue-500">
-                        {numberTrim(elem.chiqimMiqdori)} so'm
+                        {numberTrim(elem.chiqimMiqdori)} so`m
                       </span>
                     </div>
                     {removeShow ? (

@@ -25,7 +25,7 @@ import calcClickKirim from "@/app/hooks/calcClickKirim";
 import calcClickChiqim from "@/app/hooks/calcClickChiqim";
 const Kirim = (props) => {
   const [groupValue, setGroupValue] = useState("Guruh");
-  const [studentValue, setStudentValue] = useState("O'quvchi");
+  const [studentValue, setStudentValue] = useState("O`quvchi");
   const [foizValue, setFoizValue] = useState(0);
   const [tolovTypeValue, setTolovTypeValue] = useState("Naqd");
   const [oyValue, setOyValue] = useState("Yanvar");
@@ -47,7 +47,7 @@ const Kirim = (props) => {
     if (
       departmentValue !== "Kafedra" &&
       groupValue !== "Guruh" &&
-      studentValue !== "O'quvchi" &&
+      studentValue !== "O`quvchi" &&
       oyValue !== ""
     ) {
       dispatch(spinnerLoading());
@@ -139,7 +139,7 @@ const Kirim = (props) => {
       setAddValid(false);
       setDepartmentValue("Kafedra");
       setGroupValue("Guruh");
-      setStudentValue("O'quvchi");
+      setStudentValue("O`quvchi");
       setTolovValue(0);
       setTolovTypeValue("Naqd");
       setOyValue("Yanvar");
@@ -211,7 +211,7 @@ const Kirim = (props) => {
                   aria-label="Guruh"
                   value={groupValue}
                   onChange={(e) => {
-                    setStudentValue("O'quvchi");
+                    setStudentValue("O`quvchi");
                     setEskiTolov(0);
                     setGroupValue(e.target.value);
                   }}
@@ -247,7 +247,7 @@ const Kirim = (props) => {
                   }}
                 >
                   <option selected disabled>
-                    O'quvchi
+                    O`quvchi
                   </option>
                   {studentsFilter.map((elem) => {
                     return (
@@ -260,7 +260,7 @@ const Kirim = (props) => {
                 <input
                   className="form-control"
                   type="text"
-                  placeholder="to'lov"
+                  placeholder="to`lov"
                   aria-label="default input example"
                   value={tolovValue}
                   onChange={(e) => {
@@ -268,12 +268,12 @@ const Kirim = (props) => {
                   }}
                 />
                 <p className="ml-[5px]">
-                  Oldindan to'lov:{" "}
+                  Oldindan to`lov:{" "}
                   <span className="text-green-500">
                     {" "}
                     +{numberTrim(eskiTolov)}
                   </span>{" "}
-                  so'm <br />
+                  so`m <br />
                   Qarzi:{" "}
                   <span className="text-red-500">
                     {numberTrim(
@@ -284,12 +284,12 @@ const Kirim = (props) => {
                       )
                     )}
                   </span>
-                  {" so'm"}
+                  {" so`m"}
                   <br />
                   Kurs narxi: {numberTrim(
                     calcPrice(0, 0, departmentValue)
                   )}{" "}
-                  so'm ({numberTrim(foizValue)} so'm chegirma)
+                  so`m ({numberTrim(foizValue)} so`m chegirma)
                 </p>
                 <select
                   className="form-select"
@@ -330,7 +330,7 @@ const Kirim = (props) => {
             <div className="modal-footer flex gap-[20px]">
               {addValid ? (
                 <h6 className="text-red-300">
-                  Iltimos barcha ma'lumotarni kiriting!
+                  Iltimos barcha ma`lumotarni kiriting!
                 </h6>
               ) : null}
 
@@ -342,7 +342,7 @@ const Kirim = (props) => {
                   className="btn btn-success"
                   onClick={addKirim}
                 >
-                  Qo'shish
+                  Qo`shish
                 </button>
               )}
             </div>

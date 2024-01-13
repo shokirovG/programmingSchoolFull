@@ -170,7 +170,7 @@ const TableItemModal = ({
               </select>
               <div className="input-group">
                 <span className="input-group-text" id="basic-addon3">
-                  To'lov
+                  To`lov
                 </span>
                 <input
                   type="number"

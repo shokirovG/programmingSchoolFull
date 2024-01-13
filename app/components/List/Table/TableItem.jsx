@@ -32,7 +32,7 @@ const TableItem = (props) => {
           {department}
         </td>
         <td>{student}</td>
-        <td>{numberTrim(price)} so'm</td>
+        <td>{numberTrim(price)} so`m</td>
 
         <td>{priceMonth}</td>
         <td>{priceType}</td>

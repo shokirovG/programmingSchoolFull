@@ -36,10 +36,10 @@ const StudentsItem = (props) => {
       </td>
       <td>{group}</td>
       <td>{department}</td>
-      <td>{numberTrim(price)} so'm</td>
-      <td>{numberTrim(calcPrice(price, foiz, department))} so'm</td>
+      <td>{numberTrim(price)} so`m</td>
+      <td>{numberTrim(calcPrice(price, foiz, department))} so`m</td>
 
-      <td>{numberTrim(foiz)} so'm</td>
+      <td>{numberTrim(foiz)} so`m</td>
       <td>{moment(created).format("DD/MM/YYYY")}</td>
       <td className="flex  justify-around items-center h-[54px]">
         <StudentChangeModal

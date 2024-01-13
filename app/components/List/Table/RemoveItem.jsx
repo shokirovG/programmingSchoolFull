@@ -33,13 +33,13 @@ const RemoveItem = ({kun}) => {
         ])
       );
 
-      toast.error("hisobot o'chirildi!");
+      toast.error("hisobot o`chirildi!");
     });
   };
   return (
     <div>
       <button
-        title="hisobotni o'chirish"
+        title="hisobotni o`chirish"
         type="button"
         className="btn "
         data-bs-toggle="modal"
@@ -62,7 +62,7 @@ const RemoveItem = ({kun}) => {
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
                 {" "}
-                Shu kungi hisobotni o'chirish
+                Shu kungi hisobotni o`chirish
               </h5>
               <button
                 type="button"
@@ -73,8 +73,8 @@ const RemoveItem = ({kun}) => {
             </div>
             <div className="modal-body">
               <h6>
-                Hisobotni o'chirishni aniq istaysizmi ? <br /> (barcha
-                ma'lumotlar o'chib ketadi)
+                Hisobotni o`chirishni aniq istaysizmi ? <br /> (barcha
+                ma`lumotlar o`chib ketadi)
               </h6>{" "}
               <br />
               <button
@@ -83,7 +83,7 @@ const RemoveItem = ({kun}) => {
                 data-bs-dismiss="modal"
                 onClick={removeTodo}
               >
-                O'chirish
+                O`chirish
               </button>
             </div>
             <div className="modal-footer"></div>

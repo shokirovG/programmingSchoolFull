@@ -37,7 +37,13 @@ export default function SideBar() {
       <div className="flex sidebar flex-col items-center  pb-[50px] justify-between h-[100%] ">
         <div className=" flex w-[154px]  flex-col gap-[48px] mt-[47px]">
           <div className="flex flex-col items-center gap-[12px] relative">
-            <Image alt="#" src="/logo.png" width="80" height="80" id="navbarLogo"/>
+            <Image
+              alt="#"
+              src="/logo.png"
+              width="80"
+              height="80"
+              id="navbarLogo"
+            />
             <div className="logo__text">
               <h4>Programming</h4>
               <p>School</p>
@@ -100,7 +106,7 @@ export default function SideBar() {
                   </clipPath>
                 </defs>
               </svg>
-              O'quvchilar
+              O`quvchilar
             </Link>
 
             <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">

@@ -133,7 +133,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
             }}
           >
             <option selected disabled>
-              To'lov turi
+              To`lov turi
             </option>
             <option value="Naqd">Naqd</option>
             <option value="Click">Click</option>
@@ -157,7 +157,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
                 setInfoValue(e.target.value);
               }}
             ></textarea>
-            <label for="floatingTextarea">Qo'shimcha ma'lumot</label>
+            <label for="floatingTextarea">Qo`shimcha ma`lumot</label>
           </div>
         </form>
       </Modal.Body>
@@ -166,7 +166,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
           <Spinner />
         ) : (
           <button type="button" className="btn btn-success" onClick={addCost}>
-            Qo'shish
+            Qo`shish
           </button>
         )}
       </Modal.Footer>

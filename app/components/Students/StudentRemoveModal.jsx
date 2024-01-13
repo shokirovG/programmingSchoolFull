@@ -25,7 +25,7 @@ const StudentRemoveModal = ({ name, group, id }) => {
       JSON.stringify({ month: store.currentMonth, students: newStudents })
     ).then(() => {
       setShow(false);
-      toast.error(`${name} bazadan o'chirildi`);
+      toast.error(`${name} bazadan ochirildi`);
       dispatch(fetchedStudents(newStudents));
     });
   };
@@ -41,15 +41,15 @@ const StudentRemoveModal = ({ name, group, id }) => {
       />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>O'quvchini bazadan o'chirish</Modal.Title>
+          <Modal.Title>Oquvchini bazadan ochirish</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <b>{name}</b>
-          <i>({group})</i> ni o'chirishni aniq istaysizmi ?
+          <i>({group})</i> ni ochirishni aniq istaysizmi ?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={removeStudent}>
-            o'chirish
+            ochirish
           </Button>
         </Modal.Footer>
       </Modal>

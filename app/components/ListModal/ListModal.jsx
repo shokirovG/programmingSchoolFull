@@ -1,16 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function ListModal(props) {
-    return (
-        <div>
-            <!-- Button trigger modal -->
-
-
-            <!-- Modal -->
-
-        </div>
-
-    );
+  return <div></div>;
 }
 
 export default ListModal;

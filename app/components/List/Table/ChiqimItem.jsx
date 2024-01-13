@@ -11,7 +11,7 @@ const ChiqimItem = (props) => {
     <>
       <tr onClick={handleShow}>
         <td>{costType}</td>
-        <td>{numberTrim(costValue)} so'm</td>
+        <td>{numberTrim(costValue)} so`m</td>
         <td>{infoValue}</td>
         <td>{tolovType}</td>
       </tr>

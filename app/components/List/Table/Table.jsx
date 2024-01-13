@@ -25,11 +25,11 @@ function Table(props) {
         <thead>
           <tr>
             <th>Guruh</th>
-            <th>O'quvchi</th>
-            <th>To'lov</th>
+            <th>O`quvchi</th>
+            <th>To`lov</th>
 
             <th>Oy</th>
-            <th>to'lov turi</th>
+            <th>to`lov turi</th>
           </tr>
         </thead>
         <tbody>
@@ -46,8 +46,8 @@ function Table(props) {
           <tr>
             <th>Turi</th>
             <th>Qiymati</th>
-            <th>Qo'shimcha</th>
-            <th>To'lov turi</th>
+            <th>Qo`shimcha</th>
+            <th>To`lov turi</th>
           </tr>
         </thead>
         <tbody>
