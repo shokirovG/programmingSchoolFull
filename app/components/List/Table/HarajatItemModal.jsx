@@ -91,7 +91,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
         );
         setCostType("Harajat turi");
         setCostValue();
-        setTolovValue("To`lov turi");
+        setTolovType("To`lov turi");
         setInfoValue("");
         toast.success("bazaga qo`shildi!");
 
