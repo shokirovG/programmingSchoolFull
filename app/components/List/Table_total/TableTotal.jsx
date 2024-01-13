@@ -24,8 +24,8 @@ function TableTotal(props) {
       <table className="rwd-table">
         <thead>
           <tr>
-            <th>Yig'ildi</th>
-            <th>Yig'ilishi kerak</th>
+            <th>Yig`ildi</th>
+            <th>Yig`ilishi kerak</th>
 
             <th>Kutilayotgan foyda</th>
             <th>Balans</th>
@@ -132,14 +132,14 @@ function TableTotal(props) {
               ? store.majburiyChiqimlar[0].chiqimlar.map((elem) => (
                   <tr key={elem.id}>
                     <td data-th="Movie Title">
-                      {elem.chiqimNomi}: {numberTrim(+elem.chiqimMiqdori)} so'm
+                      {elem.chiqimNomi}: {numberTrim(+elem.chiqimMiqdori)} so`m
                     </td>
                   </tr>
                 ))
               : null}
 
             <tr className="table__total_footer">
-              <td data-th="Year">Umumiy: {numberTrim(totalPrice)} so'm</td>
+              <td data-th="Year">Umumiy: {numberTrim(totalPrice)} so`m</td>
             </tr>
           </tbody>
         </table>

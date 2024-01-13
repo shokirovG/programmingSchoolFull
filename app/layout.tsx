@@ -1,4 +1,6 @@
 "use client";
+// eslint-disable-next-line no-use-before-define
+//eslint-disable-line
 import "./globals.scss";
 import SideBar from "@/app/components/SideBar";
 import {

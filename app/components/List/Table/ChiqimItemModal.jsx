@@ -1,3 +1,5 @@
+//eslint-disable-line
+// eslint-disable-next-line no-use-before-define
 import useFetch from "@/app/hooks/useFetch";
 import { hisobotFetched } from "@/app/redux/actions";
 
@@ -119,7 +121,7 @@ const ChiqimItemModal = ({
           }}
         >
           <option selected disabled>
-            To'lov turi
+            To`lov turi
           </option>
           <option value="Naqd">Naqd</option>
           <option value="Click">Click</option>
@@ -134,7 +136,7 @@ const ChiqimItemModal = ({
               setInfoValue(e.target.value);
             }}
           ></textarea>
-          <label htmlFor="floatingTextarea">Qo'shimcha ma'lumot</label>
+          <label htmlFor="floatingTextarea">Qo`shimcha ma`lumot</label>
         </div>
       </Modal.Body>
       <Modal.Footer>
