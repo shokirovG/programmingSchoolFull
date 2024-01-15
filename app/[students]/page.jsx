@@ -39,6 +39,7 @@ const page = () => {
   const store = useSelector((state) => state);
   const currentMonth = store.currentMonth;
   const [filterStudents, setFilterStudents] = useState([]);
+  const [filterGroup, setFilterGroup] = useState("Barcha guruhlar");
   const initial = useRef(false);
   console.log("params", params);
   const addStudentForm = (e) => {
@@ -79,6 +80,7 @@ const page = () => {
       setValidText(true);
     }
   };
+
   console.log(store.students);
   useEffect(() => {
     if (!initial.current) {
@@ -98,7 +100,12 @@ const page = () => {
       });
     }
   }, []);
-
+  useEffect(() => {
+    const newStudents = store.students.filter((el) => el.group === filterGroup);
+    setFilterStudents(
+      filterGroup !== "Barcha guruhlar" ? newStudents : store.students
+    );
+  }, [store]);
   return (
     <>
       {store.loading === "loading" ? (
@@ -119,9 +126,14 @@ const page = () => {
             <h2 className="emptyH2">O'quvchilar topilmadi!</h2>
           ) : (
             <>
+              <h4 className="absolute top-[20px] rounded-[5px] text-gray-700 left-[100px] bg-blue-200 p-[7px]">
+                O`quvchilar soni {filterStudents.length}
+              </h4>
               <select
                 className="absolute left-[45%] top-[20px] bg-white p-[10px]"
+                value={filterGroup}
                 onChange={(e) => {
+                  setFilterGroup(e.target.value);
                   const newStudents = store.students.filter(
                     (el) => el.group === e.target.value
                   );
@@ -132,8 +144,8 @@ const page = () => {
                   );
                 }}
               >
-                <option selected value="Barcha guruhar">
-                  Barcha guruhar
+                <option selected value="Barcha guruhlar">
+                  Barcha guruhlar
                 </option>
                 <option value="Front-5">Front-5</option>
                 <option value="Front-8">Front-8</option>
