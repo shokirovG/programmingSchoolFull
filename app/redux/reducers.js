@@ -81,7 +81,10 @@ function reducers(state = initialState, action) {
     case "fetchedMajburiy": {
       return {
         ...state,
-        majburiyChiqimlar: action.payload,
+        majburiyChiqimlar:
+          action.payload.length > 0
+            ? action.payload
+            : [{ month: localStorage.getItem("currentMonth"), chiqimlar: [] }],
       };
     }
     default:

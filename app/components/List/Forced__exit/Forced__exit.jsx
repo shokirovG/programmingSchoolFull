@@ -18,7 +18,7 @@ function ForcedExit(props) {
   const store = useSelector((state) => state);
   const { request } = useFetch();
   const dispatch = useDispatch();
-  const [chiqimValue, setChiqimValue] = useState();
+  const [chiqimValue, setChiqimValue] = useState("");
   const [miqdorValue, setMiqdorValue] = useState();
   const [data, setData] = useState([]);
   const [removeShow, setRemoveShow] = useState(true);
@@ -61,6 +61,7 @@ function ForcedExit(props) {
         return elem;
       }
     });
+    console.log("chiqimlar", store.majburiyChiqimlar);
     request(
       `${process.env.NEXT_PUBLIC_URL}/chiqimlar`,
       "POST",
@@ -81,6 +82,7 @@ function ForcedExit(props) {
       const currentMonthChiqim = res.chiqimlar.filter(
         (el) => el.month === localStorage.getItem("currentMonth")
       );
+      console.log("use", res);
       dispatch(fetchedMajburiy(currentMonthChiqim));
     });
   }, []);
@@ -128,7 +130,6 @@ function ForcedExit(props) {
                   type="text"
                   className="form-control"
                   style={{ fontSize: "15px" }}
-                  aria-label="Example text with two button addons"
                   placeholder="Majburiy chiqim nomi"
                   value={chiqimValue}
                   onChange={(e) => {
@@ -139,7 +140,6 @@ function ForcedExit(props) {
                   type="number"
                   className="form-control"
                   style={{ fontSize: "15px" }}
-                  aria-label="Example text with two button addons"
                   placeholder="miqdori"
                   value={miqdorValue}
                   onChange={(e) => {

@@ -38,7 +38,7 @@ const page = () => {
   const dispatch = useDispatch();
   const store = useSelector((state) => state);
   const currentMonth = store.currentMonth;
-
+  const [filterStudents, setFilterStudents] = useState([]);
   const initial = useRef(false);
   console.log("params", params);
   const addStudentForm = (e) => {
@@ -91,6 +91,7 @@ const page = () => {
           if (elem.month == localStorage.getItem("currentMonth")) {
             console.log("dispatch ishladi", elem.students);
             dispatch(fetchedStudents(elem.students));
+            setFilterStudents(elem.students);
           }
         });
         dispatch(loaded());
@@ -117,26 +118,66 @@ const page = () => {
           {store.students.length === 0 ? (
             <h2 className="emptyH2">O'quvchilar topilmadi!</h2>
           ) : (
-            <table striped hover variant="light" className="table__students">
-              <thead id="thead__students">
-                <tr className="text-center">
-                  <th>№</th>
-                  <th>F.I.SH</th>
-                  <th>Guruh</th>
-                  <th>Kafedra</th>
-                  <th>Qilgan to'lov</th>
-                  <th>Qarz</th>
-                  <th>Chegirma</th>
-                  <th>Guruhga qo'shilgan</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {store.students.map((elem, index) => {
-                  return <StudentsItem key={elem.id} {...elem} index={index} />;
-                })}
-              </tbody>
-            </table>
+            <>
+              <select
+                className="absolute left-[45%] top-[20px] bg-white p-[10px]"
+                onChange={(e) => {
+                  const newStudents = store.students.filter(
+                    (el) => el.group === e.target.value
+                  );
+                  setFilterStudents(
+                    e.target.value !== "Barcha guruhlar"
+                      ? newStudents
+                      : store.students
+                  );
+                }}
+              >
+                <option selected value="Barcha guruhar">
+                  Barcha guruhar
+                </option>
+                <option value="Front-5">Front-5</option>
+                <option value="Front-8">Front-8</option>
+                <option value="Front-10">Front-10</option>
+                <option value="Front-12">Front-12</option>
+                <option value="Front-13">Front-13</option>
+                <option value="Front-14">Front-14</option>
+                <option value="K.S-1">K.S-1</option>
+                <option value="K.S-2">K.S-2</option>
+                <option value="K.S-3">K.S-3</option>
+                <option value="K.S-4">K.S-4</option>
+                <option value="K.S-5">K.S-5</option>
+                <option value="K.S-6">K.S-6</option>
+                <option value="Tibbiyot-1">Tibbiyot-1</option>
+                <option value="Tibbiyot-2">Tibbiyot-2</option>
+                <option value="Tibbiyot-3">Tibbiyot-3</option>
+                <option value="Ingliz-tili-1">Ingliz-tili-1</option>
+                <option value="Ingliz-tili-2">Ingliz-tili-2</option>
+                <option value="Scretch-1">Scretch-1</option>
+                <option value="Scretch-2">Scretch-2</option>
+              </select>
+              <table striped hover variant="light" className="table__students">
+                <thead id="thead__students">
+                  <tr className="text-center">
+                    <th>№</th>
+                    <th>F.I.SH</th>
+                    <th>Guruh</th>
+                    <th>Kafedra</th>
+                    <th>Qilgan to'lov</th>
+                    <th>Qarz</th>
+                    <th>Chegirma</th>
+                    <th>Guruhga qo'shilgan</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filterStudents.map((elem, index) => {
+                    return (
+                      <StudentsItem key={elem.id} {...elem} index={index} />
+                    );
+                  })}
+                </tbody>
+              </table>
+            </>
           )}
 
           <div
