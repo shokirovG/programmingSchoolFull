@@ -19,12 +19,11 @@ export default function Home() {
   useEffect(() => {
     if (!initial.current) {
       initial.current = true;
-      console.log("student mount");
+
       dispatch(fetchingStudents());
       request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
         res.students.forEach((elem) => {
           if (elem.month == localStorage.getItem("currentMonth")) {
-            console.log("dispatch ishladi", elem.students);
             dispatch(fetchedStudents(elem.students));
           }
         });

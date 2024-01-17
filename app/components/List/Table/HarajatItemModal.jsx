@@ -23,11 +23,18 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
   const [costValue, setCostValue] = useState();
   const [infoValue, setInfoValue] = useState("");
   const [tolovType, setTolovType] = useState("To`lov turi");
+  const [avansShow, setAvansShow] = useState(false);
+  const [userAvans, setUserAvans] = useState("Kimga");
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
   const addCost = () => {
-    if (costType !== "" && costValue && infoValue !== "") {
+    if (
+      costType !== "" &&
+      costValue &&
+      infoValue !== "" &&
+      userAvans !== "Kimga"
+    ) {
       dispatch(spinnerLoading());
       const newCost = {
         id: v4(),
@@ -35,6 +42,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
         costValue,
         infoValue,
         tolovType,
+        userAvans,
       };
       const naqdTolov = tolovType == "Naqd" ? Number(costValue) : 0;
       const clickTolov = tolovType == "Click" ? Number(costValue) : 0;
@@ -93,6 +101,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
         setCostValue(0);
         setTolovType("To`lov turi");
         setInfoValue("");
+        setUserAvans("Kimga");
         toast.success("bazaga qo`shildi!");
 
         dispatch(spinnerLoaded());
@@ -113,6 +122,11 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
             aria-label="harajat"
             value={costType}
             onChange={(e) => {
+              if (e.target.value === "Avans") {
+                setAvansShow(true);
+              } else {
+                setAvansShow(false);
+              }
               setCostType(e.target.value);
             }}
           >
@@ -126,6 +140,26 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
             <option value="Arenda">Arenda</option>
             <option value="Qarz">Qarz</option>
           </select>
+          {avansShow ? (
+            <select
+              className="form-select"
+              value={userAvans}
+              onChange={(e) => {
+                setUserAvans(e.target.value);
+              }}
+            >
+              <option value="Kimga" selected disabled>
+                Kimga
+              </option>
+              <option value="G`iyos">G`iyos</option>
+              <option value="Farrux">Farrux</option>
+              <option value="Sarvar">Sarvar</option>
+              <option value="Obid">Obid</option>
+              <option value="Rahim">Rahim</option>
+              <option value="Mehribonu">Mehribonu</option>
+              <option value="Zaxro">Zaxro</option>
+            </select>
+          ) : null}
           <select
             className="form-select"
             value={tolovType}

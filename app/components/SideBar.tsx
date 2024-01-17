@@ -108,8 +108,12 @@ export default function SideBar() {
               </svg>
               O`quvchilar
             </Link>
-
-            <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">
+            <Link
+              id="ishchilar"
+              className="id_1 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
+              href="/workers"
+              onClick={addActiveClass}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -130,8 +134,9 @@ export default function SideBar() {
                   </clipPath>
                 </defs>
               </svg>
-              <span onClick={addActiveClass}>Library</span>
-            </div>
+              Ishchilar
+            </Link>
+
             <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

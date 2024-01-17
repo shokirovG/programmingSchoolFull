@@ -5,6 +5,7 @@ import "./table__total.scss";
 import calcPriceTolov from "@/app/hooks/calcPriceTolov";
 import calcQarzPrice from "@/app/hooks/calcQarzPrice";
 import calcCategoryPrice from "@/app/hooks/calcCategoryPrice";
+import calcFoyda from "@/app/hooks/calcFoyda";
 function TableTotal(props) {
   const store = useSelector((state) => state);
   let totalPrice = 0;
@@ -18,7 +19,7 @@ function TableTotal(props) {
   if (store.hisobot.length > 0) {
     chiqimlar = store.hisobot[0].hisoblar;
   }
-  console.log(chiqimlar);
+  console.log(store);
   return (
     <div className=" totalTable ">
       <table className="rwd-table">
@@ -42,7 +43,25 @@ function TableTotal(props) {
               {numberTrim(calcQarzPrice(store.students, "Dasturlash"))}
             </td>
 
-            <td data-th="Genre">+0</td>
+            <td data-th="Genre">
+              +{" "}
+              {numberTrim(
+                calcFoyda(
+                  chiqimlar,
+                  store.majburiyChiqimlar.length > 0
+                    ? store.majburiyChiqimlar[0]
+                    : { chiqimlar: [] },
+                  calcPriceTolov(store.students, "Dasturlash") +
+                    calcPriceTolov(store.students, "K.S") +
+                    calcPriceTolov(store.students, "Ingliz-tili") +
+                    calcPriceTolov(store.students, "Scretch") +
+                    calcQarzPrice(store.students, "Dasturlash") +
+                    calcQarzPrice(store.students, "K.S") +
+                    calcQarzPrice(store.students, "Ingliz-tili") +
+                    calcQarzPrice(store.students, "Scretch")
+                )
+              )}
+            </td>
             <td data-th="Year">Kassa: {0}</td>
           </tr>
           <tr>

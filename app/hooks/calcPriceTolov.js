@@ -3,7 +3,7 @@ function calcPriceTolov(students, department) {
   const tolovTotal = tolov.reduce((s, item) => {
     return s + Number(item.price);
   }, 0);
-  console.log(tolovTotal);
+
   return tolovTotal;
 }
 

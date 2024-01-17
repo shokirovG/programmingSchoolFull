@@ -17,8 +17,7 @@ import clickEskiBalans from "@/app/hooks/clickEskiBalans";
 import { useSelector } from "@/node_modules/react-redux/dist/react-redux";
 function Table(props) {
   const store = useSelector((state) => state);
-  console.log("id", props.hisobot.id);
-  console.log("a", naqdEskiBalans(store.hisobot[0].hisoblar, props.hisobot.id));
+
   return (
     <>
       <table className="table table-striped table-hover p-[20px]">
