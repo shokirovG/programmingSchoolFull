@@ -29,12 +29,10 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
   const dispatch = useDispatch();
   const { request } = useFetch();
   const addCost = () => {
-    if (
-      costType !== "" &&
-      costValue &&
-      infoValue !== "" &&
-      userAvans !== "Kimga"
-    ) {
+    console.log("cost");
+
+    if (costType !== "" && costValue && infoValue !== "") {
+      console.log("cost-2");
       dispatch(spinnerLoading());
       const newCost = {
         id: v4(),
@@ -89,6 +87,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
           hisoblar: newHisoblar,
         })
       ).then(() => {
+        console.log("req");
         dispatch(
           hisobotFetched([
             {
