@@ -44,7 +44,7 @@ function TableTotal(props) {
             </td>
 
             <td data-th="Genre">
-              +{" "}
+              {" "}
               {numberTrim(
                 calcFoyda(
                   chiqimlar,
