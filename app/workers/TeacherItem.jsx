@@ -50,22 +50,25 @@ const TeacherItem = ({
       </div>
       <div className="p-[20px]">
         <p>
-          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px]">
+          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
             Oylik
           </span>
-          : {numberTrim(frontOylik * foiz)} so`m
+          {numberTrim(frontOylik * foiz)} so`m
         </p>
         <p>
-          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px]">
+          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
             Avans
           </span>{" "}
-          : {numberTrim(avans)} so`m
+          <span className="text-red-500">{numberTrim(avans)}</span> so`m
         </p>
         <p>
-          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px]">
+          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
             Qoldiq
           </span>
-          : {numberTrim(frontOylik * foiz - avans)} so`m
+          <span className="text-green-500">
+            +{numberTrim(frontOylik * foiz - avans)}
+          </span>{" "}
+          so`m
         </p>
       </div>
     </div>

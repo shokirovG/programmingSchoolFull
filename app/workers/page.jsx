@@ -13,6 +13,8 @@ import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
 import useFetch from "../hooks/useFetch";
 import Loader from "../components/Loader/Loader";
 import { setgroups } from "process";
+import AdminItem from "./AdminItem";
+import AdminYordamchi from "./AdminYordamchi";
 const Workers = () => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -77,7 +79,7 @@ const Workers = () => {
       {store.loading === "loading" ? (
         <Loader />
       ) : (
-        <div className="workers__list flex flex-wrap gap-[20px] justify-center mt-[70px]">
+        <div className="workers__list flex flex-wrap gap-[20px] justify-center mt-[70px] pb-[100px]">
           <TeacherItem
             front={front}
             department="Dasturlash"
@@ -118,11 +120,25 @@ const Workers = () => {
             group={iGroup}
             foiz={0.5}
           />
-          {/* <TeacherItem
-            teacher={"Mehriniso"}
+          <AdminItem
+            teacher="Mehribonu"
             students={guruh}
             chiqimlar={chiqimlar}
-          /> */}
+            foiz={0.02}
+            plusOylik={200000}
+          />
+          <AdminYordamchi
+            teacher="Zaxro"
+            oylik={300000}
+            chiqimlar={chiqimlar}
+            plusOylik={200000}
+          />
+          <AdminYordamchi
+            teacher="Olmos"
+            oylik={150000}
+            plusOylik={0}
+            chiqimlar={chiqimlar}
+          />
         </div>
       )}
     </div>

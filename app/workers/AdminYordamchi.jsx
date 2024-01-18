@@ -2,7 +2,7 @@ import React from "react";
 import { calcPrice } from "../hooks/calcPrice";
 import numberTrim from "../hooks/number";
 
-const AdminItem = ({ teacher, students, chiqimlar, foiz, plusOylik }) => {
+const AdminYordamchi = ({ teacher, oylik, chiqimlar, plusOylik }) => {
   let avans = 0;
 
   for (let item of chiqimlar) {
@@ -12,10 +12,7 @@ const AdminItem = ({ teacher, students, chiqimlar, foiz, plusOylik }) => {
       }
     }
   }
-  const adminOylik = students.reduce((s, item) => {
-    const narx = calcPrice(0, item.foiz, item.department);
-    return s + Number(narx);
-  }, 0);
+
   return (
     <div className="workers__item  w-[25%] min-h-[200px] rounded-[15px] ">
       <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] items-center px-[10px] gap-[20px]">
@@ -26,20 +23,20 @@ const AdminItem = ({ teacher, students, chiqimlar, foiz, plusOylik }) => {
           <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
             Oylik
           </span>
-          {numberTrim(adminOylik * foiz + plusOylik)} so`m
+          {numberTrim(oylik + plusOylik)} so`m
         </p>
         <p>
-          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
+          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px]  mr-[10px]">
             Avans
           </span>{" "}
-          <span className="text-red-500">{numberTrim(avans)}</span> so`m
+          <span className="text-red-500"> {numberTrim(avans)}</span> so`m
         </p>
         <p>
-          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
+          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px]  mr-[10px]">
             Qoldiq
           </span>
           <span className="text-green-500">
-            +{numberTrim(adminOylik * foiz - avans + plusOylik)}
+            +{numberTrim(oylik - avans + plusOylik)}
           </span>{" "}
           so`m
         </p>
@@ -48,4 +45,4 @@ const AdminItem = ({ teacher, students, chiqimlar, foiz, plusOylik }) => {
   );
 };
 
-export default AdminItem;
+export default AdminYordamchi;
