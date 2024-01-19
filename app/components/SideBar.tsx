@@ -3,9 +3,12 @@
 import Link from "@/node_modules/next/link";
 import Image from "@/node_modules/next/image";
 import { useState, useEffect } from "react";
+import { logOut } from "../redux/actions";
+import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
 
 export default function SideBar() {
   const [currentPage, setCurrentPage] = useState("hisobot");
+  const dispatch = useDispatch();
   const addActiveClass = (e: any) => {
     // setCurrentPage(e.target.id);
     localStorage.setItem("currentPage", e.target.id);
@@ -232,7 +235,14 @@ export default function SideBar() {
 
         <div className="w-[154px] flex gap-[14px] cursor-pointer sidebar__logout items-center ">
           <Image src="/log-out.png" alt="#" width="24" height="24" />
-          <p className="m-0">Log Out</p>
+          <p
+            className="m-0"
+            onClick={() => {
+              dispatch(logOut());
+            }}
+          >
+            Log Out
+          </p>
         </div>
       </div>
     </div>

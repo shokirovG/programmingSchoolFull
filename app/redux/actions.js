@@ -55,7 +55,20 @@ const fetchedMajburiy = (chiqimlar) => {
     payload: chiqimlar,
   };
 };
+const signIn = (log, pass) => {
+  return {
+    type: "signIn",
+    payload: { log, pass },
+  };
+};
+const logOut = () => {
+  return {
+    type: "logOut",
+  };
+};
 export {
+  signIn,
+  logOut,
   changeMonthAction,
   loaded,
   fetchingStudents,

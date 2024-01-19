@@ -6,15 +6,18 @@ import SideBar from "@/app/components/SideBar";
 import {
   Provider,
   useDispatch,
+  useSelector,
 } from "@/node_modules/react-redux/dist/react-redux";
 /* eslint-disable */
 import store from "./redux/index";
 import SelectMonth from "./components/List/Select__Month/SelectMonth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchedStudents, fetchingStudents, loaded } from "./redux/actions";
 import useFetch from "./hooks/useFetch";
+import SignIn from "./components/Sign/SignIn";
+import Login from "./components/Sign/Login";
 export default function RootLayout({
   children,
 }: {
@@ -44,12 +47,8 @@ export default function RootLayout({
           />
         </head>
         <body className="app flex">
-          <SideBar />
-          <div className="children">
-            <SelectMonth />
-            <ToastContainer />
-            {children}
-          </div>
+          <Login children={children} />
+
           <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

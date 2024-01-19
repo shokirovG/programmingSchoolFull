@@ -5,6 +5,8 @@ const initialState = {
   spinnerLoader: "none",
   hisobot: [],
   majburiyChiqimlar: [],
+  login: localStorage.getItem("login"),
+  parol: localStorage.getItem("parol"),
 };
 
 function reducers(state = initialState, action) {
@@ -85,6 +87,24 @@ function reducers(state = initialState, action) {
           action.payload.length > 0
             ? action.payload
             : [{ month: localStorage.getItem("currentMonth"), chiqimlar: [] }],
+      };
+    }
+    case "signIn": {
+      localStorage.setItem("login", action.payload.log);
+      localStorage.setItem("parol", action.payload.pass);
+      return {
+        ...state,
+        login: action.payload.log,
+        parol: action.payload.pass,
+      };
+    }
+    case "logOut": {
+      localStorage.setItem("login", "");
+      localStorage.setItem("parol", "");
+      return {
+        ...state,
+        login: "",
+        parol: "",
       };
     }
     default:
