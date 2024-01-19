@@ -66,7 +66,14 @@ const logOut = () => {
     type: "logOut",
   };
 };
+const auth = (login, parol) => {
+  return {
+    type: "auth",
+    payload: { login, parol },
+  };
+};
 export {
+  auth,
   signIn,
   logOut,
   changeMonthAction,

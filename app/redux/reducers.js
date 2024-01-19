@@ -5,8 +5,8 @@ const initialState = {
   spinnerLoader: "none",
   hisobot: [],
   majburiyChiqimlar: [],
-  login: localStorage.getItem("login"),
-  parol: localStorage.getItem("parol"),
+  login: "",
+  parol: "",
 };
 
 function reducers(state = initialState, action) {
@@ -105,6 +105,13 @@ function reducers(state = initialState, action) {
         ...state,
         login: "",
         parol: "",
+      };
+    }
+    case "auth": {
+      return {
+        ...state,
+        login: action.payload.login,
+        parol: action.payload.parol,
       };
     }
     default:
