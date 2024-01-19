@@ -13,16 +13,16 @@ import Loader from "../Loader/Loader";
 const Login = ({ children }) => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchingStudents());
-    dispatch(
-      auth(localStorage.getItem("login"), localStorage.getItem("parol"))
-    );
-    dispatch(loaded());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchingStudents());
+  //   dispatch(
+  //     auth(localStorage.getItem("login"), localStorage.getItem("parol"))
+  //   );
+  //   dispatch(loaded());
+  // }, []);
   return (
     <>
-      {store.loading === "loading" ? (
+      {/* {store.loading === "loading" ? (
         <Loader />
       ) : (
         <div>
@@ -39,8 +39,18 @@ const Login = ({ children }) => {
           ) : (
             <SignIn />
           )}
+          
         </div>
-      )}
+      )} */}
+
+      <>
+        <SideBar />
+        <div className="children">
+          <SelectMonth />
+          <ToastContainer />
+          {children}
+        </div>
+      </>
     </>
   );
 };
