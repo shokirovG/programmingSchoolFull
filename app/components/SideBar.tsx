@@ -38,9 +38,9 @@ export default function SideBar() {
   }, []);
   return (
     <>
-      <div className="animation">
+      {/* <div className="animation">
         <Snow />
-      </div>
+      </div> */}
       <div className="h-[100vh]   fixed w-[230px] ">
         <div className="flex sidebar flex-col items-center  pb-[50px] justify-between h-[100%] ">
           <div className=" flex w-[154px]  flex-col gap-[48px] mt-[47px]">
