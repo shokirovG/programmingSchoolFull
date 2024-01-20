@@ -18,6 +18,7 @@ import { fetchedStudents, fetchingStudents, loaded } from "./redux/actions";
 import useFetch from "./hooks/useFetch";
 import SignIn from "./components/Sign/SignIn";
 import Login from "./components/Sign/Login";
+import Snow from "@/app/components/animations/Snow";
 export default function RootLayout({
   children,
 }: {
