@@ -18,6 +18,8 @@ import { v4 } from "uuid";
 import Loader from "../Loader/Loader";
 import { fetchingStudents, loaded } from "@/app/redux/actions";
 import sortArray from "../../hooks/sortArray";
+import Image from "@/node_modules/next/image";
+
 function List() {
   const store = useSelector((state) => state);
   const [tableItems, setTableItems] = useState([]);
@@ -47,8 +49,18 @@ function List() {
             ) : (
               <h3>Tanlangan oy uchun hisobot topilmadi!</h3>
             )}
+            <a href="#footer_">
+              {" "}
+              <Image
+                src="/down-arrow.png"
+                width="30"
+                height="30"
+                alt="bottom"
+                className="fixed right-[50px] bottom-[50px] cursor-pointer"
+              />
+            </a>
 
-            <div className="flex gap-[0px] ">
+            <div className="flex gap-[0px] " id="footer_">
               <Income />
               <Forced__exit />
             </div>
