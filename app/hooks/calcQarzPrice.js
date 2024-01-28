@@ -1,4 +1,4 @@
-function calcQarzPrice(students, department) {
+function calcQarzPrice(students, department, group = "") {
   function calcPrice(price, foiz, department) {
     let qarz = 0;
     switch (department) {
@@ -26,9 +26,23 @@ function calcQarzPrice(students, department) {
   const tolov = students.filter((el) => el.department == department);
 
   const tolovTotal = tolov.reduce((s, item) => {
-    return s + calcPrice(item.price, item.foiz, item.department);
+    if (group !== item.group) {
+      return s + calcPrice(item.price, item.foiz, item.department);
+    } else {
+      return s;
+    }
+  }, 0);
+  const tolovTotal_2 = tolov.reduce((s, item) => {
+    if (group === item.group) {
+      return s + calcPrice(item.price, item.foiz, item.department);
+    } else {
+      return s;
+    }
   }, 0);
 
+  if (group === "Front-12") {
+    return tolovTotal_2;
+  }
   return tolovTotal;
 }
 

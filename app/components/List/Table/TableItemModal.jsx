@@ -29,7 +29,8 @@ const TableItemModal = ({
   const store = useSelector((state) => state);
   const { request } = useFetch();
   const dispatch = useDispatch();
-  const changeItem = () => {
+  const changeItem = (e) => {
+    e.preventDefault();
     handleClose();
     console.log(department);
     const newKirim = {
@@ -117,7 +118,7 @@ const TableItemModal = ({
         </Modal.Header>
         <Modal.Body>
           {" "}
-          <form action="">
+          <form onSubmit={changeItem}>
             <div className="mb-3 flex flex-col gap-[10px]">
               <select
                 className="form-select"

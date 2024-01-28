@@ -3,9 +3,10 @@
 import Link from "@/node_modules/next/link";
 import Image from "@/node_modules/next/image";
 import { useState, useEffect } from "react";
-import { logOut } from "../redux/actions";
+import { fetchedMajburiy, logOut } from "../redux/actions";
 import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
 import Snow from "./animations/Snow";
+import useFetch from "../hooks/useFetch";
 
 export default function SideBar() {
   const [currentPage, setCurrentPage] = useState("hisobot");
@@ -25,6 +26,7 @@ export default function SideBar() {
       e.target.parentElement.classList.add("active__bg");
     }
   };
+  const { request } = useFetch();
   useEffect(() => {
     const items: any = document.getElementsByClassName("sidebar__item");
 
@@ -35,6 +37,14 @@ export default function SideBar() {
         item.classList.remove("active__bg");
       }
     }
+    console.log("use effect");
+    request(`${process.env.NEXT_PUBLIC_URL}/chiqimlar`).then((res) => {
+      const currentMonthChiqim = res.chiqimlar.filter(
+        (el: any) => el.month === localStorage.getItem("currentMonth")
+      );
+      console.log("use", res);
+      dispatch(fetchedMajburiy(currentMonthChiqim));
+    });
   }, []);
   return (
     <>

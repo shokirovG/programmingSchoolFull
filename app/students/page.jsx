@@ -55,7 +55,7 @@ const page = () => {
         price: 0,
         id: v4(),
         foiz,
-        date: moment(new Date()).format("L"),
+        created: moment(new Date()).format("L"),
       };
       console.log([...store.students, newStudent]);
       request(

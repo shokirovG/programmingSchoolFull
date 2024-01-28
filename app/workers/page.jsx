@@ -15,6 +15,7 @@ import Loader from "../components/Loader/Loader";
 import { setgroups } from "process";
 import AdminItem from "./AdminItem";
 import AdminYordamchi from "./AdminYordamchi";
+import FoydaItem from "./FoydaItem";
 const Workers = () => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -70,7 +71,9 @@ const Workers = () => {
       setScretch(sch);
       setIngliz(i);
       setGuruh(store.students);
-      setChiqimlar(store.hisobot[0].hisoblar);
+      if (store.hisobot.length > 0) {
+        setChiqimlar(store.hisobot[0].hisoblar);
+      }
     }
   }, [store]);
 
@@ -139,6 +142,7 @@ const Workers = () => {
             plusOylik={0}
             chiqimlar={chiqimlar}
           />
+          <FoydaItem />
         </div>
       )}
     </div>

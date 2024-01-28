@@ -33,7 +33,7 @@ const TeacherItem = ({
       }
     }
   }, 0);
-  const balans = front.reduce((s, item) => {
+  let balans = front.reduce((s, item) => {
     if (item.group !== "Front-12") {
       const narx = item.price;
       return s + Number(narx);
@@ -46,6 +46,28 @@ const TeacherItem = ({
       }
     }
   }, 0);
+  switch (teacher) {
+    case "Obid": {
+      balans = balans * 0.5;
+      break;
+    }
+    case "Sarvar": {
+      balans = balans * 0.5;
+      break;
+    }
+    case "Farrux": {
+      balans = balans * 0.6;
+      break;
+    }
+    case "G`iyos": {
+      balans = balans * 0.6;
+      break;
+    }
+    case "Rahim": {
+      balans = balans * 0.25;
+      break;
+    }
+  }
   return (
     <div className="workers__item  w-[25%] min-h-[200px] rounded-[15px] ">
       <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] items-center px-[10px] gap-[20px]">
@@ -59,14 +81,12 @@ const TeacherItem = ({
               {elem}
             </span>
           ))}
-          {balans * 0.6 - avans > 0 ? (
+          {balans - avans > 0 ? (
             <span className="text-green-500">
-              +{numberTrim(balans * 0.6 - avans)}
+              +{numberTrim(balans - avans)}
             </span>
           ) : (
-            <span className="text-red-500">
-              {numberTrim(balans * 0.6 - avans)}
-            </span>
+            <span className="text-red-500">{numberTrim(balans - avans)}</span>
           )}
         </div>
       </div>
