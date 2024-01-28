@@ -1,9 +1,9 @@
 function calcFoyda(arr, majburiyChiqim, kirimlar) {
-  console.log(kirimlar);
-
   const s_2 = majburiyChiqim.chiqimlar.reduce((s, item) => {
-    if (item.chiqimNomi !== "Avans") {
+    if (item.chiqimNomi != "Avans" && item.chiqimNomi != "Oylik") {
       return s + Number(item.chiqimMiqdori);
+    } else {
+      return s;
     }
   }, 0);
   // let s = 0;
@@ -14,6 +14,7 @@ function calcFoyda(arr, majburiyChiqim, kirimlar) {
   //     }
   //   }
   // }
+
   return kirimlar - s_2;
 }
 

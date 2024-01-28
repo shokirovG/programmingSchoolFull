@@ -55,15 +55,15 @@ const FoydaItem = () => {
     }
   }
 
-  // useEffect(() => {
-  //   request(`${process.env.NEXT_PUBLIC_URL}/chiqimlar`).then((res) => {
-  //     const currentMonthChiqim = res.chiqimlar.filter(
-  //       (el) => el.month === localStorage.getItem("currentMonth")
-  //     );
-  //     console.log("use", res);
-  //     dispatch(fetchedMajburiy(currentMonthChiqim));
-  //   });
-  // }, []);
+  useEffect(() => {
+    request(`${process.env.NEXT_PUBLIC_URL}/chiqimlar`).then((res) => {
+      const currentMonthChiqim = res.chiqimlar.filter(
+        (el) => el.month === localStorage.getItem("currentMonth")
+      );
+      console.log("use", res);
+      dispatch(fetchedMajburiy(currentMonthChiqim));
+    });
+  }, []);
 
   return (
     <div className="workers__item  w-[25%] min-h-[200px] rounded-[15px] ">

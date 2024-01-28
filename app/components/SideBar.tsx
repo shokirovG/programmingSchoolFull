@@ -38,13 +38,6 @@ export default function SideBar() {
       }
     }
     console.log("use effect");
-    request(`${process.env.NEXT_PUBLIC_URL}/chiqimlar`).then((res) => {
-      const currentMonthChiqim = res.chiqimlar.filter(
-        (el: any) => el.month === localStorage.getItem("currentMonth")
-      );
-      console.log("use", res);
-      dispatch(fetchedMajburiy(currentMonthChiqim));
-    });
   }, []);
   return (
     <>
