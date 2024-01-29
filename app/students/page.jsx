@@ -106,12 +106,34 @@ const page = () => {
       });
     }
   }, []);
+
   useEffect(() => {
     const newStudents = store.students.filter((el) => el.group === filterGroup);
+    const a = filterGroup !== "Barcha guruhlar" ? newStudents : store.students;
     setFilterStudents(
       filterGroup !== "Barcha guruhlar" ? newStudents : store.students
     );
+
+    function counter(id, start, end, duration) {
+      let obj = document.getElementById(id),
+        current = start,
+        range = end - start,
+        increment = end > start ? 1 : -1,
+        step = Math.abs(Math.floor(duration / range)),
+        timer = obj
+          ? setInterval(() => {
+              current += increment;
+              obj.textContent = current;
+              if (current == end) {
+                clearInterval(timer);
+              }
+            }, step)
+          : 0;
+    }
+    counter("count1", 0, a.length, 500);
   }, [store]);
+  // document.addEventListener("DOMContentLoaded", () => {});
+
   return (
     <>
       {store.loading === "loading" ? (
@@ -133,7 +155,8 @@ const page = () => {
           ) : (
             <>
               <h4 className="absolute top-[20px] rounded-[5px] text-gray-700 left-[100px] bg-blue-200 p-[7px]">
-                O`quvchilar soni {filterStudents.length}
+                O`quvchilar soni{" "}
+                <span id="count1">{filterStudents.length} </span>
               </h4>
               <select
                 className="absolute left-[45%] top-[20px] bg-white p-[10px]"
@@ -287,13 +310,13 @@ const page = () => {
                     <input
                       required
                       className="form-control"
-                      type="text"
+                      type="number"
                       placeholder="chegirma "
                       aria-label="default input example"
                       name="sadsad"
                       value={foiz}
                       onChange={(e) => {
-                        setFoiz(e.target.value);
+                        setFoiz(Number(e.target.value));
                       }}
                     />
                     <input

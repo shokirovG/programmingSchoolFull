@@ -28,7 +28,7 @@ const StudentChangeModal = ({
   created,
 }) => {
   const [nameValue, setNameValue] = useState(name);
-  const [foizValue, setFoizValue] = useState(foiz);
+  const [foizValue, setFoizValue] = useState(Number(foiz));
   const [departmentValue, setDepartmentValue] = useState(department);
   const [groupValue, setGroupValue] = useState(group);
   const optionDepartment = document.querySelectorAll(".optionDepartment");
@@ -170,13 +170,13 @@ const StudentChangeModal = ({
             <input
               required
               className="form-control"
-              type="text"
+              type="number"
               placeholder="chegirma foizi"
               aria-label="default input example"
               name="sadsad"
               value={foizValue}
               onChange={(e) => {
-                setFoizValue(e.target.value);
+                setFoizValue(Number(e.target.value));
               }}
             />
             <input

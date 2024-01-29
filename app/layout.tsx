@@ -55,6 +55,7 @@ export default function RootLayout({
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossOrigin="anonymous"
           ></script>
+          <script src="numberAnimation.js"></script>
         </body>
       </html>
     </Provider>
