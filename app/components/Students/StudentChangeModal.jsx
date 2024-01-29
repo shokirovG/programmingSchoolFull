@@ -12,6 +12,8 @@ import {
 } from "@/app/redux/actions";
 import Spinner from "./Spinner";
 import { toast } from "react-toastify";
+import Zero from "@/app/hooks/zero";
+import moment from "moment";
 
 const StudentChangeModal = ({
   id,
@@ -23,6 +25,7 @@ const StudentChangeModal = ({
   handleClose,
   show,
   handleShow,
+  created,
 }) => {
   const [nameValue, setNameValue] = useState(name);
   const [foizValue, setFoizValue] = useState(foiz);
@@ -32,6 +35,11 @@ const StudentChangeModal = ({
   const { request } = useFetch();
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
+  const date = new Date(created);
+  const initialDate = `${date.getFullYear()}-${Zero(
+    date.getMonth() + 1
+  )}-${Zero(date.getDate())}`;
+  const [createdStudentDate, setCreatedStudentDate] = useState(initialDate);
   optionDepartment.forEach((elem) => {
     if (elem.className === department) {
       elem.setAttribute("selected", true);
@@ -51,6 +59,7 @@ const StudentChangeModal = ({
           foiz: foizValue,
           department: departmentValue,
           group: groupValue,
+          created: moment(createdStudentDate).format("L"),
         };
       } else {
         return el;
@@ -168,6 +177,14 @@ const StudentChangeModal = ({
               value={foizValue}
               onChange={(e) => {
                 setFoizValue(e.target.value);
+              }}
+            />
+            <input
+              type="date"
+              className="w-[150px] mx-[auto] p-[5px] bg-white text-black border-[1px] border-[black]"
+              value={createdStudentDate}
+              onChange={(e) => {
+                setCreatedStudentDate(e.target.value);
               }}
             />
             {store.spinnerLoader === "loading" ? (

@@ -25,6 +25,7 @@ import {
   spinnerLoaded,
 } from "../redux/actions";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import Zero from "../hooks/zero";
 /* eslint-disable */
 const page = () => {
   const [group, setGroup] = useState("");
@@ -40,6 +41,11 @@ const page = () => {
   const currentMonth = store.currentMonth;
   const [filterStudents, setFilterStudents] = useState([]);
   const [filterGroup, setFilterGroup] = useState("Barcha guruhlar");
+  const date = new Date();
+  const initialDate = `${date.getFullYear()}-${Zero(
+    date.getMonth() + 1
+  )}-${Zero(date.getDate())}`;
+  const [createdStudentDate, setCreatedStudentDate] = useState(initialDate);
   const initial = useRef(false);
   console.log("params", params);
   const addStudentForm = (e) => {
@@ -55,7 +61,7 @@ const page = () => {
         price: 0,
         id: v4(),
         foiz,
-        created: moment(new Date()).format("L"),
+        created: moment(createdStudentDate).format("L"),
       };
       console.log([...store.students, newStudent]);
       request(
@@ -288,6 +294,14 @@ const page = () => {
                       value={foiz}
                       onChange={(e) => {
                         setFoiz(e.target.value);
+                      }}
+                    />
+                    <input
+                      type="date"
+                      className="w-[150px] mx-[auto] p-[5px] bg-white text-black border-[1px] border-[black]"
+                      value={createdStudentDate}
+                      onChange={(e) => {
+                        setCreatedStudentDate(e.target.value);
                       }}
                     />
                     {validText ? (
