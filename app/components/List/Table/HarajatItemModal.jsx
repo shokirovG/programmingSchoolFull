@@ -40,7 +40,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
         costValue,
         infoValue,
         tolovType,
-        userAvans,
+        userAvans: userAvans === "Kimga" ? "" : userAvans,
       };
       const naqdTolov = tolovType == "Naqd" ? Number(costValue) : 0;
       const clickTolov = tolovType == "Click" ? Number(costValue) : 0;
@@ -135,7 +135,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
             <option value="Markaz">Markaz</option>
             <option value="Avans">Avans</option>
             <option value="Kredit">Kredit</option>
-            <option value="Oylik">Oylik</option>
+
             <option value="Arenda">Arenda</option>
             <option value="Qarz">Qarz</option>
           </select>
