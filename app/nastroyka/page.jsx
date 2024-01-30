@@ -1,5 +1,5 @@
 "use client";
-/* eslint-disable-next-line padded-blocks */
+
 import Image from "@/node_modules/next/image";
 import { Form } from "@/node_modules/react-bootstrap/esm/index";
 import {
@@ -14,6 +14,7 @@ import Modal from "react-bootstrap/Modal";
 import Spinner from "../components/Students/Spinner";
 import { spinnerLoaded, spinnerLoading } from "../redux/actions";
 import useFetch from "../hooks/useFetch";
+/* eslint-disable */
 const Settings = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
