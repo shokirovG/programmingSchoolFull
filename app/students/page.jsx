@@ -310,7 +310,7 @@ const page = () => {
                     <input
                       required
                       className="form-control"
-                      type="number"
+                      type="text"
                       placeholder="chegirma "
                       aria-label="default input example"
                       name="sadsad"
