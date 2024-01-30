@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable-next-line padded-blocks */
 import Image from "@/node_modules/next/image";
 import { Form } from "@/node_modules/react-bootstrap/esm/index";
 import {
