@@ -59,6 +59,20 @@ app.put("/students", async (req, res) => {
   );
   res.json({ month: req.body.month, students: req.body.students });
 });
+app.post("/students", async (req, res) => {
+  const findItem = await Todos.find({ month: req.body.month });
+  console.log(findItem, req.body.students);
+  if (findItem.length !== 0) {
+    await Todos.findOneAndUpdate(
+      { month: req.body.month },
+      { month: req.body.month, students: req.body.students }
+    );
+  } else {
+    await Todos.create({ month: req.body.month, students: req.body.students });
+  }
+
+  res.json({ month: req.body.month, students: req.body.students });
+});
 app.get("/hisobot", async (req, res) => {
   const hisoblar = await Hisobot.find({});
   res.json({ hisoblar });
@@ -92,6 +106,7 @@ app.get("/chiqimlar", async (req, res) => {
 
 app.post("/chiqimlar", async (req, res) => {
   const findMonth = await MajburiyCost.find({ month: req.body.month });
+
   if (findMonth.length !== 0) {
     await MajburiyCost.findOneAndUpdate(
       { month: req.body.month },
@@ -109,7 +124,7 @@ app.post("/chiqimlar", async (req, res) => {
   res.json({ name: "asd" });
 });
 app.use("/", (req, res) => {
-  res.send("hello school");
+  res.json({ name: "hello" });
 });
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
