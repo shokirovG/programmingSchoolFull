@@ -133,7 +133,7 @@ const page = () => {
               ) : (
                 <div className="flex gap-[10px]">
                   <Button variant="danger" onClick={handleClose}>
-                    Yo'q
+                    Yo`q
                   </Button>
                   <Button variant="success" onClick={monthCloneFn}>
                     Xa roziman
