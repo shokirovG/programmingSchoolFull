@@ -6,8 +6,8 @@ import {
   useSelector,
 } from "@/node_modules/react-redux/dist/react-redux";
 import { toast } from "react-toastify";
-import React, { useEffect, useRef } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Spinner from "../components/Students/Spinner";
@@ -19,7 +19,7 @@ const page = () => {
   const handleShow = () => setShow(true);
   const [monthClone_1, setMonthClone_1] = useState("1_2024");
   const [monthClone_2, setMonthClone_2] = useState("2_2024");
-  const [currentStudents, setCurrentStudents] = useState([]);
+
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
