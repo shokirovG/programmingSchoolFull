@@ -14,7 +14,7 @@ import Modal from "react-bootstrap/Modal";
 import Spinner from "../components/Students/Spinner";
 import { spinnerLoaded, spinnerLoading } from "../redux/actions";
 import useFetch from "../hooks/useFetch";
-const page = () => {
+const Settings = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -149,4 +149,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Settings;
