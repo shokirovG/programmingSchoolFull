@@ -131,7 +131,7 @@ const page = () => {
               {store.spinnerLoader === "loading" ? (
                 <Spinner />
               ) : (
-                <div>
+                <div className="flex gap-[10px]">
                   <Button variant="danger" onClick={handleClose}>
                     Yo'q
                   </Button>
