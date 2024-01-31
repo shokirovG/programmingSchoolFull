@@ -170,7 +170,7 @@ const StudentChangeModal = ({
             <input
               required
               className="form-control"
-              type="number"
+              type="text"
               placeholder="chegirma foizi"
               aria-label="default input example"
               name="sadsad"
