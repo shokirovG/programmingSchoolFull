@@ -15,7 +15,7 @@ import Spinner from "../components/Students/Spinner";
 import { spinnerLoaded, spinnerLoading } from "../redux/actions";
 import useFetch from "../hooks/useFetch";
 /* eslint-disable */
-const page = () => {
+function page() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -148,6 +148,6 @@ const page = () => {
       </div>
     </div>
   );
-};
+}
 
 export default page;
