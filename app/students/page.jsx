@@ -47,7 +47,43 @@ const page = () => {
   )}-${Zero(date.getDate())}`;
   const [createdStudentDate, setCreatedStudentDate] = useState(initialDate);
   const initial = useRef(false);
-  console.log("params", params);
+  const [filterDepartment, setFilterDepartment] = useState("Barcha kafedralar");
+  const groupsStore = [
+    {
+      department: "Dasturlash",
+      groups: [
+        "Front-5",
+        "Front-8",
+        "Front-10",
+        "Front-12",
+        "Front-13",
+        "Front-14",
+      ],
+    },
+    {
+      department: "K.S",
+      groups: [
+        "K.S-1",
+        "K.S-2",
+        "K.S-3",
+        "K.S-4",
+        "K.S-5",
+        "K.S-6",
+        "Tibbiyot-1",
+        "Tibbiyot-2",
+        "Tibbiyot-3",
+      ],
+    },
+    {
+      department: "Scretch",
+      groups: ["Scretch-1", "Scretch-2"],
+    },
+    {
+      department: "Ingliz-tili",
+      groups: ["Ingliz-tili-1", "Ingliz-tili-2"],
+    },
+  ];
+  const [filterGroupsStore, setFilterGroupsStore] = useState(groupsStore);
   const addStudentForm = (e) => {
     e.preventDefault();
     dispatch(spinnerLoading());
@@ -87,7 +123,7 @@ const page = () => {
     }
   };
 
-  console.log(store.students);
+  console.log(filterGroupsStore);
   useEffect(() => {
     if (!initial.current) {
       initial.current = true;
@@ -114,23 +150,23 @@ const page = () => {
       filterGroup !== "Barcha guruhlar" ? newStudents : store.students
     );
 
-    function counter(id, start, end, duration) {
-      let obj = document.getElementById(id),
-        current = start,
-        range = end - start,
-        increment = end > start ? 1 : -1,
-        step = Math.abs(Math.floor(duration / range)),
-        timer = obj
-          ? setInterval(() => {
-              current += increment;
-              obj.textContent = current;
-              if (current == end) {
-                clearInterval(timer);
-              }
-            }, step)
-          : 0;
-    }
-    counter("count1", 0, a.length, 500);
+    // function counter(id, start, end, duration) {
+    //   let obj = document.getElementById(id),
+    //     current = start,
+    //     range = end - start,
+    //     increment = end > start ? 1 : -1,
+    //     step = Math.abs(Math.floor(duration / range)),
+    //     timer = obj
+    //       ? setInterval(() => {
+    //           current += increment;
+    //           obj.textContent = current;
+    //           if (current == end) {
+    //             clearInterval(timer);
+    //           }
+    //         }, step)
+    //       : 0;
+    // }
+    // counter("count1", 0, a.length, 500);
   }, [store]);
   // document.addEventListener("DOMContentLoaded", () => {});
 
@@ -159,6 +195,50 @@ const page = () => {
                 <span id="count1">{filterStudents.length} </span>
               </h4>
               <select
+                className="absolute left-[30%] top-[20px] bg-white p-[10px]"
+                onChange={(e) => {
+                  setFilterDepartment(e.target.value);
+                  setFilterGroup("Barcha guruhlar");
+                  const newGroups =
+                    e.target.value === "Barcha kafedralar"
+                      ? groupsStore
+                      : groupsStore.filter(
+                          (elem) => elem.department === e.target.value
+                        );
+                  setFilterGroupsStore(newGroups);
+                  let newStudents = [];
+                  newGroups.forEach((elem) => {
+                    newStudents = [
+                      ...newStudents,
+                      store.students.filter((el) => el.group === elem),
+                    ];
+                  });
+
+                  let newStudents2 = [];
+
+                  for (let item of newGroups[0].groups) {
+                    newStudents2 = [
+                      ...newStudents2,
+                      ...store.students.filter((el) => el.group === item),
+                    ];
+                  }
+                  if (e.target.value === "Barcha kafedralar") {
+                    setFilterStudents(store.students);
+                  } else {
+                    setFilterStudents(newStudents2);
+                  }
+                }}
+              >
+                <option selected value="Barcha kafedralar">
+                  Barcha Kafedralar
+                </option>
+                <option value="Dasturlash">Dasturlash</option>
+                <option value="K.S">K.S</option>
+
+                <option value="Scretch">Scretch</option>
+                <option value="Ingliz-tili">Ingliz-tili</option>
+              </select>
+              <select
                 className="absolute left-[45%] top-[20px] bg-white p-[10px]"
                 value={filterGroup}
                 onChange={(e) => {
@@ -166,35 +246,39 @@ const page = () => {
                   const newStudents = store.students.filter(
                     (el) => el.group === e.target.value
                   );
-                  setFilterStudents(
-                    e.target.value !== "Barcha guruhlar"
-                      ? newStudents
-                      : store.students
-                  );
+                  let newStudents2 = [];
+                  console.log("filterGroupsStore", filterGroupsStore);
+                  for (let item of filterGroupsStore[0].groups) {
+                    newStudents2 = [
+                      ...newStudents2,
+                      ...store.students.filter((el) => el.group === item),
+                    ];
+                    console.log("st0", newStudents2);
+                  }
+
+                  console.log("newStudents2", newStudents2);
+                  if (
+                    e.target.value === "Barcha guruhlar" &&
+                    filterDepartment === "Barcha kafedralar"
+                  ) {
+                    setFilterStudents(store.students);
+                  } else {
+                    setFilterStudents(
+                      e.target.value !== "Barcha guruhlar"
+                        ? newStudents
+                        : newStudents2
+                    );
+                  }
                 }}
               >
                 <option selected value="Barcha guruhlar">
                   Barcha guruhlar
                 </option>
-                <option value="Front-5">Front-5</option>
-                <option value="Front-8">Front-8</option>
-                <option value="Front-10">Front-10</option>
-                <option value="Front-12">Front-12</option>
-                <option value="Front-13">Front-13</option>
-                <option value="Front-14">Front-14</option>
-                <option value="K.S-1">K.S-1</option>
-                <option value="K.S-2">K.S-2</option>
-                <option value="K.S-3">K.S-3</option>
-                <option value="K.S-4">K.S-4</option>
-                <option value="K.S-5">K.S-5</option>
-                <option value="K.S-6">K.S-6</option>
-                <option value="Tibbiyot-1">Tibbiyot-1</option>
-                <option value="Tibbiyot-2">Tibbiyot-2</option>
-                <option value="Tibbiyot-3">Tibbiyot-3</option>
-                <option value="Ingliz-tili-1">Ingliz-tili-1</option>
-                <option value="Ingliz-tili-2">Ingliz-tili-2</option>
-                <option value="Scretch-1">Scretch-1</option>
-                <option value="Scretch-2">Scretch-2</option>
+                {filterGroupsStore.map((elem) => {
+                  return elem.groups.map((item) => {
+                    return <option value={item}>{item}</option>;
+                  });
+                })}
               </select>
               <table striped hover variant="light" className="table__students">
                 <thead id="thead__students">
