@@ -160,7 +160,7 @@ const Kirim = (props) => {
       setStudentValue("O`quvchi");
       setTolovValue(0);
       setTolovTypeValue("Naqd");
-      setOyValue("Yanvar");
+
       setEskiTolov(0);
 
       //tableitem ga qarash kerak
