@@ -7,6 +7,7 @@ const initialState = {
   majburiyChiqimlar: [],
   login: "",
   parol: "",
+  monthPrice: {},
 };
 
 function reducers(state = initialState, action) {
@@ -112,6 +113,13 @@ function reducers(state = initialState, action) {
         ...state,
         login: action.payload.login,
         parol: action.payload.parol,
+      };
+    }
+    case "monthPriceFetched": {
+      console.log("month reducer");
+      return {
+        ...state,
+        monthPrice: action.payload,
       };
     }
     default:

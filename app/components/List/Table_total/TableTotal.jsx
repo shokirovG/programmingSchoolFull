@@ -19,7 +19,7 @@ function TableTotal(props) {
   if (store.hisobot.length > 0) {
     chiqimlar = store.hisobot[0].hisoblar;
   }
-  console.log(store);
+
   return (
     <div className=" totalTable ">
       <table className="rwd-table">

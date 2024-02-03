@@ -53,6 +53,9 @@ const FoydaItem = () => {
     ) {
       foydaBalans += item.price * 0.4;
     }
+    if (item.department === "Markaz") {
+      foydaBalans += item.price;
+    }
   }
 
   useEffect(() => {
@@ -67,8 +70,8 @@ const FoydaItem = () => {
 
   return (
     <div className="workers__item  w-[25%] min-h-[200px] rounded-[15px] ">
-      <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] items-center px-[10px] gap-[20px]">
-        <span className="text-[25px] ">Markaz</span>{" "}
+      <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] items-center px-[10px] gap-[15px]">
+        <span className="text-[22px] ">Markaz</span>{" "}
         <span>
           {Number(foydaBalans) -
             (calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
@@ -170,6 +173,7 @@ const FoydaItem = () => {
                   ? store.majburiyChiqimlar[0]
                   : { chiqimlar: [] },
                 calcPriceTolov(store.students, "Dasturlash") * 0.4 +
+                  calcPriceTolov(store.students, "Markaz") +
                   calcPriceTolov(store.students, "Dasturlash", "Front-12") *
                     0.5 +
                   calcPriceTolov(store.students, "K.S") * 0.4 +
@@ -216,11 +220,13 @@ const FoydaItem = () => {
                 ? store.majburiyChiqimlar[0]
                 : { chiqimlar: [] },
               calcPriceTolov(store.students, "Dasturlash") * 0.4 +
+                calcPriceTolov(store.students, "Markaz") +
                 calcPriceTolov(store.students, "Dasturlash", "Front-12") * 0.5 +
                 calcPriceTolov(store.students, "K.S") * 0.4 +
                 calcPriceTolov(store.students, "Ingliz-tili") * 0.5 +
                 calcPriceTolov(store.students, "Scretch") * 0.75 +
                 calcQarzPrice(store.students, "Dasturlash") * 0.4 +
+                calcQarzPrice(store.students, "Markaz") +
                 calcQarzPrice(store.students, "Dasturlash", "Front-12") * 0.5 +
                 calcQarzPrice(store.students, "K.S") * 0.4 +
                 calcQarzPrice(store.students, "Ingliz-tili") * 0.5 +
@@ -243,12 +249,14 @@ const FoydaItem = () => {
                       ? store.majburiyChiqimlar[0]
                       : { chiqimlar: [] },
                     calcPriceTolov(store.students, "Dasturlash") * 0.4 +
+                      calcPriceTolov(store.students, "Markaz") +
                       calcPriceTolov(store.students, "Dasturlash", "Front-12") *
                         0.5 +
                       calcPriceTolov(store.students, "K.S") * 0.4 +
                       calcPriceTolov(store.students, "Ingliz-tili") * 0.5 +
                       calcPriceTolov(store.students, "Scretch") * 0.75 +
                       calcQarzPrice(store.students, "Dasturlash") * 0.4 +
+                      calcQarzPrice(store.students, "Markaz") +
                       calcQarzPrice(store.students, "Dasturlash", "Front-12") *
                         0.5 +
                       calcQarzPrice(store.students, "K.S") * 0.4 +
@@ -275,12 +283,14 @@ const FoydaItem = () => {
                       ? store.majburiyChiqimlar[0]
                       : { chiqimlar: [] },
                     calcPriceTolov(store.students, "Dasturlash") * 0.4 +
+                      calcPriceTolov(store.students, "Markaz") +
                       calcPriceTolov(store.students, "Dasturlash", "Front-12") *
                         0.5 +
                       calcPriceTolov(store.students, "K.S") * 0.4 +
                       calcPriceTolov(store.students, "Ingliz-tili") * 0.5 +
                       calcPriceTolov(store.students, "Scretch") * 0.75 +
                       calcQarzPrice(store.students, "Dasturlash") * 0.4 +
+                      calcQarzPrice(store.students, "Markaz") +
                       calcQarzPrice(store.students, "Dasturlash", "Front-12") *
                         0.5 +
                       calcQarzPrice(store.students, "K.S") * 0.4 +

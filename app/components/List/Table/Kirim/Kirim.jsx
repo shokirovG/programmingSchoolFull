@@ -24,13 +24,31 @@ import calcNaqdChiqim from "@/app/hooks/calcNaqdChiqim";
 import calcClickKirim from "@/app/hooks/calcClickKirim";
 import calcClickChiqim from "@/app/hooks/calcClickChiqim";
 const Kirim = (props) => {
+  const months = [
+    "Yanvar",
+    "Fevral",
+    "Mart",
+    "Aprel",
+    "May",
+    "Iyun",
+    "Iyul",
+    "Avgust",
+    "Sentabr",
+    "Oktabr",
+    "Noyabr",
+    "Dekabr",
+  ];
+  const store = useSelector((state) => state);
+  console.log();
   const [groupValue, setGroupValue] = useState("Guruh");
   const [studentValue, setStudentValue] = useState("O`quvchi");
   const [foizValue, setFoizValue] = useState(0);
   const [tolovTypeValue, setTolovTypeValue] = useState("Naqd");
-  const [oyValue, setOyValue] = useState("Yanvar");
+  const [oyValue, setOyValue] = useState(
+    months[store.currentMonth.slice(0, store.currentMonth.length - 5) - 1]
+  );
   const [departmentValue, setDepartmentValue] = useState("Kafedra");
-  const store = useSelector((state) => state);
+
   const studentsFilter = store.students.filter((el) => el.group === groupValue);
   const [eskiTolov, setEskiTolov] = useState(0);
   const dispatch = useDispatch();
@@ -205,6 +223,7 @@ const Kirim = (props) => {
                   <option value="Scretch">Scretch</option>
                   <option value="K.S">K.S</option>
                   <option value="Ingliz-tili">Ingliz-tili</option>
+                  <option value="Markaz">Markaz</option>
                 </select>
                 <select
                   className="form-select"
@@ -238,6 +257,7 @@ const Kirim = (props) => {
                   <option value="Ingliz-tili-2">Ingliz-tili-2</option>
                   <option value="Scretch-1">Scretch-1</option>
                   <option value="Scretch-2">Scretch-2</option>
+                  <option value="Markaz-1">Markaz-1</option>
                 </select>
                 <select
                   className="form-select"
@@ -318,9 +338,7 @@ const Kirim = (props) => {
                   }}
                   value={oyValue}
                 >
-                  <option selected value="Yanvar">
-                    Yanvar
-                  </option>
+                  <option value="Yanvar">Yanvar</option>
                   <option value="Fevral">Fevral</option>
                   <option value="Mart">Mart</option>
                   <option value="Aprel">Aprel</option>

@@ -1,6 +1,7 @@
 function calcQarzPrice(students, department, group = "") {
   function calcPrice(price, foiz, department) {
     let qarz = 0;
+
     switch (department) {
       case "Dasturlash": {
         qarz = 350000 - foiz - price;
@@ -16,6 +17,10 @@ function calcQarzPrice(students, department, group = "") {
       }
       case "Ingliz-tili": {
         qarz = 240000 - foiz - price;
+        break;
+      }
+      case "Markaz": {
+        qarz = 0;
         break;
       }
       default:

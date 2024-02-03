@@ -82,6 +82,10 @@ const page = () => {
       department: "Ingliz-tili",
       groups: ["Ingliz-tili-1", "Ingliz-tili-2"],
     },
+    {
+      department: "Markaz",
+      groups: ["Markaz-1"],
+    },
   ];
   const [filterGroupsStore, setFilterGroupsStore] = useState(groupsStore);
   const addStudentForm = (e) => {
@@ -361,6 +365,7 @@ const page = () => {
                       <option value="Ingliz-tili-2">Ingliz-tili-2</option>
                       <option value="Scretch-1">Scretch-1</option>
                       <option value="Scretch-2">Scretch-2</option>
+                      <option value="Markaz-1">Markaz-1</option>
                     </select>
                     <select
                       className="form-select"
@@ -378,6 +383,7 @@ const page = () => {
                       <option value="K.S">K.S</option>
                       <option value="Scretch">Scretch</option>
                       <option value="Ingliz-tili">Ingliz-tili</option>
+                      <option value="Markaz">Markaz</option>
                     </select>
                     <input
                       required

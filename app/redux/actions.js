@@ -72,6 +72,12 @@ const auth = (login, parol) => {
     payload: { login, parol },
   };
 };
+const monthPriceFetched = (db) => {
+  return {
+    type: "monthPriceFetched",
+    payload: db,
+  };
+};
 export {
   auth,
   signIn,
@@ -86,4 +92,5 @@ export {
   hisobotFetched,
   addTodo,
   fetchedMajburiy,
+  monthPriceFetched,
 };

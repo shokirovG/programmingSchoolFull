@@ -28,7 +28,7 @@ const StudentChangeModal = ({
   created,
 }) => {
   const [nameValue, setNameValue] = useState(name);
-  const [foizValue, setFoizValue] = useState(Number(foiz));
+  const [foizValue, setFoizValue] = useState(foiz);
   const [departmentValue, setDepartmentValue] = useState(department);
   const [groupValue, setGroupValue] = useState(group);
   const optionDepartment = document.querySelectorAll(".optionDepartment");
