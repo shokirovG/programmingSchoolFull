@@ -155,6 +155,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
               <option value="Sarvar">Sarvar</option>
               <option value="Obid">Obid</option>
               <option value="Rahim">Rahim</option>
+              <option value="Olmos">Olmos</option>
               <option value="Mehribonu">Mehribonu</option>
               <option value="Zaxro">Zaxro</option>
             </select>
