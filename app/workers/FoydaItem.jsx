@@ -13,6 +13,10 @@ const FoydaItem = () => {
   const { request } = useFetch();
   // const [majburiyTotal, setMajburiyTotal] = useState(0);
   let majburiyTotal = 0;
+  console.log(
+    "a",
+    calcPriceTolov(store.students, "Dasturlash", "G`iyos", "Front-12")
+  );
   // useEffect(() => {
   //   const currentMonthChiqim = store.majburiyChiqimlar.filter(
   //     (el) => el.month === localStorage.getItem("currentMonth")
@@ -49,7 +53,8 @@ const FoydaItem = () => {
       item.group === "Front-5" ||
       item.group === "Front-8" ||
       item.group === "Front-10" ||
-      item.group === "Front-13"
+      item.group === "Front-13" ||
+      item.group === "Front-14"
     ) {
       foydaBalans += item.price * 0.4;
     }
@@ -67,7 +72,7 @@ const FoydaItem = () => {
       dispatch(fetchedMajburiy(currentMonthChiqim));
     });
   }, []);
-
+  console.log(calcQarzPrice(store.students, "Dasturlash"), "obid");
   return (
     <div className="workers__item  w-[25%] min-h-[200px] rounded-[15px] ">
       <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] items-center px-[10px] gap-[15px]">
@@ -81,7 +86,7 @@ const FoydaItem = () => {
               calcCategoryPrice(chiqimlar, "Arenda", "Naqd") +
               calcCategoryPrice(chiqimlar, "Arenda", "Click") +
               calcCategoryPrice(chiqimlar, "Qarz", "Naqd") +
-              calcCategoryPrice(chiqimlar, "Qarz", "Click")) >
+              calcCategoryPrice(chiqimlar, "Qarz", "Click")) >=
           0 ? (
             <span className="text-green-500">
               +
@@ -117,13 +122,7 @@ const FoydaItem = () => {
         <span>
           {Number(foydaBalans) -
             (calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
-              calcCategoryPrice(chiqimlar, "Markaz", "Click") +
-              calcCategoryPrice(chiqimlar, "Kredit", "Click") +
-              calcCategoryPrice(chiqimlar, "Kredit", "Naqd") +
-              calcCategoryPrice(chiqimlar, "Arenda", "Naqd") +
-              calcCategoryPrice(chiqimlar, "Arenda", "Click") +
-              calcCategoryPrice(chiqimlar, "Qarz", "Naqd") +
-              calcCategoryPrice(chiqimlar, "Qarz", "Click")) -
+              calcCategoryPrice(chiqimlar, "Markaz", "Click")) -
             Number(majburiyTotal) >
           0 ? (
             <span className="text-green-500">
@@ -131,13 +130,7 @@ const FoydaItem = () => {
               {numberTrim(
                 foydaBalans -
                   (calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
-                    calcCategoryPrice(chiqimlar, "Markaz", "Click") +
-                    calcCategoryPrice(chiqimlar, "Kredit", "Click") +
-                    calcCategoryPrice(chiqimlar, "Kredit", "Naqd") +
-                    calcCategoryPrice(chiqimlar, "Arenda", "Naqd") +
-                    calcCategoryPrice(chiqimlar, "Arenda", "Click") +
-                    calcCategoryPrice(chiqimlar, "Qarz", "Naqd") +
-                    calcCategoryPrice(chiqimlar, "Qarz", "Click")) -
+                    calcCategoryPrice(chiqimlar, "Markaz", "Click")) -
                   Number(majburiyTotal)
               )}
             </span>
@@ -146,13 +139,7 @@ const FoydaItem = () => {
               {numberTrim(
                 foydaBalans -
                   (calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
-                    calcCategoryPrice(chiqimlar, "Markaz", "Click") +
-                    calcCategoryPrice(chiqimlar, "Kredit", "Click") +
-                    calcCategoryPrice(chiqimlar, "Kredit", "Naqd") +
-                    calcCategoryPrice(chiqimlar, "Arenda", "Naqd") +
-                    calcCategoryPrice(chiqimlar, "Arenda", "Click") +
-                    calcCategoryPrice(chiqimlar, "Qarz", "Naqd") +
-                    calcCategoryPrice(chiqimlar, "Qarz", "Click")) -
+                    calcCategoryPrice(chiqimlar, "Markaz", "Click")) -
                   Number(majburiyTotal)
               )}
             </span>
@@ -172,19 +159,19 @@ const FoydaItem = () => {
                 store.majburiyChiqimlar.length > 0
                   ? store.majburiyChiqimlar[0]
                   : { chiqimlar: [] },
-                calcPriceTolov(store.students, "Dasturlash") * 0.4 +
-                  calcPriceTolov(store.students, "Markaz") +
-                  calcPriceTolov(store.students, "Dasturlash", "Front-12") *
-                    0.5 +
-                  calcPriceTolov(store.students, "K.S") * 0.4 +
-                  calcPriceTolov(store.students, "Ingliz-tili") * 0.5 +
-                  calcPriceTolov(store.students, "Scretch") * 0.75 +
-                  calcQarzPrice(store.students, "Dasturlash") * 0.4 +
-                  calcQarzPrice(store.students, "Dasturlash", "Front-12") *
-                    0.5 +
-                  calcQarzPrice(store.students, "K.S") * 0.4 +
-                  calcQarzPrice(store.students, "Ingliz-tili") * 0.5 +
-                  calcQarzPrice(store.students, "Scretch") * 0.75
+                calcPriceTolov(store.students, "Dasturlash", "") * 0.4
+                // calcPriceTolov(store.students, "Markaz") +
+                // calcPriceTolov(store.students, "Dasturlash", "Front-12") *
+                //   0.5 +
+                // calcPriceTolov(store.students, "K.S") * 0.4 +
+                // calcPriceTolov(store.students, "Ingliz-tili") * 0.5 +
+                // calcPriceTolov(store.students, "Scretch") * 0.75 +
+                // calcQarzPrice(store.students, "Dasturlash") * 0.4 +
+                // calcQarzPrice(store.students, "Dasturlash", "Front-12") *
+                //   0.5 +
+                // calcQarzPrice(store.students, "K.S") * 0.4 +
+                // calcQarzPrice(store.students, "Ingliz-tili") * 0.5 +
+                // calcQarzPrice(store.students, "Scretch") * 0.75
               )
             )}{" "}
           </span>
@@ -198,13 +185,7 @@ const FoydaItem = () => {
             {" "}
             {numberTrim(
               calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
-                calcCategoryPrice(chiqimlar, "Markaz", "Click") +
-                calcCategoryPrice(chiqimlar, "Kredit", "Click") +
-                calcCategoryPrice(chiqimlar, "Kredit", "Naqd") +
-                calcCategoryPrice(chiqimlar, "Arenda", "Naqd") +
-                calcCategoryPrice(chiqimlar, "Arenda", "Click") +
-                calcCategoryPrice(chiqimlar, "Qarz", "Naqd") +
-                calcCategoryPrice(chiqimlar, "Qarz", "Click")
+                calcCategoryPrice(chiqimlar, "Markaz", "Click")
             )}
           </span>{" "}
           so`m
@@ -233,13 +214,7 @@ const FoydaItem = () => {
                 calcQarzPrice(store.students, "Scretch") * 0.75
             ) -
               (calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
-                calcCategoryPrice(chiqimlar, "Markaz", "Click") +
-                calcCategoryPrice(chiqimlar, "Kredit", "Click") +
-                calcCategoryPrice(chiqimlar, "Kredit", "Naqd") +
-                calcCategoryPrice(chiqimlar, "Arenda", "Naqd") +
-                calcCategoryPrice(chiqimlar, "Arenda", "Click") +
-                calcCategoryPrice(chiqimlar, "Qarz", "Naqd") +
-                calcCategoryPrice(chiqimlar, "Qarz", "Click")) <
+                calcCategoryPrice(chiqimlar, "Markaz", "Click")) <
             0 ? (
               <span className="text-red-500">
                 {numberTrim(
@@ -264,13 +239,7 @@ const FoydaItem = () => {
                       calcQarzPrice(store.students, "Scretch") * 0.75
                   ) -
                     (calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
-                      calcCategoryPrice(chiqimlar, "Markaz", "Click") +
-                      calcCategoryPrice(chiqimlar, "Kredit", "Click") +
-                      calcCategoryPrice(chiqimlar, "Kredit", "Naqd") +
-                      calcCategoryPrice(chiqimlar, "Arenda", "Naqd") +
-                      calcCategoryPrice(chiqimlar, "Arenda", "Click") +
-                      calcCategoryPrice(chiqimlar, "Qarz", "Naqd") +
-                      calcCategoryPrice(chiqimlar, "Qarz", "Click"))
+                      calcCategoryPrice(chiqimlar, "Markaz", "Click"))
                 )}
               </span>
             ) : (
@@ -298,13 +267,7 @@ const FoydaItem = () => {
                       calcQarzPrice(store.students, "Scretch") * 0.75
                   ) -
                     (calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
-                      calcCategoryPrice(chiqimlar, "Markaz", "Click") +
-                      calcCategoryPrice(chiqimlar, "Kredit", "Click") +
-                      calcCategoryPrice(chiqimlar, "Kredit", "Naqd") +
-                      calcCategoryPrice(chiqimlar, "Arenda", "Naqd") +
-                      calcCategoryPrice(chiqimlar, "Arenda", "Click") +
-                      calcCategoryPrice(chiqimlar, "Qarz", "Naqd") +
-                      calcCategoryPrice(chiqimlar, "Qarz", "Click"))
+                      calcCategoryPrice(chiqimlar, "Markaz", "Click"))
                 )}
               </span>
             )}

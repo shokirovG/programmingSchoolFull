@@ -39,7 +39,7 @@ function TableTotal(props) {
             </td>
             <td data-th="Movie Title">
               Dasturlash:{" "}
-              {numberTrim(calcQarzPrice(store.students, "Dasturlash"))}
+              {numberTrim(calcQarzPrice(store.students, "Dasturlash")+calcQarzPrice(store.students, "Dasturlash","Front-12"))}
             </td>
 
             <td data-th="Year">Kassa: {0}</td>

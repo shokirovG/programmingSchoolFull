@@ -31,7 +31,7 @@ function calcQarzPrice(students, department, group = "") {
   const tolov = students.filter((el) => el.department == department);
 
   const tolovTotal = tolov.reduce((s, item) => {
-    if (group !== item.group) {
+    if (group !== item.group && item.group !== "Front-12") {
       return s + calcPrice(item.price, item.foiz, item.department);
     } else {
       return s;

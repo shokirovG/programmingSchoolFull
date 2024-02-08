@@ -286,16 +286,16 @@ const page = () => {
               </select>
               <table striped hover variant="light" className="table__students">
                 <thead id="thead__students">
-                  <tr className="text-center">
-                    <th>№</th>
-                    <th>F.I.SH</th>
-                    <th>Guruh</th>
-                    <th>Kafedra</th>
-                    <th>Qilgan to'lov</th>
-                    <th>Qarz</th>
-                    <th>Chegirma</th>
-                    <th>Guruhga qo'shilgan</th>
-                    <th></th>
+                  <tr className="text-center ">
+                    <th className="th_1">№</th>
+                    <th className="th_2">F.I.SH</th>
+                    <th className="th_3">Guruh</th>
+                    <th className="th_4">Kafedra</th>
+                    <th className="th_5">Qilgan to'lov</th>
+                    <th className="th_6">Qarz</th>
+                    <th className="th_7">Chegirma</th>
+                    <th className="th_8">Guruhga qo'shilgan</th>
+                    <th className="th_9"></th>
                   </tr>
                 </thead>
                 <tbody>

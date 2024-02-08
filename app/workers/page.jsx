@@ -123,13 +123,13 @@ const Workers = () => {
             group={iGroup}
             foiz={0.5}
           />
-          <AdminItem
+          {/* <AdminItem
             teacher="Mehribonu"
             students={guruh}
             chiqimlar={chiqimlar}
             foiz={0.02}
             plusOylik={200000}
-          />
+          /> */}
           <AdminYordamchi
             teacher="Zaxro"
             oylik={300000}

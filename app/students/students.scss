@@ -15,6 +15,33 @@
 .table__students {
   width: 100%;
 }
+.th_1 {
+  width: 64px !important;
+}
+.th_2 {
+  width: 270px !important;
+}
+.th_3 {
+  width: 119px !important;
+}
+.th_4 {
+  width: 117px !important;
+}
+.th_5 {
+  width: 154px !important;
+}
+.th_6 {
+  width: 140px !important;
+}
+.th_7 {
+  width: 140px !important;
+}
+.th_8 {
+  width: 200px !important;
+}
+.th_9 {
+  width: 85px !important;
+}
 /* title */
 .title-container {
   height: 40px;
@@ -37,10 +64,11 @@
 }
 
 .table__students tr th {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #fff;
   background-color: #4318ff;
+  width: auto;
 }
 .table__students tr td {
   color: #606060;

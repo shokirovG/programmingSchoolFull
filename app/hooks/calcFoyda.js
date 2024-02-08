@@ -1,4 +1,5 @@
 function calcFoyda(arr, majburiyChiqim, kirimlar) {
+  console.log("kirimlar", kirimlar);
   const s_2 = majburiyChiqim.chiqimlar.reduce((s, item) => {
     if (item.chiqimNomi != "Avans" && item.chiqimNomi != "Oylik") {
       return s + Number(item.chiqimMiqdori);

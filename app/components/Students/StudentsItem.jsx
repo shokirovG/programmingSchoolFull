@@ -41,7 +41,7 @@ const StudentsItem = (props) => {
 
       <td>{numberTrim(foiz)} so`m</td>
       <td>{moment(created).format("DD/MM/YYYY")}</td>
-      <td className="flex  justify-around items-center h-[54px]">
+      <td className="flex  justify-around items-center h-[54px] gap-[15px]">
         <StudentChangeModal
           key={id}
           {...props}

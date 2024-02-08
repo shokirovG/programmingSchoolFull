@@ -16,4 +16,4 @@ BAGLAR:
 2.hisobotlarda edit funksiyasini q`oshish
 3.balans git ga push qilsam ishlaydi.+
 4.2-marta kirimmi chiqimmi nimadir qo`shgan qiymat 0 ni o`chirib qoyish kera
-
+5.o`quvchilar ikkingi fanga kelgan qo`shimcha qo`shishsiz ikkinchi guruhga q`oshish (id validate)
