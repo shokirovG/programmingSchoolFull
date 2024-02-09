@@ -148,6 +148,34 @@ export default function SideBar() {
                 Ishchilar
               </Link>
               <Link
+                id="groups"
+                className="id_11 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
+                href="/tables"
+                onClick={addActiveClass}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <g clipPath="url(#clip0_319_104)">
+                    <path
+                      className="sidebar__svg"
+                      d="M20 3H19V1H17V3H7V1H5V3H4C2.9 3 2 3.9 2 5V21C2 22.1 2.9 23 4 23H20C21.1 23 22 22.1 22 21V5C22 3.9 21.1 3 20 3ZM20 21H4V10H20V21ZM20 8H4V5H20V8Z"
+                      fill="#A3AED0"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_319_104">
+                      <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                Dars Jadvali
+              </Link>
+              <Link
                 id="settings"
                 className="id_10 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
                 href="/nastroyka"
@@ -175,6 +203,7 @@ export default function SideBar() {
                 </svg>
                 Sozlamalar
               </Link>
+
               <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -191,29 +220,7 @@ export default function SideBar() {
                 </svg>
                 <span onClick={addActiveClass}>Security</span>
               </div>
-              <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <g clipPath="url(#clip0_319_104)">
-                    <path
-                      className="sidebar__svg"
-                      d="M20 3H19V1H17V3H7V1H5V3H4C2.9 3 2 3.9 2 5V21C2 22.1 2.9 23 4 23H20C21.1 23 22 22.1 22 21V5C22 3.9 21.1 3 20 3ZM20 21H4V10H20V21ZM20 8H4V5H20V8Z"
-                      fill="#A3AED0"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_319_104">
-                      <rect width="24" height="24" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                <span onClick={addActiveClass}>Schedules</span>
-              </div>
+
               <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
