@@ -71,7 +71,7 @@ const TeacherItem = ({
                 {elem}
               </span>
             ))}
-            {balans - avans > 0 ? (
+            {(balans * foiz) / 100 - avans > 0 ? (
               <span className="text-green-500">
                 +{numberTrim((balans * foiz) / 100 - avans)}
               </span>
