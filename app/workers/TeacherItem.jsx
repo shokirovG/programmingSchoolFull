@@ -13,6 +13,7 @@ const TeacherItem = ({
   foiz,
   price,
   priceType,
+  prioritet,
 }) => {
   let avans = 0;
   const [show, setShow] = useState(false);
@@ -60,8 +61,11 @@ const TeacherItem = ({
         className="workers__item  w-[25%] min-h-[200px] rounded-[15px] "
         onClick={handleShow}
       >
-        <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] items-center px-[10px] gap-[20px]">
-          <span className="text-[25px] ">{teacher}</span>
+        <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] justify-center items-center px-[10px] gap-[20px]">
+          <div className="flex flex-col text-center gap-[5px]">
+            <span className="text-[25px] ">{teacher}</span>
+            <span className="text-[10px] text-cyan-500">{prioritet}</span>
+          </div>
           <div className="teacher__groups flex gap-[10px] flex-wrap ">
             {group.map((elem) => (
               <span

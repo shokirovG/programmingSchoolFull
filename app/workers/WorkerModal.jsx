@@ -42,6 +42,7 @@ const WorkerModal = ({
   const { request } = useFetch();
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
+  const [prioritet, setPrioritet] = useState("");
   const handleDelete = (delGroup) => {
     const newGroups = groupsValue.filter((el) => el !== delGroup);
     setGroupsValue(newGroups);
@@ -78,6 +79,7 @@ const WorkerModal = ({
           priceFoiz: priceFoizValue,
           priceType: priceTypeValue,
           department: departmentValue,
+          prioritet,
         };
       } else {
         return elem;
@@ -107,6 +109,15 @@ const WorkerModal = ({
           <Modal.Title>Ishchi sozlamasi</Modal.Title>
         </Modal.Header>
         <Modal.Body className="flex flex-column gap-[10px]">
+          <input
+            type="text"
+            value={prioritet}
+            placeholder="Lavozimi"
+            className="form-control"
+            onChange={(e) => {
+              setPrioritet(e.target.value);
+            }}
+          />
           <input
             type="text"
             value={nameValue}

@@ -28,6 +28,7 @@ const WorkerAddModal = ({ show, handleClose }) => {
   const { request } = useFetch();
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
+  const [prioritet, setPrioritet] = useState("");
   const handleDelete = (delGroup) => {
     const newGroups = groupsValue.filter((el) => el !== delGroup);
     setGroupsValue(newGroups);
@@ -44,6 +45,7 @@ const WorkerAddModal = ({ show, handleClose }) => {
         priceFoiz: priceFoizValue,
         priceType: priceTypeValue,
         department: departmentValue,
+        prioritet,
       },
     ];
     dispatch(spinnerLoading());
@@ -65,6 +67,7 @@ const WorkerAddModal = ({ show, handleClose }) => {
       setGroupsValue([]);
       setNewGroupValue("");
       setDepartmentValue("Kafedra");
+      setPrioritet("");
       handleClose();
     });
   };
@@ -88,6 +91,15 @@ const WorkerAddModal = ({ show, handleClose }) => {
           <Modal.Title> Yangi ishchi qo`shish </Modal.Title>
         </Modal.Header>
         <Modal.Body className="flex flex-column gap-[10px]">
+          <input
+            type="text"
+            value={prioritet}
+            placeholder="Lavozimi"
+            className="form-control"
+            onChange={(e) => {
+              setPrioritet(e.target.value);
+            }}
+          />
           <input
             type="text"
             value={nameValue}

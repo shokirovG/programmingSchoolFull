@@ -108,6 +108,7 @@ const Workers = () => {
                 price={elem.price}
                 priceType={elem.priceType}
                 id={elem.id}
+                prioritet={elem.prioritet}
               />
             ))}
 
