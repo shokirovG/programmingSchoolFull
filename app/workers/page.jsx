@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import TeacherItem from "./TeacherItem";
 import {
   fetchedStudents,
+  fetchedWorkers,
   fetchingStudents,
   hisobotFetched,
   loaded,
@@ -42,6 +43,16 @@ const Workers = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   useEffect(() => {
+    request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
+      const workers = res.workers.filter(
+        (elem) => elem.month === localStorage.getItem("currentMonth")
+      );
+
+      if (workers.length > 0) {
+        console.log(workers);
+        dispatch(fetchedWorkers(workers[0].workers));
+      }
+    });
     if (!initial.current) {
       initial.current = true;
 
@@ -65,6 +76,16 @@ const Workers = () => {
   }, []);
 
   useEffect(() => {
+    // request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
+    //   const workers = res.workers.filter(
+    //     (elem) => elem.month === localStorage.getItem("currentMonth")
+    //   );
+
+    //   if (workers.length > 0) {
+    //     console.log(workers);
+    //     dispatch(fetchedWorkers(workers[0].workers));
+    //   }
+    // });
     if (store.students.length > 0) {
       const d = store.students.filter((el) => el.department === "Dasturlash");
       const s = store.students.filter((el) => el.department === "K.S");

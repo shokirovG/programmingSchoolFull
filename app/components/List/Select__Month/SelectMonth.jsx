@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   changeMonthAction,
   fetchedStudents,
+  fetchedWorkers,
   fetchingStudents,
   hisobotFetched,
   loaded,
@@ -16,7 +17,20 @@ function SelectMonth() {
   const { request } = useFetch();
 
   const changeMonth = (e) => {
+    console.log(e.target.value);
+    console.log(store.workers);
     dispatch(fetchingStudents());
+    request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
+      const workers = res.workers.filter(
+        (elem) => elem.month === e.target.value
+      );
+
+      if (workers.length > 0) {
+        dispatch(fetchedWorkers(workers[0].workers));
+      } else {
+        dispatch(fetchedWorkers([]));
+      }
+    });
     request(`${process.env.NEXT_PUBLIC_URL}/hisobot`).then((res) => {
       const currentHisobot = res.hisoblar.filter(
         (el) => el.month === localStorage.getItem("currentMonth")
