@@ -9,6 +9,7 @@ const initialState = {
   parol: "",
   monthPrice: {},
   workers: [],
+  spinnerDeleteLoader: "none",
 };
 
 function reducers(state = initialState, action) {
@@ -127,6 +128,18 @@ function reducers(state = initialState, action) {
       return {
         ...state,
         workers: action.payload,
+      };
+    }
+    case "spinnerDeleteLoaded": {
+      return {
+        ...state,
+        spinnerDeleteLoader: "loaded",
+      };
+    }
+    case "spinnerDeleteLoading": {
+      return {
+        ...state,
+        spinnerDeleteLoader: "loading",
       };
     }
     default:

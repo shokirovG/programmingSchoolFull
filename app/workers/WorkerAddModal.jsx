@@ -117,7 +117,7 @@ const WorkerAddModal = ({ show, handleClose }) => {
             <input
               type="number"
               value={priceFoizValue}
-              placeholder="foiz"
+              placeholder="kelishuv foizini kiriting"
               className="form-control"
               onChange={(e) => {
                 setPriceFoizValue(e.target.value);
@@ -129,7 +129,7 @@ const WorkerAddModal = ({ show, handleClose }) => {
                 <input
                   type="number"
                   value={priceValue}
-                  placeholder="o`zgarmas"
+                  placeholder="oylikni qiymatini kiriting"
                   className="form-control"
                   onChange={(e) => {
                     setPriceValue(e.target.value);
@@ -138,59 +138,64 @@ const WorkerAddModal = ({ show, handleClose }) => {
               ) : null}
             </span>
           )}
-          <select
-            className="form-select"
-            value={departmentValue}
-            onChange={(e) => {
-              setDepartmentValue(e.target.value);
-            }}
-          >
-            <option value="Kafedra" disabled selected>
-              Kafedra
-            </option>
-            <option value="Dasturlash">Dasturlash</option>
-            <option value="K.S">K.S</option>
-            <option value="Scretch">Scretch</option>
-            <option value="Ingliz-tili">Ingliz-tili</option>
-          </select>
-          <Stack direction="row" spacing={1}>
-            {groupsValue.map((elem) => (
-              <Chip
-                label={elem}
-                variant="outlined"
-                onDelete={() => {
-                  handleDelete(elem);
+          {priceTypeValue === "foiz" ? (
+            <div>
+              <select
+                className="form-select"
+                value={departmentValue}
+                onChange={(e) => {
+                  setDepartmentValue(e.target.value);
                 }}
-              />
-            ))}
-          </Stack>
+              >
+                <option value="Kafedra" disabled selected>
+                  Kafedra
+                </option>
+                <option value="Dasturlash">Dasturlash</option>
+                <option value="K.S">K.S</option>
+                <option value="Scretch">Scretch</option>
+                <option value="Ingliz-tili">Ingliz-tili</option>
+              </select>
+              <Stack direction="row" spacing={1}>
+                {groupsValue.map((elem) => (
+                  <Chip
+                    label={elem}
+                    variant="outlined"
+                    onDelete={() => {
+                      handleDelete(elem);
+                    }}
+                  />
+                ))}
+              </Stack>
 
-          <form
-            className="flex items-center"
-            onSubmit={(e) => {
-              e.preventDefault();
-              newGroupValue && setGroupsValue([...groupsValue, newGroupValue]);
-              setNewGroupValue("");
-            }}
-          >
-            <label htmlFor="" className="w-[180px]">
-              guruh nomi
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              value={newGroupValue}
-              onChange={(e) => {
-                setNewGroupValue(e.target.value);
-              }}
-              placeholder="masalan front-1"
-            />
-            <input
-              type="submit"
-              className="btn btn-primary ml-[10px]"
-              value="qo`shish"
-            />
-          </form>
+              <form
+                className="flex items-center"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  newGroupValue &&
+                    setGroupsValue([...groupsValue, newGroupValue]);
+                  setNewGroupValue("");
+                }}
+              >
+                <label htmlFor="" className="w-[180px]">
+                  guruh nomi
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={newGroupValue}
+                  onChange={(e) => {
+                    setNewGroupValue(e.target.value);
+                  }}
+                  placeholder="masalan front-1"
+                />
+                <input
+                  type="submit"
+                  className="btn btn-primary ml-[10px]"
+                  value="qo`shish"
+                />
+              </form>
+            </div>
+          ) : null}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

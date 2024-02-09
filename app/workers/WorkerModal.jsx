@@ -3,6 +3,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 import {
   useDispatch,
   useSelector,
@@ -11,6 +13,8 @@ import useFetch from "../hooks/useFetch";
 import { v4 } from "uuid";
 import {
   fetchedWorkers,
+  spinnerDeleteLoaded,
+  spinnerDeleteLoading,
   spinnerLoaded,
   spinnerLoading,
 } from "../redux/actions";
@@ -46,7 +50,7 @@ const WorkerModal = ({
     if (delWorkerValue === name) {
       const workers = store.workers.filter((elem) => elem.id !== id);
 
-      dispatch(spinnerLoading());
+      dispatch(spinnerDeleteLoading());
       request(
         `${process.env.NEXT_PUBLIC_URL}/workers`,
         "POST",
@@ -56,7 +60,7 @@ const WorkerModal = ({
         })
       ).then(() => {
         toast.success(`${nameValue} ishchi  bazadan o'chirildi!`);
-        dispatch(spinnerLoaded());
+        dispatch(spinnerDeleteLoaded());
         dispatch(fetchedWorkers(workers));
 
         handleClose();
@@ -153,62 +157,67 @@ const WorkerModal = ({
               ) : null}
             </span>
           )}
-          <select
-            className="form-select"
-            value={departmentValue}
-            onChange={(e) => {
-              setDepartmentValue(e.target.value);
-            }}
-          >
-            <option value="Kafedra" disabled selected>
-              Kafedra
-            </option>
-            <option value="Dasturlash">Dasturlash</option>
-            <option value="K.S">K.S</option>
-            <option value="Scretch">Scretch</option>
-            <option value="Ingliz-tili">Ingliz-tili</option>
-          </select>
-          <Stack direction="row" spacing={1}>
-            {groupsValue.map((elem) => (
-              <Chip
-                label={elem}
-                variant="outlined"
-                onDelete={() => {
-                  handleDelete(elem);
+          {priceType === "foiz" ? (
+            <div className="flex flex-col gap-[10px]">
+              <select
+                className="form-select"
+                value={departmentValue}
+                onChange={(e) => {
+                  setDepartmentValue(e.target.value);
                 }}
-              />
-            ))}
-          </Stack>
-          <form
-            className="flex items-center"
-            onSubmit={(e) => {
-              e.preventDefault();
-              newGroupValue && setGroupsValue([...groupsValue, newGroupValue]);
-              setNewGroupValue("");
-            }}
-          >
-            <label htmlFor="" className="w-[180px]">
-              guruh nomi
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              value={newGroupValue}
-              onChange={(e) => {
-                setNewGroupValue(e.target.value);
-              }}
-              placeholder="masalan front-1"
-            />
-            <input
-              type="submit"
-              className="btn btn-primary ml-[10px]"
-              value="qo`shish"
-            />
-          </form>
+              >
+                <option value="Kafedra" disabled selected>
+                  Kafedra
+                </option>
+                <option value="Dasturlash">Dasturlash</option>
+                <option value="K.S">K.S</option>
+                <option value="Scretch">Scretch</option>
+                <option value="Ingliz-tili">Ingliz-tili</option>
+              </select>
+              <Stack direction="row" spacing={1}>
+                {groupsValue.map((elem) => (
+                  <Chip
+                    label={elem}
+                    variant="outlined"
+                    onDelete={() => {
+                      handleDelete(elem);
+                    }}
+                  />
+                ))}
+              </Stack>
+              <form
+                className="flex items-center"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  newGroupValue &&
+                    setGroupsValue([...groupsValue, newGroupValue]);
+                  setNewGroupValue("");
+                }}
+              >
+                <label htmlFor="" className="w-[180px]">
+                  guruh nomi
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={newGroupValue}
+                  onChange={(e) => {
+                    setNewGroupValue(e.target.value);
+                  }}
+                  placeholder="masalan front-1"
+                />
+                <input
+                  type="submit"
+                  className="btn btn-primary ml-[10px]"
+                  value="qo`shish"
+                />
+              </form>
+            </div>
+          ) : null}
         </Modal.Body>
         <Modal.Footer>
           <div className="flex justify-between w-[100%] items-center">
-            <div className="flex flex-col gap-[10px]">
+            <div className="flex flex-col justify-center gap-[10px]">
               <input
                 type="text"
                 className="form-control"
@@ -218,15 +227,17 @@ const WorkerModal = ({
                   setDelWorkerValue(e.target.value);
                 }}
               />
-              {store.spinnerLoader === "loading" ? (
-                <Spinner />
+              {store.spinnerDeleteLoader === "loading" ? (
+                <Box sx={{ display: "flex" }}>
+                  <CircularProgress />
+                </Box>
               ) : (
                 <Button variant="danger" onClick={delWorker}>
                   Ishchini o`chirish
                 </Button>
               )}
             </div>
-            <div className="flex gap-[10px]">
+            <div className="flex gap-[10px] items-center">
               <Button variant="secondary" onClick={handleClose}>
                 Chiqish
               </Button>

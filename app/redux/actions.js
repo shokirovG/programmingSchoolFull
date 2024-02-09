@@ -84,6 +84,16 @@ const fetchedWorkers = (workers) => {
     payload: workers,
   };
 };
+const spinnerDeleteLoading = () => {
+  return {
+    type: "spinnerDeleteLoading",
+  };
+};
+const spinnerDeleteLoaded = () => {
+  return {
+    type: "spinnerDeleteLoaded",
+  };
+};
 export {
   auth,
   signIn,
@@ -100,4 +110,6 @@ export {
   fetchedMajburiy,
   monthPriceFetched,
   fetchedWorkers,
+  spinnerDeleteLoading,
+  spinnerDeleteLoaded,
 };

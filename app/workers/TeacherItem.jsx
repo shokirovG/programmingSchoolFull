@@ -26,7 +26,7 @@ const TeacherItem = ({
       }
     }
   }
-  const frontOylik = group.reduce((s, elem) => {
+  const foizOylik = group.reduce((s, elem) => {
     const hisob = store.students.reduce((s, item) => {
       if (item.group.toUpperCase() === elem.toUpperCase()) {
         const narx = calcPrice(0, item.foiz, department);
@@ -71,13 +71,19 @@ const TeacherItem = ({
                 {elem}
               </span>
             ))}
-            {(balans * foiz) / 100 - avans > 0 ? (
-              <span className="text-green-500">
-                +{numberTrim((balans * foiz) / 100 - avans)}
+            {priceType === "foiz" ? (
+              <span>
+                {(balans * foiz) / 100 - avans > 0 ? (
+                  <span className="text-green-500">
+                    +{numberTrim((balans * foiz) / 100 - avans)}
+                  </span>
+                ) : (
+                  <span className="text-red-500">
+                    {numberTrim((balans * foiz) / 100 - avans)}
+                  </span>
+                )}
               </span>
-            ) : (
-              <span className="text-red-500">{numberTrim(balans - avans)}</span>
-            )}
+            ) : null}
           </div>
         </div>
         <div className="p-[20px]">
@@ -85,7 +91,10 @@ const TeacherItem = ({
             <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
               Oylik
             </span>
-            {numberTrim((frontOylik * foiz) / 100)} so`m
+            {priceType === "foiz"
+              ? numberTrim((foizOylik * foiz) / 100)
+              : numberTrim(price)}{" "}
+            so`m
           </p>
           <p>
             <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
@@ -97,9 +106,25 @@ const TeacherItem = ({
             <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
               Qoldiq
             </span>
-            <span className="text-green-500">
-              +{numberTrim((frontOylik * foiz) / 100 - avans)}
-            </span>{" "}
+            {priceType === "foiz" ? (
+              <span
+                className={`${
+                  (foizOylik * foiz) / 100 - avans >= 0
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
+                {numberTrim((foizOylik * foiz) / 100 - avans)}
+              </span>
+            ) : (
+              <span
+                className={`${
+                  price - avans >= 0 ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {numberTrim(price - avans)}
+              </span>
+            )}{" "}
             so`m
           </p>
         </div>
