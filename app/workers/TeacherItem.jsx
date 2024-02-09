@@ -1,119 +1,122 @@
-import React from "react";
+import { useSelector } from "@/node_modules/react-redux/dist/react-redux";
+import React, { useState } from "react";
 import { calcPrice } from "../hooks/calcPrice";
 import numberTrim from "../hooks/number";
+import WorkerModal from "./WorkerModal";
 
 const TeacherItem = ({
-  front,
+  id,
   department,
   chiqimlar,
   teacher,
   group,
   foiz,
+  price,
+  priceType,
 }) => {
   let avans = 0;
-  console.log(chiqimlar);
+  const [show, setShow] = useState(false);
+  const store = useSelector((state) => state);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   for (let item of chiqimlar) {
     for (let el of item.hisobot.chiqim) {
-      console.log("a", el);
       if (el.costType === "Avans" && el.userAvans === teacher) {
         avans += Number(el.costValue);
       }
     }
   }
-  const frontOylik = front.reduce((s, item) => {
-    if (item.group !== "Front-12") {
-      const narx = calcPrice(0, item.foiz, department);
-      return s + Number(narx);
-    } else {
-      if (teacher !== "Obid") {
-        return s + 0;
-      } else {
+  const frontOylik = group.reduce((s, elem) => {
+    const hisob = store.students.reduce((s, item) => {
+      if (item.group.toUpperCase() === elem.toUpperCase()) {
         const narx = calcPrice(0, item.foiz, department);
+
         return s + Number(narx);
-      }
-    }
-  }, 0);
-  let balans = front.reduce((s, item) => {
-    if (item.group !== "Front-12") {
-      const narx = item.price;
-      return s + Number(narx);
-    } else {
-      if (teacher !== "Obid") {
-        return s + 0;
       } else {
-        const narx = item.price;
-        return s + Number(narx);
+        return s;
       }
-    }
+    }, 0);
+
+    return s + Number(hisob);
   }, 0);
-  switch (teacher) {
-    case "Obid": {
-      balans = balans * 0.5;
-      break;
-    }
-    case "Sarvar": {
-      balans = balans * 0.5;
-      break;
-    }
-    case "Farrux": {
-      balans = balans * 0.6;
-      break;
-    }
-    case "G`iyos": {
-      balans = balans * 0.6;
-      break;
-    }
-    case "Rahim": {
-      balans = balans * 0.25;
-      break;
-    }
-  }
+
+  let balans = group.reduce((s, elem) => {
+    const hisob = store.students.reduce((s, item) => {
+      if (item.group.toUpperCase() === elem.toUpperCase()) {
+        const narx = item.price;
+
+        return s + Number(narx);
+      } else {
+        return s;
+      }
+    }, 0);
+
+    return s + Number(hisob);
+  }, 0);
+
   return (
-    <div className="workers__item  w-[25%] min-h-[200px] rounded-[15px] ">
-      <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] items-center px-[10px] gap-[20px]">
-        <span className="text-[25px] ">{teacher}</span>
-        <div className="teacher__groups flex gap-[10px] flex-wrap ">
-          {group.map((elem) => (
-            <span
-              key={elem}
-              className="bg-emerald-400 text-white p-[3px] rounded-[5px] text-[14px] text-"
-            >
-              {elem}
+    <>
+      <div
+        className="workers__item  w-[25%] min-h-[200px] rounded-[15px] "
+        onClick={handleShow}
+      >
+        <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] items-center px-[10px] gap-[20px]">
+          <span className="text-[25px] ">{teacher}</span>
+          <div className="teacher__groups flex gap-[10px] flex-wrap ">
+            {group.map((elem) => (
+              <span
+                key={elem}
+                className="bg-emerald-400 text-white p-[3px] rounded-[5px] text-[14px] text-"
+              >
+                {elem}
+              </span>
+            ))}
+            {balans - avans > 0 ? (
+              <span className="text-green-500">
+                +{numberTrim((balans * foiz) / 100 - avans)}
+              </span>
+            ) : (
+              <span className="text-red-500">{numberTrim(balans - avans)}</span>
+            )}
+          </div>
+        </div>
+        <div className="p-[20px]">
+          <p>
+            <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
+              Oylik
             </span>
-          ))}
-          {balans - avans > 0 ? (
+            {numberTrim((frontOylik * foiz) / 100)} so`m
+          </p>
+          <p>
+            <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
+              Avans
+            </span>{" "}
+            <span className="text-red-500">{numberTrim(avans)}</span> so`m
+          </p>
+          <p>
+            <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
+              Qoldiq
+            </span>
             <span className="text-green-500">
-              +{numberTrim(balans - avans)}
-            </span>
-          ) : (
-            <span className="text-red-500">{numberTrim(balans - avans)}</span>
-          )}
+              +{numberTrim((frontOylik * foiz) / 100 - avans)}
+            </span>{" "}
+            so`m
+          </p>
         </div>
       </div>
-      <div className="p-[20px]">
-        <p>
-          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
-            Oylik
-          </span>
-          {numberTrim(frontOylik * foiz)} so`m
-        </p>
-        <p>
-          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
-            Avans
-          </span>{" "}
-          <span className="text-red-500">{numberTrim(avans)}</span> so`m
-        </p>
-        <p>
-          <span className="oylik__span bg-slate-200 w-[100px] p-[7px] rounded-[10px] mr-[10px]">
-            Qoldiq
-          </span>
-          <span className="text-green-500">
-            +{numberTrim(frontOylik * foiz - avans)}
-          </span>{" "}
-          so`m
-        </p>
-      </div>
-    </div>
+      <WorkerModal
+        show={show}
+        handleClose={handleClose}
+        name={teacher}
+        priceType={priceType}
+        priceFoiz={foiz}
+        price={price}
+        groups={group}
+        department={department}
+        id={id}
+      />
+      {/* modalga props berish kerak worker  */}
+    </>
   );
 };
 

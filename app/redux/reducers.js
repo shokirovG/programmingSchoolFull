@@ -8,6 +8,7 @@ const initialState = {
   login: "",
   parol: "",
   monthPrice: {},
+  workers: [],
 };
 
 function reducers(state = initialState, action) {
@@ -120,6 +121,12 @@ function reducers(state = initialState, action) {
       return {
         ...state,
         monthPrice: action.payload,
+      };
+    }
+    case "fetchedWorkers": {
+      return {
+        ...state,
+        workers: action.payload,
       };
     }
     default:

@@ -16,6 +16,10 @@ import { setgroups } from "process";
 import AdminItem from "./AdminItem";
 import AdminYordamchi from "./AdminYordamchi";
 import FoydaItem from "./FoydaItem";
+
+import WorkerModal from "./WorkerModal";
+import WorkerAddModal from "./WorkerAddModal";
+import Image from "@/node_modules/next/image";
 const Workers = () => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -33,6 +37,10 @@ const Workers = () => {
   const fGroup_12 = ["front-12"];
   const sGroup = ["scretch-1"];
   const iGroup = ["ingliz-1", "ingliz-2"];
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   useEffect(() => {
     if (!initial.current) {
       initial.current = true;
@@ -76,74 +84,97 @@ const Workers = () => {
       }
     }
   }, [store]);
-
+  console.log(store.workers);
   return (
     <div>
       {store.loading === "loading" ? (
         <Loader />
       ) : (
-        <div className="workers__list flex flex-wrap gap-[20px] justify-center mt-[70px] pb-[100px]">
-          <TeacherItem
-            front={front}
-            department="Dasturlash"
-            chiqimlar={chiqimlar}
-            teacher="G`iyos"
-            group={fGroup}
-            foiz={0.6}
+        <>
+          <Image
+            src="./teacher.svg"
+            width="60"
+            height="60"
+            alt="teacher"
+            className="absolute top-[20px] left-[10px] cursor-pointer"
+            onClick={handleShow}
           />
-          <TeacherItem
-            front={savod}
-            department="K.S"
-            chiqimlar={chiqimlar}
-            teacher="Farrux"
-            group={dGroup}
-            foiz={0.6}
-          />
-          <TeacherItem
-            front={front_12}
-            department="Dasturlash"
-            chiqimlar={chiqimlar}
-            teacher="Obid"
-            group={fGroup_12}
-            foiz={0.5}
-          />
-          <TeacherItem
-            front={scretch}
-            department="Scretch"
-            chiqimlar={chiqimlar}
-            teacher="Rahim"
-            group={sGroup}
-            foiz={0.25}
-          />
-          <TeacherItem
-            front={ingliz}
-            department="Ingliz-tili"
-            chiqimlar={chiqimlar}
-            teacher="Sarvar"
-            group={iGroup}
-            foiz={0.5}
-          />
-          {/* <AdminItem
-            teacher="Mehribonu"
-            students={guruh}
-            chiqimlar={chiqimlar}
-            foiz={0.02}
-            plusOylik={200000}
-          /> */}
-          <AdminYordamchi
-            teacher="Zaxro"
-            oylik={300000}
-            chiqimlar={chiqimlar}
-            plusOylik={200000}
-          />
-          <AdminYordamchi
-            teacher="Olmos"
-            oylik={150000}
-            plusOylik={0}
-            chiqimlar={chiqimlar}
-          />
-          <FoydaItem />
-        </div>
+          <WorkerAddModal show={show} handleClose={handleClose} />
+          <div className="workers__list flex flex-wrap gap-[20px] justify-center mt-[70px] pb-[100px]">
+            {store.workers.map((elem) => (
+              <TeacherItem
+                department={elem.department}
+                chiqimlar={chiqimlar}
+                teacher={elem.name}
+                group={elem.groups}
+                foiz={elem.priceFoiz}
+                price={elem.price}
+                priceType={elem.priceType}
+                id={elem.id}
+              />
+            ))}
+            {/* <TeacherItem
+              front={front}
+              department="Dasturlash"
+              chiqimlar={chiqimlar}
+              teacher="G`iyos"
+              group={fGroup}
+              foiz={0.6}
+            /> */}
+            {/* <TeacherItem
+              front={savod}
+              department="K.S"
+              chiqimlar={chiqimlar}
+              teacher="Farrux"
+              group={dGroup}
+              foiz={0.6}
+            />
+            <TeacherItem
+              front={front_12}
+              department="Dasturlash"
+              chiqimlar={chiqimlar}
+              teacher="Obid"
+              group={fGroup_12}
+              foiz={0.5}
+            />
+            <TeacherItem
+              front={scretch}
+              department="Scretch"
+              chiqimlar={chiqimlar}
+              teacher="Rahim"
+              group={sGroup}
+              foiz={0.25}
+            />
+            <TeacherItem
+              front={ingliz}
+              department="Ingliz-tili"
+              chiqimlar={chiqimlar}
+              teacher="Sarvar"
+              group={iGroup}
+              foiz={0.5}
+            /> */}
+            {/* <AdminItem
+           teacher="Mehribonu"
+           students={guruh}
+           chiqimlar={chiqimlar}
+           foiz={0.02}
+           plusOylik={200000}
+         /> */}
+            {/* <AdminYordamchi
+              teacher="Zaxro"
+              oylik={300000}
+              chiqimlar={chiqimlar}
+              plusOylik={200000}
+            />
+            <AdminYordamchi
+              teacher="Olmos"
+              oylik={150000}
+              plusOylik={0}
+              chiqimlar={chiqimlar}
+            /> */}
+            <FoydaItem />
+          </div>
+        </>
       )}
     </div>
   );

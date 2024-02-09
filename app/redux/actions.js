@@ -78,6 +78,12 @@ const monthPriceFetched = (db) => {
     payload: db,
   };
 };
+const fetchedWorkers = (workers) => {
+  return {
+    type: "fetchedWorkers",
+    payload: workers,
+  };
+};
 export {
   auth,
   signIn,
@@ -93,4 +99,5 @@ export {
   addTodo,
   fetchedMajburiy,
   monthPriceFetched,
+  fetchedWorkers,
 };
