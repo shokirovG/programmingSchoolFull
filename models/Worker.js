@@ -20,6 +20,7 @@ const workerSchema = new mongoose.Schema({
         default: "o`zgarmas",
       },
       department: String,
+      prioritet: String,
     },
   ],
 });
