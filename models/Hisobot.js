@@ -27,11 +27,9 @@ const hisobotSchema = new mongoose.Schema({
       },
       balansNaqd: {
         type: Number,
-        required: true,
       },
       balansClick: {
         type: Number,
-        required: true,
       },
     },
   ],

@@ -7,8 +7,10 @@ const dotEnv = require("dotenv");
 const cors = require("cors");
 const Todos = require("./models/Todos");
 const Hisobot = require("./models/Hisobot");
+const Worker = require("./models/Worker");
 const mongoose = require("mongoose");
 const MajburiyCost = require("./models/MajburiyCost");
+const EskiOy = require("./models/EskiOy");
 dotEnv.config();
 app.use(express.json());
 app.use(
@@ -122,6 +124,56 @@ app.post("/chiqimlar", async (req, res) => {
     });
   }
   res.json({ name: "asd" });
+});
+app.post("/monthprice", async (req, res) => {
+  const findItem = await EskiOy.find({ month: req.body.month });
+  console.log(findItem);
+  if (findItem.length > 0) {
+    await EskiOy.findOneAndUpdate(
+      {
+        month: req.body.month,
+      },
+      {
+        month: req.body.month,
+        totalPrice: req.body.totalPrice,
+      }
+    );
+  } else {
+    await EskiOy.create({
+      month: req.body.month,
+      totalPriceNaqd: req.body.totalPriceNaqd,
+      totalPriceClick: req.body.totalPriceClick,
+    });
+  }
+  res.json({ name: "asdasd" });
+});
+app.get("/monthprice", async (req, res) => {
+  const total = await EskiOy.find({});
+  res.json({ totalPrice: total });
+});
+app.post("/workers", async (req, res) => {
+  const findWorker = await Worker.find({ month: req.body.month });
+
+  if (findWorker.length === 0) {
+    await Worker.create({
+      month: req.body.month,
+      workers: req.body.workers,
+    });
+  } else {
+    await Worker.findOneAndUpdate(
+      { month: req.body.month },
+      {
+        month: req.body.month,
+        workers: req.body.workers,
+      }
+    );
+  }
+  res.json({ post: "post" });
+});
+app.get("/workers", async (req, res) => {
+  const workers = await Worker.find({});
+
+  res.json({ workers });
 });
 app.use("/", (req, res) => {
   res.json({ name: "hello" });
