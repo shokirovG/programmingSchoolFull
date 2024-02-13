@@ -71,18 +71,22 @@ $title-color: #898b96;
         justify-content: flex-start;
         margin-bottom: 5px;
         border-radius: 5px;
-        padding: 3px;
-        color: white;
         padding: 5px;
+        color: white;
+        height: 60px;
+
         box-shadow: 0px 1px 15px 1px rgba(81, 77, 92, 0.08);
+        transition: all 0.3s ease-in-out 0.1s !important;
         .title {
-          font-size: 12px;
+          font-size: 16px;
         }
         footer {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-evenly;
-          font-size: 11px;
+          padding-bottom: 10px !important;
+          overflow: hidden;
+        }
+        &:hover {
+          height: 110px;
+          cursor: pointer;
         }
       }
     }
@@ -99,4 +103,20 @@ $title-color: #898b96;
 .container {
   margin-top: 20px;
   // border: 1px solid $border-color;
+}
+.group__img {
+  color: black;
+  &:hover {
+    color: white;
+  }
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+.room {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 20px;
 }

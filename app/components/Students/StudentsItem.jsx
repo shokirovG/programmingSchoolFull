@@ -21,7 +21,10 @@ const StudentsItem = (props) => {
   } = props;
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  const date = new Date();
+  const studentDate = +moment(created).format("DD/MM/YYYY").slice(0, 2);
+  const date2 = +moment(date).format("DD/MM/YYYY").slice(0, 2);
+  console.log(date2 < studentDate);
   return (
     <tr key={id} className={`px-[20px] text-center h-[54px] `}>
       <td>{index + 1}</td>
@@ -30,7 +33,7 @@ const StudentsItem = (props) => {
           calcPrice(price, foiz, department) == 0
             ? "active__student"
             : "danger__student"
-        }`}
+        } ${date2 < studentDate ? "norm__student" : ""}`}
       >
         {name}
       </td>

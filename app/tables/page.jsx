@@ -1,255 +1,406 @@
-import React from "react";
+"use client";
+import Image from "next/image";
+import { useState } from "react";
+import TablesAddModal from "./TablesAddModal";
 import "./tableTime.scss";
-const page = () => {
-  return (
-    <div className="mt-[100px]">
-      <div class="container ">
-        <div class="row">
-          <div class="col-12">
-            <div class="row day-columns">
-              <div class="day-column">
-                <div class="day-header">Monday</div>
-                <div class="day-content">
-                  <div class="event gray">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>4 Assets</span>
-                      <span>20:00</span>
-                    </footer>
-                  </div>
-                  <div class="event orange">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>3 Assets</span>
-                      <span>21:30</span>
-                    </footer>
-                  </div>
-                  <div class="event red">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event blue">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                </div>
-                <div class="day-footer">4 tasks</div>
-              </div>
-              <div class="day-column">
-                <div class="day-header">Tuesday</div>
-                <div class="day-content">
-                  <div class="event purple">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
+import useFetch from "../hooks/useFetch";
+import {
+  useDispatch,
+  useSelector,
+} from "@/node_modules/react-redux/dist/react-redux";
+import {
+  fetchedGroups,
+  fetchedStudents,
+  fetchingStudents,
+  loaded,
+} from "../redux/actions";
+import GroupItem from "./GroupItem";
+import Loader from "../components/Loader/Loader";
 
-                  <div class="event blue">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
+const page = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const { request } = useFetch();
+  const store = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const initial = React.useRef(false);
+  const dushanbaTables = store.groups.filter(
+    (elem) => elem.checkBoxValue.Dushanba
+  );
+  const shanbaTables = store.groups.filter((elem) => elem.checkBoxValue.Shanba);
+  const seshanbaTables = store.groups.filter(
+    (elem) => elem.checkBoxValue.Seshanba
+  );
+  const chorshanbaTables = store.groups.filter(
+    (elem) => elem.checkBoxValue.Chorshanba
+  );
+  const payshanbaTables = store.groups.filter(
+    (elem) => elem.checkBoxValue.Payshanba
+  );
+  const jumaTables = store.groups.filter((elem) => elem.checkBoxValue.Juma);
+  const yakshanbaTables = store.groups.filter(
+    (elem) => elem.checkBoxValue.Yakshanba
+  );
+  React.useEffect(() => {
+    dispatch(fetchingStudents());
+    request(`${process.env.NEXT_PUBLIC_URL}/tables`).then((res) => {
+      if (res) {
+        if (res) {
+          const tables = res.groups.filter(
+            (elem) => elem.month === localStorage.getItem("currentMonth")
+          );
+          if (tables.length !== 0) {
+            dispatch(fetchedGroups(tables[0].groups));
+            dispatch(loaded());
+          } else {
+            dispatch(fetchedGroups([]));
+            dispatch(loaded());
+          }
+        }
+      }
+    });
+
+    if (!initial.current) {
+      initial.current = true;
+
+      dispatch(fetchingStudents());
+      request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
+        res.students.forEach((elem) => {
+          if (elem.month == localStorage.getItem("currentMonth")) {
+            dispatch(fetchedStudents(elem.students));
+          }
+        });
+        dispatch(loaded());
+      });
+    }
+  }, []);
+
+  return (
+    <div className="pb-[70px]">
+      {store.loading === "loading" ? (
+        <Loader />
+      ) : (
+        <div>
+          <Box sx={{ "& > :not(style)": { m: 1 } }}>
+            <Fab
+              color="primary"
+              aria-label="add"
+              className="group__img"
+              onClick={handleOpen}
+            >
+              <AddIcon />
+            </Fab>
+          </Box>
+          <div className="flex mx-auto justify-center items-center pt-[20px] gap-[5px] flex-wrap w-[90%]">
+            {store.groups.map((elem) => (
+              <GroupItem key={elem ? elem.groupValue : 1} {...elem} />
+            ))}
+          </div>
+          <TablesAddModal handleClose={handleClose} open={open} />
+          <div className="mt-[70px]">
+            <div class="container ">
+              <div class="row">
+                <div class="col-12">
+                  <div class="row day-columns min-h-[90vh]">
+                    <div class="day-column">
+                      <div class="day-header">Dushanba</div>
+                      <div class="day-content">
+                        {store.groups.map((elem) => {
+                          const studentsCount = store.students.filter(
+                            (item) => item.group === elem.groupValue
+                          );
+                          if (elem.checkBoxValue.Dushanba) {
+                            return (
+                              <>
+                                <div
+                                  class="event"
+                                  style={{ backgroundColor: `${elem.color}` }}
+                                >
+                                  <span class="title flex justify-between">
+                                    {elem.groupValue}{" "}
+                                    <span className="room text-[12px] bg-slate-400 rounded px-[2px]">
+                                      {elem.room}
+                                    </span>
+                                  </span>
+                                  <footer className="flex flex-col gap-[5px] ">
+                                    <span className="text-[15px]">
+                                      {elem.lessonTimeValue}
+                                    </span>
+                                    <span className="text-[11px]">
+                                      {elem.departmentValue}
+                                    </span>
+                                    <span>
+                                      o`quvchilar {studentsCount.length} ta
+                                    </span>
+                                  </footer>
+                                </div>
+                              </>
+                            );
+                          }
+                        })}
+                      </div>
+                      <div class="day-footer">
+                        Guruhlar {dushanbaTables.length} ta
+                      </div>
+                    </div>
+                    <div class="day-column">
+                      <div class="day-header">Seshanba</div>
+                      <div class="day-content">
+                        {store.groups.map((elem) => {
+                          const studentsCount = store.students.filter(
+                            (item) => item.group === elem.groupValue
+                          );
+                          if (elem.checkBoxValue.Seshanba) {
+                            return (
+                              <>
+                                <div
+                                  class="event"
+                                  style={{ backgroundColor: `${elem.color}` }}
+                                >
+                                  <span class="title flex justify-between">
+                                    {elem.groupValue}{" "}
+                                    <span className="room text-[12px] bg-slate-400 rounded px-[2px]">
+                                      {elem.room}
+                                    </span>
+                                  </span>
+                                  <footer className="flex flex-col gap-[5px] ">
+                                    <span className="text-[15px]">
+                                      {elem.lessonTimeValue}
+                                    </span>
+                                    <span className="text-[11px]">
+                                      {elem.departmentValue}
+                                    </span>
+                                    <span>
+                                      o`quvchilar {studentsCount.length} ta
+                                    </span>
+                                  </footer>
+                                </div>
+                              </>
+                            );
+                          }
+                        })}
+                      </div>
+                      <div class="day-footer">
+                        Guruhlar {seshanbaTables.length} ta
+                      </div>
+                    </div>
+                    <div class="day-column">
+                      <div class="day-header">Chorshanba</div>
+                      <div class="day-content">
+                        {store.groups.map((elem) => {
+                          const studentsCount = store.students.filter(
+                            (item) => item.group === elem.groupValue
+                          );
+                          if (elem.checkBoxValue.Chorshanba) {
+                            return (
+                              <>
+                                <div
+                                  class="event"
+                                  style={{ backgroundColor: `${elem.color}` }}
+                                >
+                                  <span class="title flex justify-between">
+                                    {elem.groupValue}{" "}
+                                    <span className="room text-[12px] bg-slate-400 rounded px-[2px]">
+                                      {elem.room}
+                                    </span>
+                                  </span>
+                                  <footer className="flex flex-col gap-[5px] ">
+                                    <span className="text-[15px]">
+                                      {elem.lessonTimeValue}
+                                    </span>
+                                    <span className="text-[11px]">
+                                      {elem.departmentValue}
+                                    </span>
+                                    <span>
+                                      o`quvchilar {studentsCount.length} ta
+                                    </span>
+                                  </footer>
+                                </div>
+                              </>
+                            );
+                          }
+                        })}
+                      </div>
+                      <div class="day-footer">
+                        Guruhlar {chorshanbaTables.length} ta
+                      </div>
+                    </div>
+                    <div class="day-column">
+                      <div class="day-header">Payshanba</div>
+                      <div class="day-content">
+                        {store.groups.map((elem) => {
+                          const studentsCount = store.students.filter(
+                            (item) => item.group === elem.groupValue
+                          );
+                          if (elem.checkBoxValue.Payshanba) {
+                            return (
+                              <>
+                                <div
+                                  class="event"
+                                  style={{ backgroundColor: `${elem.color}` }}
+                                >
+                                  <span class="title flex justify-between">
+                                    {elem.groupValue}{" "}
+                                    <span className="room text-[12px] bg-slate-400 rounded px-[2px]">
+                                      {elem.room}
+                                    </span>
+                                  </span>
+                                  <footer className="flex flex-col gap-[5px] ">
+                                    <span className="text-[15px]">
+                                      {elem.lessonTimeValue}
+                                    </span>
+                                    <span className="text-[11px]">
+                                      {elem.departmentValue}
+                                    </span>
+                                    <span>
+                                      o`quvchilar {studentsCount.length} ta
+                                    </span>
+                                  </footer>
+                                </div>
+                              </>
+                            );
+                          }
+                        })}
+                      </div>
+                      <div class="day-footer">
+                        Guruhlar {payshanbaTables.length} ta
+                      </div>
+                    </div>
+                    <div class="day-column">
+                      <div class="day-header">Juma</div>
+                      <div class="day-content">
+                        {store.groups.map((elem) => {
+                          const studentsCount = store.students.filter(
+                            (item) => item.group === elem.groupValue
+                          );
+                          if (elem.checkBoxValue.Juma) {
+                            return (
+                              <>
+                                <div
+                                  class="event"
+                                  style={{ backgroundColor: `${elem.color}` }}
+                                >
+                                  <span class="title flex justify-between">
+                                    {elem.groupValue}{" "}
+                                    <span className="room text-[12px] bg-slate-400 rounded px-[2px]">
+                                      {elem.room}
+                                    </span>
+                                  </span>
+                                  <footer className="flex flex-col gap-[5px] ">
+                                    <span className="text-[15px]">
+                                      {elem.lessonTimeValue}
+                                    </span>
+                                    <span className="text-[11px]">
+                                      {elem.departmentValue}
+                                    </span>
+                                    <span>
+                                      o`quvchilar {studentsCount.length} ta
+                                    </span>
+                                  </footer>
+                                </div>
+                              </>
+                            );
+                          }
+                        })}
+                      </div>
+                      <div class="day-footer">
+                        Guruhlar {jumaTables.length} ta
+                      </div>
+                    </div>
+                    <div class="day-column">
+                      <div class="day-header">Shanba</div>
+                      <div class="day-content">
+                        {store.groups.map((elem) => {
+                          const studentsCount = store.students.filter(
+                            (item) => item.group === elem.groupValue
+                          );
+                          if (elem.checkBoxValue.Shanba) {
+                            return (
+                              <>
+                                <div
+                                  class="event"
+                                  style={{ backgroundColor: `${elem.color}` }}
+                                >
+                                  <span class="title flex justify-between">
+                                    {elem.groupValue}{" "}
+                                    <span className="room text-[12px] bg-slate-400 rounded px-[2px]">
+                                      {elem.room}
+                                    </span>
+                                  </span>
+                                  <footer className="flex flex-col gap-[5px] ">
+                                    <span className="text-[15px]">
+                                      {elem.lessonTimeValue}
+                                    </span>
+                                    <span className="text-[11px]">
+                                      {elem.departmentValue}
+                                    </span>
+                                    <span>
+                                      o`quvchilar {studentsCount.length} ta
+                                    </span>
+                                  </footer>
+                                </div>
+                              </>
+                            );
+                          }
+                        })}
+                      </div>
+                      <div class="day-footer">
+                        Guruhlar {shanbaTables.length} ta
+                      </div>
+                    </div>
+                    <div class="day-column">
+                      <div class="day-header">Yakshanba</div>
+                      <div class="day-content">
+                        {store.groups.map((elem) => {
+                          const studentsCount = store.students.filter(
+                            (item) => item.group === elem.groupValue
+                          );
+                          if (elem.checkBoxValue.Yakshanba) {
+                            return (
+                              <>
+                                <div
+                                  class="event"
+                                  style={{ backgroundColor: `${elem.color}` }}
+                                >
+                                  <span class="title flex justify-between">
+                                    {elem.groupValue}{" "}
+                                    <span className="room text-[12px] bg-slate-400 rounded px-[2px] flex items-center justify-center">
+                                      {elem.room}
+                                    </span>
+                                  </span>
+                                  <footer className="flex flex-col gap-[5px] ">
+                                    <span className="text-[15px]">
+                                      {elem.lessonTimeValue}
+                                    </span>
+                                    <span className="text-[11px]">
+                                      {elem.departmentValue}
+                                    </span>
+                                    <span>
+                                      o`quvchilar {studentsCount.length} ta
+                                    </span>
+                                  </footer>
+                                </div>
+                              </>
+                            );
+                          }
+                        })}
+                      </div>
+                      <div class="day-footer">
+                        Guruhlar {yakshanbaTables.length} ta
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="day-footer">2 Tasks</div>
-              </div>
-              <div class="day-column">
-                <div class="day-header">Wednesday</div>
-                <div class="day-content">
-                  <div class="event yellow">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event navy">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event red">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event blue">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                </div>
-                <div class="day-footer">4 tasks</div>
-              </div>
-              <div class="day-column">
-                <div class="day-header">Thursday</div>
-                <div class="day-content">
-                  <div class="event purple">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event navy">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event orange">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event red">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event blue">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                </div>
-                <div class="day-footer">5 Tasks</div>
-              </div>
-              <div class="day-column">
-                <div class="day-header">Friday</div>
-                <div class="day-content">
-                  <div class="event purple">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event navy">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event yellow">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event navy">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event red">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event blue">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event orange">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                </div>
-                <div class="day-footer">7 Tasks</div>
-              </div>
-              <div class="day-column">
-                <div class="day-header">Saturday</div>
-                <div class="day-content">
-                  <div class="event purple">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event navy">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event red">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event blue">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                </div>
-                <div class="day-footer">4 Tasks</div>
-              </div>
-              <div class="day-column">
-                <div class="day-header">Sunday</div>
-                <div class="day-content">
-                  <div class="event gray">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                  <div class="event blue">
-                    <span class="title">Event Name</span>
-                    <footer>
-                      <span>Prop1</span>
-                      <span>20:30</span>
-                    </footer>
-                  </div>
-                </div>
-                <div class="day-footer">2 Tasks</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

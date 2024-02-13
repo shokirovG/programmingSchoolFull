@@ -94,6 +94,12 @@ const spinnerDeleteLoaded = () => {
     type: "spinnerDeleteLoaded",
   };
 };
+const fetchedGroups = (groups) => {
+  return {
+    type: "fetchedGroups",
+    payload: groups,
+  };
+};
 export {
   auth,
   signIn,
@@ -112,4 +118,5 @@ export {
   fetchedWorkers,
   spinnerDeleteLoading,
   spinnerDeleteLoaded,
+  fetchedGroups,
 };

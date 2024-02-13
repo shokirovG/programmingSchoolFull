@@ -10,6 +10,7 @@ const initialState = {
   monthPrice: {},
   workers: [],
   spinnerDeleteLoader: "none",
+  groups: [],
 };
 
 function reducers(state = initialState, action) {
@@ -140,6 +141,12 @@ function reducers(state = initialState, action) {
       return {
         ...state,
         spinnerDeleteLoader: "loading",
+      };
+    }
+    case "fetchedGroups": {
+      return {
+        ...state,
+        groups: action.payload,
       };
     }
     default:
