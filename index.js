@@ -11,6 +11,7 @@ const Worker = require("./models/Worker");
 const mongoose = require("mongoose");
 const MajburiyCost = require("./models/MajburiyCost");
 const EskiOy = require("./models/EskiOy");
+const Table = require("./models/Table");
 dotEnv.config();
 app.use(express.json());
 app.use(
@@ -174,6 +175,22 @@ app.get("/workers", async (req, res) => {
   const workers = await Worker.find({});
 
   res.json({ workers });
+});
+app.get("/tables", async (req, res) => {
+  const groups = await Table.find({});
+  res.json({ groups });
+});
+app.post("/tables", async (req, res) => {
+  const findTable = await Table.find({ month: req.body.month });
+  if (findTable.length === 0) {
+    await Table.create({ month: req.body.month, groups: req.body.groups });
+  } else {
+    await Table.findOneAndUpdate(
+      { month: req.body.month },
+      { month: req.body.month, groups: req.body.groups }
+    );
+  }
+  res.json({ post: "table" });
 });
 app.use("/", (req, res) => {
   res.json({ name: "hello" });
