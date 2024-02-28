@@ -15,13 +15,13 @@ import { useRouter, useParams } from "next/navigation";
 import useFetch from "./hooks/useFetch";
 
 export default function Home() {
-  localStorage.setItem("currentPage", "hisobot");
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
   const initial = useRef(false);
   const initial2 = useRef(false);
   useEffect(() => {
+    localStorage.setItem("currentPage", "hisobot");
     if (!initial.current) {
       initial.current = true;
 
