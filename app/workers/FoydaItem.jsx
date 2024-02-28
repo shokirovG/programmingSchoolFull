@@ -11,7 +11,7 @@ const FoydaItem = () => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
-  // const [majburiyTotal, setMajburiyTotal] = useState(0);
+  const [showCard, setShowCard] = useState({ show: false });
   let majburiyTotal = 0;
   console.log(
     "a",
@@ -72,9 +72,18 @@ const FoydaItem = () => {
       dispatch(fetchedMajburiy(currentMonthChiqim));
     });
   }, []);
-  console.log(calcQarzPrice(store.students, "Dasturlash"), "obid");
+
   return (
-    <div className="workers__item  w-[25%] min-h-[200px] rounded-[15px] ">
+    <div
+      className={`workers__item  w-[25%]  ${
+        showCard.show ? "h-[260px]" : "h-[100px]"
+      } rounded-[15px]`}
+      onClick={() => {
+        setShowCard({
+          show: !showCard.show,
+        });
+      }}
+    >
       <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] items-center px-[10px] gap-[15px]">
         <span className="text-[22px] ">Markaz</span>{" "}
         <span>

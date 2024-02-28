@@ -96,6 +96,9 @@ const page = () => {
               <AddIcon />
             </Fab>
           </Box>
+          <div className="absolute top-[33px] left-[120px] text-[22px] rounded bg-slate-300 px-[7px]">
+            Guruhlar soni {store.groups.length}
+          </div>
           <div className="flex mx-auto justify-center items-center pt-[20px] gap-[5px] flex-wrap w-[90%]">
             {store.groups.map((elem) => (
               <GroupItem key={elem ? elem.groupValue : 1} {...elem} />

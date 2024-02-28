@@ -17,8 +17,6 @@ function SelectMonth() {
   const { request } = useFetch();
 
   const changeMonth = (e) => {
-    console.log(e.target.value);
-    console.log(store.workers);
     dispatch(fetchingStudents());
     request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
       const workers = res.workers.filter(

@@ -11,8 +11,11 @@ import {
   loaded,
   monthPriceFetched,
 } from "./redux/actions";
+import { useRouter, useParams } from "next/navigation";
 import useFetch from "./hooks/useFetch";
+
 export default function Home() {
+  localStorage.setItem("currentPage", "hisobot");
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();

@@ -26,8 +26,9 @@ import {
 } from "../redux/actions";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Zero from "../hooks/zero";
+
 /* eslint-disable */
-const page = () => {
+const page = ({ params }) => {
   const [group, setGroup] = useState("");
   const [department, setDepartment] = useState("");
   const [name, setName] = useState("");
@@ -35,7 +36,8 @@ const page = () => {
   const [foiz, setFoiz] = useState(0);
   const [students, setStudents] = useState([]);
   const { request } = useFetch();
-  const params = useParams();
+
+  console.log(params);
   const dispatch = useDispatch();
   const store = useSelector((state) => state);
   const currentMonth = store.currentMonth;

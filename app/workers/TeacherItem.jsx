@@ -17,6 +17,7 @@ const TeacherItem = ({
 }) => {
   let avans = 0;
   const [show, setShow] = useState(false);
+  const [showCard, setShowCard] = useState({ idx: "", show: false });
   const store = useSelector((state) => state);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -57,7 +58,17 @@ const TeacherItem = ({
 
   return (
     <>
-      <div className="workers__item  w-[25%] min-h-[200px] rounded-[15px] ">
+      <div
+        className={`workers__item  w-[25%] ${
+          showCard.show && id === showCard.idx ? "h-[260px]" : "h-[100px]"
+        }  rounded-[15px] `}
+        onClick={() => {
+          setShowCard({
+            show: !showCard.show,
+            idx: id,
+          });
+        }}
+      >
         <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] justify-center items-center px-[10px] gap-[20px]">
           <div className="flex flex-col text-center gap-[5px]">
             <span className="text-[25px] " onClick={handleShow}>

@@ -83,7 +83,7 @@ const Workers = () => {
   }, [store]);
 
   return (
-    <div>
+    <div className="workers__page">
       {store.loading === "loading" ? (
         <Loader />
       ) : (
