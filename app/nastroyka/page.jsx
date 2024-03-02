@@ -32,7 +32,8 @@ function page() {
   console.log(monthClone_1, monthClone_2);
   const monthCloneFn = () => {
     let setCurrentStudents = [];
-
+    let setCurrentWorkers = [];
+    let setCurrentGroups = [];
     dispatch(spinnerLoading());
     request(`${process.env.NEXT_PUBLIC_URL}/students`)
       .then((res) => {
@@ -47,7 +48,7 @@ function page() {
           foiz: 0,
           price: 0,
         }));
-        console.log("newStudents", newStudents);
+
         request(
           `${process.env.NEXT_PUBLIC_URL}/students`,
           "POST",
@@ -66,6 +67,65 @@ function page() {
 
       .catch((e) => {
         toast.error("ma`lumot olishda xatolik yuz berdi!");
+      });
+    request(`${process.env.NEXT_PUBLIC_URL}/workers`)
+      .then((res) => {
+        console.log(res);
+        res.workers.forEach((elem) => {
+          if (elem.month == monthClone_1) {
+            setCurrentWorkers = elem.workers;
+            // dispatch(fetchedStudents(elem.students));
+          }
+        });
+
+        request(
+          `${process.env.NEXT_PUBLIC_URL}/workers`,
+          "POST",
+          JSON.stringify({ month: monthClone_2, workers: setCurrentWorkers })
+        )
+          .then((res) => {
+            handleClose();
+          })
+          .catch((e) => {
+            console.log(e);
+            toast.error(
+              "ishchilarni ma`lumotini bazaga qo'shishda xatolik yuz berdi!"
+            );
+          });
+      })
+
+      .catch((e) => {
+        toast.error("ishchilarni ma`lumotini olishda xatolik yuz berdi!");
+      });
+
+    request(`${process.env.NEXT_PUBLIC_URL}/tables`)
+      .then((res) => {
+        console.log(res);
+        res.groups.forEach((elem) => {
+          if (elem.month == monthClone_1) {
+            setCurrentGroups = elem.groups;
+            // dispatch(fetchedStudents(elem.students));
+          }
+        });
+
+        request(
+          `${process.env.NEXT_PUBLIC_URL}/tables`,
+          "POST",
+          JSON.stringify({ month: monthClone_2, groups: setCurrentGroups })
+        )
+          .then((res) => {
+            handleClose();
+          })
+          .catch((e) => {
+            console.log(e);
+            toast.error(
+              "ishchilarni ma`lumotini bazaga qo'shishda xatolik yuz berdi!"
+            );
+          });
+      })
+
+      .catch((e) => {
+        toast.error("ishchilarni ma`lumotini olishda xatolik yuz berdi!");
       });
   };
   return (
