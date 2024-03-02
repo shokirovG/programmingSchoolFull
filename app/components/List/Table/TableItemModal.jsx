@@ -145,17 +145,9 @@ const TableItemModal = ({
                 <option selected disabled>
                   Guruh
                 </option>
-                <option value="Front-5">Front-5</option>
-                <option value="Front-8">Front-8</option>
-                <option value="Front-10">Front-10</option>
-                <option value="Front-12">Front-12</option>
-                <option value="Front-13">Front-13</option>
-                <option value="K.S-1">K.S-1</option>
-                <option value="K.S-2">K.S-2</option>
-                <option value="Tibbiyot-1">Tibbiyot-1</option>
-                <option value="Ingliz-tili-1">Ingliz-tili-1</option>
-                <option value="Ingliz-tili-2">Ingliz-tili-2</option>
-                <option value="Scretch-1">Scretch-1</option>
+                {store.groups.map((elem) => (
+                  <option value={elem.groupValue}>{elem.groupValue}</option>
+                ))}
               </select>
 
               <select

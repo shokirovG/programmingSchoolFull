@@ -48,7 +48,7 @@ const Kirim = (props) => {
     months[store.currentMonth.slice(0, store.currentMonth.length - 5) - 1]
   );
   const [departmentValue, setDepartmentValue] = useState("Kafedra");
-
+  console.log("groups", store.groups);
   const studentsFilter = store.students.filter((el) => el.group === groupValue);
   const [eskiTolov, setEskiTolov] = useState(0);
   const dispatch = useDispatch();
@@ -238,26 +238,9 @@ const Kirim = (props) => {
                   <option selected disabled>
                     Guruh
                   </option>
-                  <option value="Front-5">Front-5</option>
-                  <option value="Front-8">Front-8</option>
-                  <option value="Front-10">Front-10</option>
-                  <option value="Front-12">Front-12</option>
-                  <option value="Front-13">Front-13</option>
-                  <option value="Front-14">Front-14</option>
-                  <option value="K.S-1">K.S-1</option>
-                  <option value="K.S-2">K.S-2</option>
-                  <option value="K.S-3">K.S-3</option>
-                  <option value="K.S-4">K.S-4</option>
-                  <option value="K.S-5">K.S-5</option>
-                  <option value="K.S-6">K.S-6</option>
-                  <option value="Tibbiyot-1">Tibbiyot-1</option>
-                  <option value="Tibbiyot-2">Tibbiyot-2</option>
-                  <option value="Tibbiyot-3">Tibbiyot-3</option>
-                  <option value="Ingliz-tili-1">Ingliz-tili-1</option>
-                  <option value="Ingliz-tili-2">Ingliz-tili-2</option>
-                  <option value="Scretch-1">Scretch-1</option>
-                  <option value="Scretch-2">Scretch-2</option>
-                  <option value="Markaz-1">Markaz-1</option>
+                  {store.groups.map((elem) => (
+                    <option value={elem.groupValue}>{elem.groupValue}</option>
+                  ))}
                 </select>
                 <select
                   className="form-select"
