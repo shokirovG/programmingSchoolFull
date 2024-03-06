@@ -69,9 +69,9 @@ const TeacherItem = ({
           });
         }}
       >
-        <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] justify-center items-center px-[10px] gap-[20px]">
+        <div className="border-b-[1px] bg-slate-200 py-[25px]  rounded-[15px] border-black-200 flex h-[100px] justify-center items-center px-[10px] gap-[20px] ">
           <div className="flex flex-col text-center gap-[5px]">
-            <span className="text-[25px] " onClick={handleShow}>
+            <span className="text-[16px] " onClick={handleShow}>
               {teacher}
             </span>
             <span className="text-[10px] text-cyan-500">{prioritet}</span>
@@ -80,7 +80,7 @@ const TeacherItem = ({
             {group.map((elem) => (
               <span
                 key={elem}
-                className="bg-emerald-400 text-white p-[3px] rounded-[5px] text-[14px] text-"
+                className="bg-emerald-400 text-white p-[3px] rounded-[5px] text-[11px] text-"
               >
                 {elem}
               </span>

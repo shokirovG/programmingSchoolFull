@@ -7,6 +7,7 @@ import numberTrim from "@/app/hooks/number";
 import { calcPrice } from "@/app/hooks/calcPrice";
 import StudentRemoveModal from "../Students/StudentRemoveModal";
 import moment from "moment";
+import { render } from "react-dom";
 const StudentsItem = (props) => {
   const [show, setShow] = useState(false);
   const {
@@ -33,7 +34,11 @@ const StudentsItem = (props) => {
           calcPrice(price, foiz, department) == 0
             ? "active__student"
             : "danger__student"
-        } ${date2 < studentDate ? "norm__student" : ""}`}
+        } ${
+          date2 < studentDate && calcPrice(price, foiz, department) !== 0
+            ? "norm__student"
+            : ""
+        }`}
       >
         {name}
       </td>
