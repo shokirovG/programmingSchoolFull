@@ -6,6 +6,10 @@ import { toast } from "react-toastify";
 import { fetchedStudents, hisobotFetched, loaded } from "@/app/redux/actions";
 import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
 import useFetch from "@/app/hooks/useFetch";
+import calcClickKirim from "@/app/hooks/calcClickKirim";
+import calcNaqdChiqim from "@/app/hooks/calcNaqdChiqim";
+import calcNaqdKirim from "@/app/hooks/calcNaqdKirim";
+import calcClickChiqim from "@/app/hooks/calcClickChiqim";
 const TableItemModal = ({
   show,
   handleClose,
@@ -31,8 +35,7 @@ const TableItemModal = ({
   const dispatch = useDispatch();
   const changeItem = (e) => {
     e.preventDefault();
-    handleClose();
-    console.log(department);
+
     const newKirim = {
       id,
       department: departmentValue,
@@ -45,6 +48,8 @@ const TableItemModal = ({
       priceMonth: oyValue,
       foiz,
     };
+    const naqdTolov = tolovTypeValue == "Naqd" ? Number(tolovValue) : 0;
+    const clickTolov = tolovTypeValue == "Click" ? Number(tolovValue) : 0;
     const newHisoblar = store.hisobot[0].hisoblar.map((elem) => {
       if (elem.kun == localStorage.getItem("currentDay")) {
         return {
@@ -56,6 +61,18 @@ const TableItemModal = ({
               newKirim,
             ],
           },
+          balansNaqd: Number(
+            calcNaqdKirim(
+              [...elem.hisobot.kirim.filter((el) => el.id !== id), newKirim],
+              "Naqd"
+            ) - calcNaqdChiqim(elem.hisobot.chiqim, "Naqd")
+          ),
+          balansClick: Number(
+            calcClickKirim(
+              [...elem.hisobot.kirim.filter((el) => el.id !== id), newKirim],
+              "Click"
+            ) - calcClickChiqim(elem.hisobot.chiqim, "Click")
+          ),
         };
       } else {
         return elem;
@@ -109,6 +126,7 @@ const TableItemModal = ({
     ).then(() => {
       toast.info("student to`lov o`zgardi!");
     });
+    handleClose();
   };
   return (
     <>

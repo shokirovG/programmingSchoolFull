@@ -51,7 +51,7 @@ function Table(props) {
         </thead>
         <tbody>
           {props.hisobot.chiqim.map((el, index) => (
-            <ChiqimItem {...el} key={index} />
+            <ChiqimItem {...el} key={el.id} />
           ))}
         </tbody>
       </table>

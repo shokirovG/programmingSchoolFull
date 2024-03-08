@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import React from "react";
 
-const RemoveItem = ({kun}) => {
+const RemoveItem = ({ kun }) => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
@@ -38,7 +38,7 @@ const RemoveItem = ({kun}) => {
   };
   return (
     <div>
-      <button
+      {/* <button
         title="hisobotni o`chirish"
         type="button"
         className="btn "
@@ -49,7 +49,7 @@ const RemoveItem = ({kun}) => {
         }}
       >
         <Image src="/remove.png" alt="#" width="30" height="15" />
-      </button>
+      </button> */}
       <div
         className="modal fade"
         id="exampleModalRemove"

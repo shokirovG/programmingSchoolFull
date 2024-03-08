@@ -37,12 +37,12 @@ const TableItem = (props) => {
         <td>{priceMonth}</td>
         <td>{priceType}</td>
       </tr>
-      {/* <TableItemModal
+      <TableItemModal
         {...props}
         show={show}
         handleClose={handleClose}
         handleShow={handleShow}
-      /> */}
+      />
     </>
   );
 };

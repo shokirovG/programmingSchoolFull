@@ -162,14 +162,9 @@ const Kirim = (props) => {
       setTolovTypeValue("Naqd");
 
       setEskiTolov(0);
-
-      //tableitem ga qarash kerak
     } else {
       setAddValid(true);
-      console.log(store.students);
     }
-
-    // studentslardagi student ni ham to`lovini o`zgartirish kerak bunga qo`shib
   };
 
   return (
