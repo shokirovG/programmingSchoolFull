@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { fetchedStudents, hisobotFetched, loaded } from "@/app/redux/actions";
+import {
+  fetchedStudents,
+  hisobotFetched,
+  loaded,
+  spinnerLoaded,
+  spinnerLoading,
+} from "@/app/redux/actions";
 import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
 import useFetch from "@/app/hooks/useFetch";
 import calcClickKirim from "@/app/hooks/calcClickKirim";
 import calcNaqdChiqim from "@/app/hooks/calcNaqdChiqim";
 import calcNaqdKirim from "@/app/hooks/calcNaqdKirim";
 import calcClickChiqim from "@/app/hooks/calcClickChiqim";
+import Spinner from "../../Students/Spinner";
 const TableItemModal = ({
   show,
   handleClose,
@@ -35,7 +42,7 @@ const TableItemModal = ({
   const dispatch = useDispatch();
   const changeItem = (e) => {
     e.preventDefault();
-
+    dispatch(spinnerLoading());
     const newKirim = {
       id,
       department: departmentValue,
@@ -50,16 +57,16 @@ const TableItemModal = ({
     };
     const naqdTolov = tolovTypeValue == "Naqd" ? Number(tolovValue) : 0;
     const clickTolov = tolovTypeValue == "Click" ? Number(tolovValue) : 0;
+
     const newHisoblar = store.hisobot[0].hisoblar.map((elem) => {
       if (elem.kun == localStorage.getItem("currentDay")) {
+        const removeKirim = elem.hisobot.kirim.filter((el) => el.id !== id);
+        console.log("removeKirim", removeKirim);
         return {
           ...elem,
           hisobot: {
             ...elem.hisobot,
-            kirim: [
-              ...elem.hisobot.kirim.filter((el) => el.id !== id),
-              newKirim,
-            ],
+            kirim: [...removeKirim, newKirim],
           },
           balansNaqd: Number(
             calcNaqdKirim(
@@ -78,6 +85,7 @@ const TableItemModal = ({
         return elem;
       }
     });
+    console.log("newHisoblar", newHisoblar);
     request(
       `${process.env.NEXT_PUBLIC_URL}/hisobot`,
       "POST",
@@ -97,17 +105,17 @@ const TableItemModal = ({
       request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
         res.students.forEach((elem) => {
           if (elem.month == localStorage.getItem("currentMonth")) {
-            console.log("dispatch ishladi", elem.students);
             dispatch(fetchedStudents(elem.students));
           }
         });
         dispatch(loaded());
       });
-      toast.success("bazaga qo`shildi!");
+      dispatch(spinnerLoaded());
+      toast.success("baza o`zgardi!");
     });
 
     const newStudents = store.students.map((el) => {
-      if (el.name === studentValue) {
+      if (el.name == student) {
         return {
           ...el,
           price: Number(el.price) - price + Number(tolovValue),
@@ -116,6 +124,7 @@ const TableItemModal = ({
         return el;
       }
     });
+
     request(
       `${process.env.NEXT_PUBLIC_URL}/students`,
       "PUT",
@@ -128,6 +137,7 @@ const TableItemModal = ({
     });
     handleClose();
   };
+
   return (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -230,9 +240,13 @@ const TableItemModal = ({
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={changeItem}>
-            Saqlash
-          </Button>
+          {store.spinnerLoader === "loading" ? (
+            <Spinner />
+          ) : (
+            <Button variant="success" onClick={changeItem}>
+              Saqlash
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>

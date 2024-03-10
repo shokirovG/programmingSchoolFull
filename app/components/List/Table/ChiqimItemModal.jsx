@@ -1,7 +1,11 @@
 //eslint-disable-line
 // eslint-disable-next-line no-use-before-define
 import useFetch from "@/app/hooks/useFetch";
-import { hisobotFetched } from "@/app/redux/actions";
+import {
+  hisobotFetched,
+  spinnerDeleteLoaded,
+  spinnerDeleteLoading,
+} from "@/app/redux/actions";
 
 import {
   useDispatch,
@@ -16,6 +20,7 @@ import calcNaqdChiqim from "@/app/hooks/calcNaqdChiqim";
 import calcClickKirim from "@/app/hooks/calcClickKirim";
 import calcClickChiqim from "@/app/hooks/calcClickChiqim";
 import { v4 } from "uuid";
+import Spinner from "../../Students/Spinner";
 const ChiqimItemModal = ({
   show,
   handleClose,
@@ -39,6 +44,7 @@ const ChiqimItemModal = ({
   const { request } = useFetch();
   console.log("id", id);
   const changeChiqimItem = () => {
+    dispatch(spinnerDeleteLoading());
     const newCost = {
       id: id === undefined ? v4() : id,
       costType: costTypeS,
@@ -77,7 +83,7 @@ const ChiqimItemModal = ({
         return elem;
       }
     });
-    console.log("newHisoblar", newHisoblar);
+
     request(
       `${process.env.NEXT_PUBLIC_URL}/hisobot`,
       "POST",
@@ -98,9 +104,10 @@ const ChiqimItemModal = ({
       // setCostValue("");
       // setInfoValue("");
       // setTolovType("");
+      dispatch(spinnerDeleteLoaded());
+      handleClose();
       toast.info("yangilandi!");
     });
-    handleClose();
   };
   return (
     <Modal show={show} onHide={handleClose}>
@@ -189,9 +196,13 @@ const ChiqimItemModal = ({
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={changeChiqimItem}>
-          Saqlash
-        </Button>
+        {store.spinnerDeleteLoader == "loading" ? (
+          <Spinner />
+        ) : (
+          <Button variant="primary" onClick={changeChiqimItem}>
+            Saqlash
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

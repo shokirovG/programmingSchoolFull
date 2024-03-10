@@ -5,7 +5,10 @@ const ChiqimItem = (props) => {
   const [show, setShow] = useState(false);
   const { costType, costValue, infoValue, tolovType, userAvans, id } = props;
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    localStorage.setItem("currentDay", props.kun);
+    setShow(true);
+  };
 
   return (
     <>
