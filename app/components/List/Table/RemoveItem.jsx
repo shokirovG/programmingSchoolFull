@@ -38,7 +38,7 @@ const RemoveItem = ({ kun }) => {
   };
   return (
     <div>
-      {/* <button
+      <button
         title="hisobotni o`chirish"
         type="button"
         className="btn "
@@ -49,7 +49,7 @@ const RemoveItem = ({ kun }) => {
         }}
       >
         <Image src="/remove.png" alt="#" width="30" height="15" />
-      </button> */}
+      </button>
       <div
         className="modal fade"
         id="exampleModalRemove"
