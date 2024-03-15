@@ -57,7 +57,7 @@ const StudentsItem = (props) => {
           show={show}
           handleShow={handleShow}
         />
-        <StudentRemoveModal name={name} group={group} id={id} />
+        <StudentRemoveModal name={name} group={group} id={id} price={price} />
       </td>
     </tr>
   );

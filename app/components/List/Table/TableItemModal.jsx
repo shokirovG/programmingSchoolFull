@@ -40,21 +40,27 @@ const TableItemModal = ({
   const store = useSelector((state) => state);
   const { request } = useFetch();
   const dispatch = useDispatch();
+  console.log("priceStudent", priceStudent);
   const changeItem = (e) => {
     e.preventDefault();
     dispatch(spinnerLoading());
+    const findStudentTotalPrice = store.students.filter(
+      (el) => el.name === student
+    );
+
     const newKirim = {
       id,
       department: departmentValue,
       group: groupValue,
       student: studentValue,
 
-      priceStudent: priceStudent - price + Number(tolovValue),
+      priceStudent: findStudentTotalPrice[0].price - price + Number(tolovValue),
       price: tolovValue,
       priceType: tolovTypeValue,
       priceMonth: oyValue,
       foiz,
     };
+    console.log("newKirim", newKirim);
     const naqdTolov = tolovTypeValue == "Naqd" ? Number(tolovValue) : 0;
     const clickTolov = tolovTypeValue == "Click" ? Number(tolovValue) : 0;
 
@@ -118,7 +124,7 @@ const TableItemModal = ({
       if (el.name == student) {
         return {
           ...el,
-          price: Number(el.price) - price + Number(tolovValue),
+          price: findStudentTotalPrice[0].price - price + Number(tolovValue),
         };
       } else {
         return el;
@@ -134,8 +140,8 @@ const TableItemModal = ({
       })
     ).then(() => {
       toast.info("student to`lov o`zgardi!");
+      handleClose();
     });
-    handleClose();
   };
 
   return (

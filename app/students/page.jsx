@@ -50,84 +50,52 @@ const page = ({ params }) => {
   const [createdStudentDate, setCreatedStudentDate] = useState(initialDate);
   const initial = useRef(false);
   const [filterDepartment, setFilterDepartment] = useState("Barcha kafedralar");
-  console.log("groups", store.groups);
-  const groupsStore = [
-    {
-      department: "Dasturlash",
-      groups: [
-        "Front-5",
-        "Front-8",
-        "Front-10",
-        "Front-12",
-        "Front-13",
-        "Front-14",
-      ],
-    },
-    {
-      department: "K.S",
-      groups: [
-        "K.S-1",
-        "K.S-2",
-        "K.S-3",
-        "K.S-4",
-        "K.S-5",
-        "K.S-6",
-        "Tibbiyot-1",
-        "Tibbiyot-2",
-        "Tibbiyot-3",
-      ],
-    },
-    {
-      department: "Scretch",
-      groups: ["Scretch-1", "Scretch-2"],
-    },
-    {
-      department: "Ingliz-tili",
-      groups: ["Ingliz-tili-1", "Ingliz-tili-2"],
-    },
-    {
-      department: "Markaz",
-      groups: ["Markaz-1"],
-    },
-  ];
+  const [classStudent, setClassStudent] = useState(false);
+
   const [filterGroupsStore, setFilterGroupsStore] = useState([]);
 
   const addStudentForm = (e) => {
     e.preventDefault();
-    dispatch(spinnerLoading());
-    console.log("form mount");
-    // dispatch(fetchingStudents());
-    if (group !== "" && department !== "") {
-      const newStudent = {
-        group,
-        department,
-        name,
-        price: 0,
-        id: v4(),
-        foiz,
-        created: moment(createdStudentDate).format("L"),
-      };
-      console.log([...store.students, newStudent]);
-      request(
-        `${process.env.NEXT_PUBLIC_URL}/add`,
-        "POST",
-        JSON.stringify({
-          month: localStorage.getItem("currentMonth"),
-          students: [...store.students, newStudent],
-        })
-      )
-        .then((res) => console.log(res))
-        .then(() => {
-          setName("");
-          setFoiz(0);
-          toast.success("asdsad");
-          console.log("yangi o'quvchi api ga ketdi");
-          dispatch(addStudent(newStudent));
-          dispatch(spinnerLoaded());
-        });
+    const findStudent = store.students.findIndex(
+      (el) => el.name.trim() == name.trim()
+    );
+    if (findStudent > 0) {
+      setClassStudent(true);
     } else {
-      dispatch(spinnerLoaded());
-      setValidText(true);
+      dispatch(spinnerLoading());
+      if (group !== "" && department !== "") {
+        const newStudent = {
+          group,
+          department,
+          name,
+          price: 0,
+          id: v4(),
+          foiz,
+          created: moment(createdStudentDate).format("L"),
+        };
+        console.log([...store.students, newStudent]);
+        request(
+          `${process.env.NEXT_PUBLIC_URL}/add`,
+          "POST",
+          JSON.stringify({
+            month: localStorage.getItem("currentMonth"),
+            students: [...store.students, newStudent],
+          })
+        )
+          .then((res) => console.log(res))
+          .then(() => {
+            setName("");
+            setFoiz(0);
+            toast.success("asdsad");
+            console.log("yangi o'quvchi api ga ketdi");
+            dispatch(addStudent(newStudent));
+            dispatch(spinnerLoaded());
+          });
+      } else {
+        dispatch(spinnerLoaded());
+        setValidText(true);
+      }
+      setClassStudent(false);
     }
   };
 
@@ -381,7 +349,9 @@ const page = ({ params }) => {
                     </select>
                     <input
                       required
-                      className="form-control"
+                      className={`form-control ${
+                        classStudent ? "studentRed" : ""
+                      }`}
                       type="text"
                       placeholder="o'quvchi F.I.SH"
                       aria-label="default input example"

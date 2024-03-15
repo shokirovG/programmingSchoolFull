@@ -106,6 +106,7 @@ const ChiqimItemModal = ({
       // setTolovType("");
       dispatch(spinnerDeleteLoaded());
       handleClose();
+
       toast.info("yangilandi!");
     });
   };
