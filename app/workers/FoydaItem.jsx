@@ -89,11 +89,11 @@ const FoydaItem = ({chiqimlar}) => {
       <div className="border-b-[1px] bg-slate-200 py-[8px]  rounded-[15px] border-black-200 flex h-[100px] items-center px-[10px] gap-[15px]">
         <span className="text-[22px] ">Markaz</span>{" "}
         <span className={`${balans1(store.students,store.workers)>=0 ? 'text-green-500':'text-red-500'}`}>
-            {numberTrim(balans1(store.students,store.workers,chiqimlar)) }
+            {numberTrim(Math.floor(balans1(store.students,store.workers,chiqimlar)) ) }
         </span>
         /
         <span className={`${balans2(store.students,store.workers,chiqimlar,store.majburiyChiqimlar) >=0 ? 'text-green-500':'text-red-500'}`}>
-          {numberTrim(balans2(store.students,store.workers,chiqimlar,store.majburiyChiqimlar))}
+          {numberTrim(Math.floor(balans2(store.students,store.workers,chiqimlar,store.majburiyChiqimlar)) )}
         </span>
       </div>
       <div className="p-[20px]">
@@ -102,7 +102,7 @@ const FoydaItem = ({chiqimlar}) => {
             Foyda
           </span>
           <span className=" ">
-                {numberTrim(foyda(store.students,store.workers,chiqimlar,store.majburiyChiqimlar)) }  so`m
+                {numberTrim(Math.floor(foyda(store.students,store.workers,chiqimlar,store.majburiyChiqimlar)) ) }  so`m
           </span>
          
         </p>
@@ -131,14 +131,14 @@ const FoydaItem = ({chiqimlar}) => {
             Qoldiq
           </span>
          <span className="text-green-500">
-          +{numberTrim(foyda(store.students,store.workers,chiqimlar,store.majburiyChiqimlar) -  ( calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
+          +{numberTrim(Math.floor(foyda(store.students,store.workers,chiqimlar,store.majburiyChiqimlar) -  ( calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
                 calcCategoryPrice(chiqimlar, "Markaz", "Click")+
                 calcCategoryPrice(chiqimlar, "Arenda", "Click")+
                 calcCategoryPrice(chiqimlar, "Arenda", "Naqd")+
                 calcCategoryPrice(chiqimlar, "Qarz", "Naqd")+
                 calcCategoryPrice(chiqimlar, "Qarz", "Click")+
                 calcCategoryPrice(chiqimlar, "Kredit", "Naqd")+
-                calcCategoryPrice(chiqimlar, "Kredit", "Click"))) }  so`m
+                calcCategoryPrice(chiqimlar, "Kredit", "Click"))) ) }  so`m
          </span>
          
         </p>
