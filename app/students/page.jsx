@@ -276,8 +276,8 @@ const page = ({ params }) => {
                     <th className="th_6">Qarz</th>
                     <th className="th_7">Chegirma</th>
 
-                    <th className="th_9">Kelgan sana</th>
-                    <th className="th_8">To`lov sana</th>
+                    <th className="th_9">Kelgan</th>
+                    <th className="th_8">To`lov</th>
                     <th className="th_10"></th>
                   </tr>
                 </thead>
