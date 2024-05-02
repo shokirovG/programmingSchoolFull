@@ -83,6 +83,9 @@ td {
   font-size: 14px !important;
   padding: 8px;
   text-align: center;
+  a {
+    font-size: 12px !important;
+  }
 }
 /* even and odd color */
 .table__students tbody tr:nth-child(odd) {
