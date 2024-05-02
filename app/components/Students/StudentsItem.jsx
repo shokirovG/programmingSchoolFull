@@ -19,15 +19,16 @@ const StudentsItem = (props) => {
     price = 0,
     foiz,
     created,
+    priceDate,
   } = props;
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const date = new Date();
-  const studentDate = +moment(created).format("DD/MM/YYYY").slice(0, 2);
+  const studentDate = +moment(priceDate).format("DD/MM/YYYY").slice(0, 2);
   const date2 = +moment(date).format("DD/MM/YYYY").slice(0, 2);
   console.log(date2 < studentDate);
   return (
-    <tr key={id} className={`px-[20px] text-center h-[54px] `}>
+    <tr key={id} className={`px-[20px] text-center h-[54px]  `}>
       <td>{index + 1}</td>
       <td
         className={`${
@@ -48,8 +49,23 @@ const StudentsItem = (props) => {
       <td>{numberTrim(calcPrice(price, foiz, department))} so`m</td>
 
       <td>{numberTrim(foiz)} so`m</td>
+
       <td>{moment(created).format("DD/MM/YYYY")}</td>
-      <td className="flex  justify-around items-center h-[54px] gap-[15px]">
+      <td
+        className={`${
+          calcPrice(price, foiz, department) == 0
+            ? "active__student"
+            : "danger__student"
+        } ${
+          date2 < studentDate && calcPrice(price, foiz, department) !== 0
+            ? "norm__student"
+            : ""
+        }`}
+      >
+        {moment(priceDate).format("DD/MM/YYYY")}
+      </td>
+
+      <td className="flex  justify-around items-center h-[54px] gap-[10px] px-0">
         <StudentChangeModal
           key={id}
           {...props}

@@ -47,7 +47,7 @@ const StudentChangeModal = ({
       elem.setAttribute("selected", false);
     }
   });
-
+  const [priceStudentDate, setPriceStudentDate] = useState(initialDate);
   const changeStudent = (e) => {
     e.preventDefault();
     dispatch(spinnerLoading());
@@ -60,6 +60,7 @@ const StudentChangeModal = ({
           department: departmentValue,
           group: groupValue,
           created: moment(createdStudentDate).format("L"),
+          priceDate: moment(priceStudentDate).format("L"),
         };
       } else {
         return el;
@@ -138,6 +139,8 @@ const StudentChangeModal = ({
               <option value="Ingliz-tili" className="optionDepartment">
                 Ingliz-tili
               </option>
+              <option value="Python">Python</option>
+              <option value="Grafik-Dizayn">Grafik-Dizayn</option>
             </select>
             <input
               required
@@ -163,14 +166,28 @@ const StudentChangeModal = ({
                 setFoizValue(Number(e.target.value));
               }}
             />
-            <input
-              type="date"
-              className="w-[150px] mx-[auto] p-[5px] bg-white text-black border-[1px] border-[black]"
-              value={createdStudentDate}
-              onChange={(e) => {
-                setCreatedStudentDate(e.target.value);
-              }}
-            />
+            <div className="date__create">
+              <label>Guruhga qo`shilgan sanasi:</label>
+              <input
+                type="date"
+                className="w-[150px] mx-[auto] p-[5px] bg-white text-black border-[1px] border-[black]"
+                value={createdStudentDate}
+                onChange={(e) => {
+                  setCreatedStudentDate(e.target.value);
+                }}
+              />
+            </div>
+            <div className="date__create">
+              <label>To`lov sanasi:</label>
+              <input
+                type="date"
+                className="w-[150px] mx-[auto] p-[5px] bg-white text-black border-[1px] border-[black]"
+                value={priceStudentDate}
+                onChange={(e) => {
+                  setPriceStudentDate(e.target.value);
+                }}
+              />
+            </div>
             {store.spinnerLoader === "loading" ? (
               <Spinner />
             ) : (
