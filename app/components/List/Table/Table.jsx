@@ -20,7 +20,7 @@ function Table(props) {
 
   return (
     <>
-      <table className="table table-striped table-hover p-[20px]">
+      <table className="table table-striped table-hover p-[20px] kirim_table">
         <thead>
           <tr>
             <th>Guruh</th>
@@ -40,7 +40,7 @@ function Table(props) {
       <div className="bg-blue-500 text-center text-white text-[20px] py-[5px] mt-[30px]">
         Harajatlar
       </div>
-      <table className="table table-striped table-hover p-[0px] mt-[0]">
+      <table className="table table-striped table-hover p-[0px] mt-[0] chiqim_table">
         <thead>
           <tr>
             <th>Turi</th>
