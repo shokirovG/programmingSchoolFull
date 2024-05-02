@@ -26,6 +26,7 @@ const StudentChangeModal = ({
   show,
   handleShow,
   created,
+  priceDate,
 }) => {
   const [nameValue, setNameValue] = useState(name);
   const [foizValue, setFoizValue] = useState(foiz);
@@ -36,9 +37,13 @@ const StudentChangeModal = ({
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const date = new Date(created);
+  const datePrice = new Date(priceDate);
   const initialDate = `${date.getFullYear()}-${Zero(
     date.getMonth() + 1
   )}-${Zero(date.getDate())}`;
+  const initialPriceDate = `${datePrice.getFullYear()}-${Zero(
+    datePrice.getMonth() + 1
+  )}-${Zero(datePrice.getDate())}`;
   const [createdStudentDate, setCreatedStudentDate] = useState(initialDate);
   optionDepartment.forEach((elem) => {
     if (elem.className === department) {
@@ -47,7 +52,8 @@ const StudentChangeModal = ({
       elem.setAttribute("selected", false);
     }
   });
-  const [priceStudentDate, setPriceStudentDate] = useState(initialDate);
+  console.log("init", initialPriceDate);
+  const [priceStudentDate, setPriceStudentDate] = useState(initialPriceDate);
   const changeStudent = (e) => {
     e.preventDefault();
     dispatch(spinnerLoading());
