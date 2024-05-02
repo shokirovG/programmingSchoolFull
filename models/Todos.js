@@ -33,6 +33,10 @@ const todosSchema = new mongoose.Schema({
         type: Date,
         default: new Date(),
       },
+      priceDate: {
+        type: Date,
+        default: new Date(),
+      },
     },
   ],
 });

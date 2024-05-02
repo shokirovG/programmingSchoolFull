@@ -12,6 +12,9 @@ const mongoose = require("mongoose");
 const MajburiyCost = require("./models/MajburiyCost");
 const EskiOy = require("./models/EskiOy");
 const Table = require("./models/Table");
+const { generateJWTToken } = require("./services/token");
+const Register = require("./models/Register");
+const cookieParser = require("cookie-parser");
 dotEnv.config();
 app.use(express.json());
 app.use(
@@ -19,6 +22,7 @@ app.use(
     origin: process.env.URL_FRONT,
   })
 );
+app.use(cookieParser());
 mongoose
   .connect(
     "mongodb+srv://muhammad:jVGUTNpQ9RPA7Shd@cluster0.k4oof.mongodb.net/"
@@ -32,7 +36,15 @@ mongoose
 app.get("/", (req, res) => {
   res.json({ todos: [1, 2, 3] });
 });
+app.get("/auth", async (req, res) => {
+  // const user = await Register.findOne({ email: req.body.email });
+  const isAuth = req.cookies.token ? true : false;
 
+  res.json({ isAuth });
+
+  // const token = generateJWTToken(user._id);
+  // res.cookie("token", token, { httpOnly: true, secure: true });
+});
 app.post("/add", async (req, res) => {
   console.log("body:", req.body);
   const findMonth = await Todos.find({ month: req.body.month });
