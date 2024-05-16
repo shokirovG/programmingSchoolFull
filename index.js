@@ -1,7 +1,7 @@
 const express = require("express");
 const { urlencoded } = require("express");
 const { configDotenv } = require("dotenv");
-const router = express.Router();
+
 const app = express();
 const dotEnv = require("dotenv");
 const cors = require("cors");
@@ -12,21 +12,25 @@ const mongoose = require("mongoose");
 const MajburiyCost = require("./models/MajburiyCost");
 const EskiOy = require("./models/EskiOy");
 const Table = require("./models/Table");
-const { generateJWTToken } = require("./services/token");
+
 const Register = require("./models/Register");
 const cookieParser = require("cookie-parser");
+const router = require("./router/auth");
 dotEnv.config();
 app.use(express.json());
 app.use(
   cors({
+    credentials: true,
     origin: process.env.URL_FRONT,
   })
 );
 app.use(cookieParser());
+app.use("/api", router);
 mongoose
-  .connect(
-    "mongodb+srv://muhammad:jVGUTNpQ9RPA7Shd@cluster0.k4oof.mongodb.net/"
-  )
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("bazaga ulandi...");
   })
@@ -46,7 +50,7 @@ app.get("/auth", async (req, res) => {
   // res.cookie("token", token, { httpOnly: true, secure: true });
 });
 app.post("/add", async (req, res) => {
-  console.log("body:", req.body);
+ 
   const findMonth = await Todos.find({ month: req.body.month });
   if (findMonth.length !== 0) {
     await Todos.findOneAndUpdate(
@@ -76,7 +80,7 @@ app.put("/students", async (req, res) => {
 });
 app.post("/students", async (req, res) => {
   const findItem = await Todos.find({ month: req.body.month });
-  console.log(findItem, req.body.students);
+ 
   if (findItem.length !== 0) {
     await Todos.findOneAndUpdate(
       { month: req.body.month },
@@ -96,7 +100,7 @@ app.post("/hisobot", async (req, res) => {
   const findMonth = await Hisobot.find({ month: req.body.month });
 
   if (findMonth.length !== 0) {
-    console.log("find topdi!", req.body.hisoblar);
+   
     await Hisobot.findOneAndUpdate(
       { month: req.body.month },
       {
@@ -105,7 +109,7 @@ app.post("/hisobot", async (req, res) => {
       }
     );
   } else {
-    console.log("find topmadi");
+
     await Hisobot.create({
       month: req.body.month,
       hisoblar: req.body.hisoblar,
@@ -140,7 +144,7 @@ app.post("/chiqimlar", async (req, res) => {
 });
 app.post("/monthprice", async (req, res) => {
   const findItem = await EskiOy.find({ month: req.body.month });
-  console.log(findItem);
+  
   if (findItem.length > 0) {
     await EskiOy.findOneAndUpdate(
       {
@@ -204,9 +208,9 @@ app.post("/tables", async (req, res) => {
   }
   res.json({ post: "table" });
 });
-app.use("/", (req, res) => {
-  res.json({ name: "hello" });
-});
+// app.use("/", (req, res) => {
+//   res.json({ name: "hello" });
+// });
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(" port listen");
