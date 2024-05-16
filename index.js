@@ -27,10 +27,7 @@ app.use(
 app.use(cookieParser());
 app.use("/api", router);
 mongoose
-  .connect(process.env.DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.DB_URL)
   .then(() => {
     console.log("bazaga ulandi...");
   })
@@ -50,7 +47,6 @@ app.get("/auth", async (req, res) => {
   // res.cookie("token", token, { httpOnly: true, secure: true });
 });
 app.post("/add", async (req, res) => {
- 
   const findMonth = await Todos.find({ month: req.body.month });
   if (findMonth.length !== 0) {
     await Todos.findOneAndUpdate(
@@ -80,7 +76,7 @@ app.put("/students", async (req, res) => {
 });
 app.post("/students", async (req, res) => {
   const findItem = await Todos.find({ month: req.body.month });
- 
+
   if (findItem.length !== 0) {
     await Todos.findOneAndUpdate(
       { month: req.body.month },
@@ -100,7 +96,6 @@ app.post("/hisobot", async (req, res) => {
   const findMonth = await Hisobot.find({ month: req.body.month });
 
   if (findMonth.length !== 0) {
-   
     await Hisobot.findOneAndUpdate(
       { month: req.body.month },
       {
@@ -109,7 +104,6 @@ app.post("/hisobot", async (req, res) => {
       }
     );
   } else {
-
     await Hisobot.create({
       month: req.body.month,
       hisoblar: req.body.hisoblar,
@@ -144,7 +138,7 @@ app.post("/chiqimlar", async (req, res) => {
 });
 app.post("/monthprice", async (req, res) => {
   const findItem = await EskiOy.find({ month: req.body.month });
-  
+
   if (findItem.length > 0) {
     await EskiOy.findOneAndUpdate(
       {
