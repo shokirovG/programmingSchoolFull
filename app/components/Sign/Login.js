@@ -7,7 +7,13 @@ import React, { useEffect, useRef, useState } from "react";
 import SelectMonth from "../List/Select__Month/SelectMonth";
 import SideBar from "../SideBar";
 import SignIn from "./SignIn";
-import { auth, fetchingStudents, loaded, login } from "@/app/redux/actions";
+import {
+  auth,
+  fetchingStudents,
+  loaded,
+  login,
+  logOut,
+} from "@/app/redux/actions";
 import Loader from "../Loader/Loader";
 import useFetch from "@/app/hooks/useFetch";
 import { redirect, useRouter } from "@/node_modules/next/navigation";
@@ -30,7 +36,7 @@ const Login = ({ children }) => {
         .then((response) => {
           console.log(response);
           if (!response.data.refreshToken) {
-            throw new Error("foydalanuvchi avtorizatsiya qilinmagan");
+            dispatch(logOut());
           }
           localStorage.setItem("refreshToken", response.data.refreshToken);
           dispatch(login());
