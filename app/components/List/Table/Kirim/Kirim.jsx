@@ -39,7 +39,7 @@ const Kirim = (props) => {
     "Dekabr",
   ];
   const store = useSelector((state) => state);
-  console.log();
+
   const [groupValue, setGroupValue] = useState("Guruh");
   const [studentValue, setStudentValue] = useState("O`quvchi");
   const [foizValue, setFoizValue] = useState(0);
@@ -48,7 +48,7 @@ const Kirim = (props) => {
     months[store.currentMonth.slice(0, store.currentMonth.length - 5) - 1]
   );
   const [departmentValue, setDepartmentValue] = useState("Kafedra");
-  console.log("groups", store.groups);
+
   const studentsFilter = store.students.filter((el) => el.group === groupValue);
   const [eskiTolov, setEskiTolov] = useState(0);
   const dispatch = useDispatch();
@@ -115,7 +115,7 @@ const Kirim = (props) => {
           return elem;
         }
       });
-      console.log("hisoblar", newHisoblar);
+  
       request(
         `${process.env.NEXT_PUBLIC_URL}/hisobot`,
         "POST",
@@ -135,7 +135,7 @@ const Kirim = (props) => {
         request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
           res.students.forEach((elem) => {
             if (elem.month == localStorage.getItem("currentMonth")) {
-              console.log("dispatch ishladi", elem.students);
+           
               dispatch(fetchedStudents(elem.students));
             }
           });
@@ -246,7 +246,7 @@ const Kirim = (props) => {
                     const stFilter = studentsFilter.filter(
                       (el) => el.name === e.target.value
                     );
-                    // console.log(stFilter);
+                    
                     setEskiTolov(stFilter[0].price);
                     setFoizValue(stFilter[0].foiz);
                     setCurrentStudent(stFilter[0]);

@@ -52,7 +52,7 @@ const StudentChangeModal = ({
       elem.setAttribute("selected", false);
     }
   });
-  console.log("init", initialPriceDate);
+
   const [priceStudentDate, setPriceStudentDate] = useState(initialPriceDate);
   const changeStudent = (e) => {
     e.preventDefault();

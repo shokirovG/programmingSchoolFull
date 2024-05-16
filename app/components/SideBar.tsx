@@ -7,7 +7,7 @@ import { fetchedMajburiy, logOut } from "../redux/actions";
 import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
 import Snow from "./animations/Snow";
 import useFetch from "../hooks/useFetch";
-
+import axios from "axios";
 export default function SideBar() {
   const [currentPage, setCurrentPage] = useState("hisobot");
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export default function SideBar() {
     for (let item of items) {
       item.classList.remove("active__bg");
     }
-    console.log(items);
+   
 
     if (e.target.classList.contains("sidebar__item")) {
       e.target.classList.add("active__bg");
@@ -37,7 +37,7 @@ export default function SideBar() {
         item.classList.remove("active__bg");
       }
     }
-    console.log("use effect");
+   
   }, []);
   return (
     <>
@@ -258,6 +258,14 @@ export default function SideBar() {
             <p
               className="m-0"
               onClick={() => {
+                localStorage.removeItem('refreshToken')
+                axios.delete(`${process.env.NEXT_PUBLIC_URL}/api/logout`,{
+                  withCredentials: true,
+                })
+                .then(res=> {
+                 
+                  
+                })
                 dispatch(logOut());
               }}
             >

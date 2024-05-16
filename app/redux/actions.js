@@ -100,6 +100,21 @@ const fetchedGroups = (groups) => {
     payload: groups,
   };
 };
+const login = () => {
+  return {
+    type: "login",
+  };
+};
+const loginSpinnerLoading = () => {
+  return {
+    type: "loginSpinnerLoading",
+  };
+};
+const loginSpinnerLoaded = () => {
+  return {
+    type: "loginSpinnerLoaded",
+  };
+};
 export {
   auth,
   signIn,
@@ -119,4 +134,7 @@ export {
   spinnerDeleteLoading,
   spinnerDeleteLoaded,
   fetchedGroups,
+  login,
+  loginSpinnerLoading,
+  loginSpinnerLoaded,
 };

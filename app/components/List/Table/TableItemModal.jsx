@@ -40,7 +40,7 @@ const TableItemModal = ({
   const store = useSelector((state) => state);
   const { request } = useFetch();
   const dispatch = useDispatch();
-  console.log("priceStudent", priceStudent);
+ 
   const changeItem = (e) => {
     e.preventDefault();
     dispatch(spinnerLoading());
@@ -60,14 +60,14 @@ const TableItemModal = ({
       priceMonth: oyValue,
       foiz,
     };
-    console.log("newKirim", newKirim);
+   
     const naqdTolov = tolovTypeValue == "Naqd" ? Number(tolovValue) : 0;
     const clickTolov = tolovTypeValue == "Click" ? Number(tolovValue) : 0;
 
     const newHisoblar = store.hisobot[0].hisoblar.map((elem) => {
       if (elem.kun == localStorage.getItem("currentDay")) {
         const removeKirim = elem.hisobot.kirim.filter((el) => el.id !== id);
-        console.log("removeKirim", removeKirim);
+      
         return {
           ...elem,
           hisobot: {
@@ -91,7 +91,7 @@ const TableItemModal = ({
         return elem;
       }
     });
-    console.log("newHisoblar", newHisoblar);
+  
     request(
       `${process.env.NEXT_PUBLIC_URL}/hisobot`,
       "POST",

@@ -72,11 +72,11 @@ function Income(props) {
           })
         ).then(() => {
           dispatch(addTodo(month, newTodo));
-          console.log("yangi hisobot yaratildi!");
+         
           toast.success("yangi hisobot yaratildi!");
         });
       } else {
-        console.log("hisobot oldin yaratilhgan");
+       
         toast.error("ushbu kun uchun hisobot oldin yaratilgan!");
       }
     } else {

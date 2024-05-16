@@ -28,10 +28,10 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
-  console.log("workers", store.workers);
+
   const addCost = () => {
     if (costType !== "" && costValue && infoValue !== "") {
-      console.log("cost-2");
+  
       dispatch(spinnerLoading());
       const newCost = {
         id: v4(),
@@ -44,16 +44,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
       const naqdTolov = tolovType == "Naqd" ? Number(costValue) : 0;
       const clickTolov = tolovType == "Click" ? Number(costValue) : 0;
 
-      // let clickEskiBalans = 0;
-      // for (let item of store.hisobot[0].hisoblar) {
-      //   clickEskiBalans += Number(item.balansClick);
-      //   if (item.kun === localStorage.getItem("currentDay")) {
-      //     break;
-      //   }
-      // }
-
-      // console.log("naqdEski", naqdEskiBalans - naqdTolov);
-      // console.log("clickEski", clickEskiBalans - clickTolov);
+     
       const newHisoblar = store.hisobot[0].hisoblar.map((elem) => {
         if (elem.kun == localStorage.getItem("currentDay")) {
           return {
@@ -77,7 +68,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
           return elem;
         }
       });
-      console.log("chiqimHisob", newHisoblar);
+     
       request(
         `${process.env.NEXT_PUBLIC_URL}/hisobot`,
         "POST",
@@ -86,7 +77,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
           hisoblar: newHisoblar,
         })
       ).then(() => {
-        console.log("req");
+      
         dispatch(
           hisobotFetched([
             {

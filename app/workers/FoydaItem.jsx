@@ -29,18 +29,9 @@ const FoydaItem = ({ chiqimlar }) => {
     }
   }
 
-  console.log("store", store);
 
-  // if (store.majburiyChiqimlar.length > 0) {
-  //   majburiyTotal = store.majburiyChiqimlar[0].chiqimlar.reduce((s, item) => {
-  //     if ((item.chiqimNomi !== "Avans", item.chiqimNomi !== "Oylik")) {
-  //       return s + Number(item.chiqimMiqdori);
-  //     } else {
-  //       return s;
-  //     }
-  //   }, 0);
-  //   setMajburiyTotal(majburiyT);
-  // }
+
+
 
   let foydaBalans = 0;
   for (let item of store.students) {
@@ -70,7 +61,7 @@ const FoydaItem = ({ chiqimlar }) => {
       const currentMonthChiqim = res.chiqimlar.filter(
         (el) => el.month === localStorage.getItem("currentMonth")
       );
-      console.log("use", res);
+   
       dispatch(fetchedMajburiy(currentMonthChiqim));
     });
   }, []);

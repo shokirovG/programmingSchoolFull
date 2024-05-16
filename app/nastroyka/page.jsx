@@ -29,7 +29,7 @@ function page() {
     setMonthClone_1("1_2024");
     setMonthClone_2("2_2024");
   }, []);
-  console.log(monthClone_1, monthClone_2);
+ 
   const monthCloneFn = () => {
     let setCurrentStudents = [];
     let setCurrentWorkers = [];
@@ -60,7 +60,7 @@ function page() {
             dispatch(spinnerLoaded());
           })
           .catch((e) => {
-            console.log(e);
+        
             toast.error("ma`lumot yuborishda hatolik yuz berdi!");
           });
       })
@@ -70,7 +70,7 @@ function page() {
       });
     request(`${process.env.NEXT_PUBLIC_URL}/workers`)
       .then((res) => {
-        console.log(res);
+       
         res.workers.forEach((elem) => {
           if (elem.month == monthClone_1) {
             setCurrentWorkers = elem.workers;
@@ -87,7 +87,7 @@ function page() {
             handleClose();
           })
           .catch((e) => {
-            console.log(e);
+          
             toast.error(
               "ishchilarni ma`lumotini bazaga qo'shishda xatolik yuz berdi!"
             );
@@ -100,7 +100,7 @@ function page() {
 
     request(`${process.env.NEXT_PUBLIC_URL}/tables`)
       .then((res) => {
-        console.log(res);
+     
         res.groups.forEach((elem) => {
           if (elem.month == monthClone_1) {
             setCurrentGroups = elem.groups;
@@ -117,7 +117,7 @@ function page() {
             handleClose();
           })
           .catch((e) => {
-            console.log(e);
+       
             toast.error(
               "ishchilarni ma`lumotini bazaga qo'shishda xatolik yuz berdi!"
             );

@@ -17,7 +17,7 @@ import { setgroups } from "process";
 import AdminItem from "./AdminItem";
 import AdminYordamchi from "./AdminYordamchi";
 import FoydaItem from "./FoydaItem";
-import balans1 from '../hooks/foyda/balans1'
+import balans1 from "../hooks/foyda/balans1";
 import WorkerModal from "./WorkerModal";
 import WorkerAddModal from "./WorkerAddModal";
 import Image from "@/node_modules/next/image";
@@ -34,6 +34,7 @@ const Workers = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   useEffect(() => {
+  
     request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
       const workers = res.workers.filter(
         (elem) => elem.month === localStorage.getItem("currentMonth")
@@ -66,57 +67,49 @@ const Workers = () => {
   }, []);
 
   useEffect(() => {
-    // request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
-    //   const workers = res.workers.filter(
-    //     (elem) => elem.month === localStorage.getItem("currentMonth")
-    //   );
-
-    //   if (workers.length > 0) {
-    //     console.log(workers);
-    //     dispatch(fetchedWorkers(workers[0].workers));
-    //   }
-    // });
+ 
 
     if (store.hisobot.length > 0) {
       setChiqimlar(store.hisobot[0].hisoblar);
     }
   }, [store]);
- 
-  return (
-    <div className="workers__page">
-      {store.loading === "loading" ? (
-        <Loader />
-      ) : (
-        <>
-          <Image
-            src="./teacher.svg"
-            width="60"
-            height="60"
-            alt="teacher"
-            className="absolute top-[20px] left-[25px] cursor-pointer"
-            onClick={handleShow}
-          />
-          <WorkerAddModal show={show} handleClose={handleClose} />
-          <div className="workers__list flex flex-wrap  gap-[20px] justify-center mt-[100px] pb-[100px]">
-            {store.workers.map((elem) => (
-              <TeacherItem
-                department={elem.department}
-                chiqimlar={chiqimlar}
-                teacher={elem.name}
-                group={elem.groups}
-                foiz={elem.priceFoiz}
-                price={elem.price}
-                priceType={elem.priceType}
-                id={elem.id}
-                prioritet={elem.prioritet}
-              />
-            ))}
 
-            <FoydaItem chiqimlar={chiqimlar}/>
-          </div>
-        </>
-      )}
-    </div>
+  return (
+    <>
+      <Image
+        src="./teacher.svg"
+        width="60"
+        height="60"
+        alt="teacher"
+        className="absolute top-[20px] left-[25px] cursor-pointer"
+        onClick={handleShow}
+      />
+      <WorkerAddModal show={show} handleClose={handleClose} />
+      <div className="workers__list flex flex-wrap  gap-[20px] justify-center mt-[100px] pb-[100px]">
+        {store.workers.map((elem) => (
+          <TeacherItem
+            department={elem.department}
+            chiqimlar={chiqimlar}
+            teacher={elem.name}
+            group={elem.groups}
+            foiz={elem.priceFoiz}
+            price={elem.price}
+            priceType={elem.priceType}
+            id={elem.id}
+            prioritet={elem.prioritet}
+          />
+        ))}
+
+        <FoydaItem chiqimlar={chiqimlar} />
+      </div>
+    </>
+    // <div className="workers__page">
+    //   {store.loading === "loading" ? (
+    //     <Loader />
+    //   ) : (
+
+    //   )}
+    // </div>
   );
 };
 

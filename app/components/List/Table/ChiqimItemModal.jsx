@@ -42,7 +42,7 @@ const ChiqimItemModal = ({
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
-  console.log("id", id);
+ 
   const changeChiqimItem = () => {
     dispatch(spinnerDeleteLoading());
     const newCost = {

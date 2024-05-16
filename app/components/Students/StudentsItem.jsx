@@ -26,7 +26,7 @@ const StudentsItem = (props) => {
   const date = new Date();
   const studentDate = +moment(priceDate).format("DD/MM/YYYY").slice(0, 2);
   const date2 = +moment(date).format("DD/MM/YYYY").slice(0, 2);
-  console.log(date2 < studentDate);
+
   return (
     <tr key={id} className={`px-[20px] text-center h-[54px]  `}>
       <td>{index + 1}</td>

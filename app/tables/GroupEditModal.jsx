@@ -18,7 +18,7 @@ import {
 import useFetch from "../hooks/useFetch";
 import Spinner from "../components/Students/Spinner";
 const GroupEditModal = ({ handleClose, show, props }) => {
-  console.log("modal");
+ 
   const [departmentValue, setDepartmentValue] = useState(props.departmentValue);
   const [teacherValue, setTeacherValue] = useState(props.teacherValue);
   const [groupValue, setGroupValue] = useState(props.groupValue);

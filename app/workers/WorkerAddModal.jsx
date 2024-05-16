@@ -33,7 +33,7 @@ const WorkerAddModal = ({ show, handleClose }) => {
     const newGroups = groupsValue.filter((el) => el !== delGroup);
     setGroupsValue(newGroups);
   };
-  console.log(store.workers);
+
   const addWorker = () => {
     const workers = [
       ...store.workers,
@@ -78,7 +78,7 @@ const WorkerAddModal = ({ show, handleClose }) => {
       );
 
       if (workers.length > 0) {
-        console.log(workers);
+        
         dispatch(fetchedWorkers(workers[0].workers));
       }
     });

@@ -61,7 +61,7 @@ function ForcedExit(props) {
         return elem;
       }
     });
-    console.log("chiqimlar", store.majburiyChiqimlar);
+    
     request(
       `${process.env.NEXT_PUBLIC_URL}/chiqimlar`,
       "POST",
@@ -82,7 +82,7 @@ function ForcedExit(props) {
       const currentMonthChiqim = res.chiqimlar.filter(
         (el) => el.month === localStorage.getItem("currentMonth")
       );
-      console.log("use", res);
+    
       dispatch(fetchedMajburiy(currentMonthChiqim));
     });
   }, []);

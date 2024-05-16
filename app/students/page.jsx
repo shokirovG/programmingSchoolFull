@@ -75,7 +75,7 @@ const page = ({ params }) => {
           created: moment(createdStudentDate).format("L"),
           priceDate: moment(priceStudentDate).format("L"),
         };
-        console.log([...store.students, newStudent]);
+      
         request(
           `${process.env.NEXT_PUBLIC_URL}/add`,
           "POST",
@@ -84,12 +84,12 @@ const page = ({ params }) => {
             students: [...store.students, newStudent],
           })
         )
-          .then((res) => console.log(res))
+          .then((res) =>{})
           .then(() => {
             setName("");
             setFoiz(0);
             toast.success("asdsad");
-            console.log("yangi o'quvchi api ga ketdi");
+          
             dispatch(addStudent(newStudent));
             dispatch(spinnerLoaded());
           });
@@ -102,6 +102,7 @@ const page = ({ params }) => {
   };
 
   useEffect(() => {
+    
     request(`${process.env.NEXT_PUBLIC_URL}/tables`).then((res) => {
       if (res) {
         if (res) {
@@ -120,13 +121,13 @@ const page = ({ params }) => {
 
     if (!initial.current) {
       initial.current = true;
-      console.log("student mount");
+     
 
       dispatch(fetchingStudents());
       request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
         res.students.forEach((elem) => {
           if (elem.month == localStorage.getItem("currentMonth")) {
-            console.log("dispatch ishladi", elem.students);
+          
             dispatch(fetchedStudents(elem.students));
             setFilterStudents(elem.students);
           }
@@ -153,7 +154,7 @@ const page = ({ params }) => {
 
   return (
     <>
-      {store.loading === "loading" ? (
+      {store.loading === "dsfsfdsf" ? (
         <Loader />
       ) : (
         <div>
@@ -187,14 +188,8 @@ const page = ({ params }) => {
                           (elem) => elem.departmentValue === e.target.value
                         );
                   setFilterGroupsStore(newGroups);
-                  // let newStudents = [];
-                  // newGroups.forEach((elem) => {
-                  //   newStudents = [
-                  //     ...newStudents,
-                  //     store.students.filter((el) => el.group === elem),
-                  //   ];
-                  // });
-                  console.log("newGroups", newGroups);
+              
+                 
                   let newStudents2 = [];
 
                   for (let item of newGroups) {

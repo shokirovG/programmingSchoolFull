@@ -1,6 +1,8 @@
+import AuthService from "../../services/AuthService";
+import axios from "axios";
 const initialState = {
   currentMonth: "",
-  loading: "loading",
+  loading: "none",
   students: [],
   spinnerLoader: "none",
   hisobot: [],
@@ -11,6 +13,8 @@ const initialState = {
   workers: [],
   spinnerDeleteLoader: "none",
   groups: [],
+  isAuth: false,
+  loginSpinner: "none",
 };
 
 function reducers(state = initialState, action) {
@@ -103,12 +107,9 @@ function reducers(state = initialState, action) {
       };
     }
     case "logOut": {
-      localStorage.setItem("login", "");
-      localStorage.setItem("parol", "");
       return {
         ...state,
-        login: "",
-        parol: "",
+        isAuth: false,
       };
     }
     case "auth": {
@@ -119,7 +120,6 @@ function reducers(state = initialState, action) {
       };
     }
     case "monthPriceFetched": {
-      console.log("month reducer");
       return {
         ...state,
         monthPrice: action.payload,
@@ -147,6 +147,26 @@ function reducers(state = initialState, action) {
       return {
         ...state,
         groups: action.payload,
+      };
+    }
+    case "login": {
+      return {
+        ...state,
+        isAuth: true,
+        loading: "loaded",
+        loginSpinner: "loaded",
+      };
+    }
+    case "loginSpinnerLoading": {
+      return {
+        ...state,
+        loginSpinner: "loading",
+      };
+    }
+    case "loginSpinnerLoaded": {
+      return {
+        ...state,
+        loginSpinner: "loaded",
       };
     }
     default:
