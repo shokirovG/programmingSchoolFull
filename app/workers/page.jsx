@@ -21,6 +21,7 @@ import balans1 from "../hooks/foyda/balans1";
 import WorkerModal from "./WorkerModal";
 import WorkerAddModal from "./WorkerAddModal";
 import Image from "@/node_modules/next/image";
+import { redirect } from "@/node_modules/next/navigation";
 const Workers = () => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const Workers = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   useEffect(() => {
-  
+    dispatch(fetchingStudents());
     request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
       const workers = res.workers.filter(
         (elem) => elem.month === localStorage.getItem("currentMonth")
@@ -47,7 +48,6 @@ const Workers = () => {
     if (!initial.current) {
       initial.current = true;
 
-      dispatch(fetchingStudents());
       request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
         res.students.forEach((elem) => {
           if (elem.month == localStorage.getItem("currentMonth")) {
@@ -67,13 +67,20 @@ const Workers = () => {
   }, []);
 
   useEffect(() => {
- 
-
     if (store.hisobot.length > 0) {
       setChiqimlar(store.hisobot[0].hisoblar);
     }
   }, [store]);
+  if (store.loading === "loading") {
+    return <Loader />;
+  }
+  if (store.user.rol === "admin") {
+    if (store.user.rol === "admin") {
+      localStorage.setItem("currentPage", "students");
 
+      redirect("/students");
+    }
+  }
   return (
     <>
       <Image

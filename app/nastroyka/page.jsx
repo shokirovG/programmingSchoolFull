@@ -12,8 +12,15 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Spinner from "../components/Students/Spinner";
-import { spinnerLoaded, spinnerLoading } from "../redux/actions";
+import {
+  fetchingStudents,
+  loaded,
+  spinnerLoaded,
+  spinnerLoading,
+} from "../redux/actions";
 import useFetch from "../hooks/useFetch";
+import Loader from "../components/Loader/Loader";
+import { redirect } from "next/navigation";
 /* eslint-disable */
 function page() {
   const [show, setShow] = useState(false);
@@ -26,10 +33,12 @@ function page() {
   const dispatch = useDispatch();
   const { request } = useFetch();
   useEffect(() => {
+    dispatch(fetchingStudents());
     setMonthClone_1("1_2024");
     setMonthClone_2("2_2024");
+    dispatch(loaded());
   }, []);
- 
+
   const monthCloneFn = () => {
     let setCurrentStudents = [];
     let setCurrentWorkers = [];
@@ -60,7 +69,6 @@ function page() {
             dispatch(spinnerLoaded());
           })
           .catch((e) => {
-        
             toast.error("ma`lumot yuborishda hatolik yuz berdi!");
           });
       })
@@ -70,7 +78,6 @@ function page() {
       });
     request(`${process.env.NEXT_PUBLIC_URL}/workers`)
       .then((res) => {
-       
         res.workers.forEach((elem) => {
           if (elem.month == monthClone_1) {
             setCurrentWorkers = elem.workers;
@@ -87,7 +94,6 @@ function page() {
             handleClose();
           })
           .catch((e) => {
-          
             toast.error(
               "ishchilarni ma`lumotini bazaga qo'shishda xatolik yuz berdi!"
             );
@@ -100,7 +106,6 @@ function page() {
 
     request(`${process.env.NEXT_PUBLIC_URL}/tables`)
       .then((res) => {
-     
         res.groups.forEach((elem) => {
           if (elem.month == monthClone_1) {
             setCurrentGroups = elem.groups;
@@ -117,7 +122,6 @@ function page() {
             handleClose();
           })
           .catch((e) => {
-       
             toast.error(
               "ishchilarni ma`lumotini bazaga qo'shishda xatolik yuz berdi!"
             );
@@ -128,6 +132,14 @@ function page() {
         toast.error("ishchilarni ma`lumotini olishda xatolik yuz berdi!");
       });
   };
+  if (store.loading === "loading") {
+    return <Loader />;
+  }
+  if (store.user.rol === "admin") {
+    localStorage.setItem("currentPage", "students");
+
+    redirect("/students");
+  }
   return (
     <div className="flex flex-col items-center pt-[150px]">
       <div className="monthClone text-center p-[20px] rounded w-[80%] min-h-[200px] flex flex-col items-center gap-[20px]">

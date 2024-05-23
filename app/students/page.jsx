@@ -75,7 +75,7 @@ const page = ({ params }) => {
           created: moment(createdStudentDate).format("L"),
           priceDate: moment(priceStudentDate).format("L"),
         };
-      
+
         request(
           `${process.env.NEXT_PUBLIC_URL}/add`,
           "POST",
@@ -84,12 +84,12 @@ const page = ({ params }) => {
             students: [...store.students, newStudent],
           })
         )
-          .then((res) =>{})
+          .then((res) => {})
           .then(() => {
             setName("");
             setFoiz(0);
             toast.success("asdsad");
-          
+
             dispatch(addStudent(newStudent));
             dispatch(spinnerLoaded());
           });
@@ -102,7 +102,7 @@ const page = ({ params }) => {
   };
 
   useEffect(() => {
-    
+    dispatch(fetchingStudents());
     request(`${process.env.NEXT_PUBLIC_URL}/tables`).then((res) => {
       if (res) {
         if (res) {
@@ -121,20 +121,17 @@ const page = ({ params }) => {
 
     if (!initial.current) {
       initial.current = true;
-     
 
-      dispatch(fetchingStudents());
       request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
         res.students.forEach((elem) => {
           if (elem.month == localStorage.getItem("currentMonth")) {
-          
             dispatch(fetchedStudents(elem.students));
             setFilterStudents(elem.students);
           }
         });
-        dispatch(loaded());
       });
     }
+    // dispatch(loaded());
   }, []);
 
   useEffect(() => {
@@ -154,7 +151,7 @@ const page = ({ params }) => {
 
   return (
     <>
-      {store.loading === "dsfsfdsf" ? (
+      {store.loading === "loading" ? (
         <Loader />
       ) : (
         <div>
@@ -188,8 +185,7 @@ const page = ({ params }) => {
                           (elem) => elem.departmentValue === e.target.value
                         );
                   setFilterGroupsStore(newGroups);
-              
-                 
+
                   let newStudents2 = [];
 
                   for (let item of newGroups) {

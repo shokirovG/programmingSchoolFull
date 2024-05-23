@@ -115,6 +115,19 @@ const loginSpinnerLoaded = () => {
     type: "loginSpinnerLoaded",
   };
 };
+
+const setAuthLoading = (payload) => {
+  return {
+    type: "setAuthLoading",
+    payload,
+  };
+};
+const setUser = (userEmail) => {
+  return {
+    type: "setUser",
+    payload: userEmail,
+  };
+};
 export {
   auth,
   signIn,
@@ -137,4 +150,6 @@ export {
   login,
   loginSpinnerLoading,
   loginSpinnerLoaded,
+  setAuthLoading,
+  setUser,
 };

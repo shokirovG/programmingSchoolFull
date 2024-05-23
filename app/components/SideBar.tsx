@@ -4,13 +4,14 @@ import Link from "@/node_modules/next/link";
 import Image from "@/node_modules/next/image";
 import { useState, useEffect } from "react";
 import { fetchedMajburiy, logOut } from "../redux/actions";
-import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
+import { useDispatch, useSelector } from "@/node_modules/react-redux/dist/react-redux";
 import Snow from "./animations/Snow";
 import useFetch from "../hooks/useFetch";
 import axios from "axios";
 export default function SideBar() {
   const [currentPage, setCurrentPage] = useState("hisobot");
   const dispatch = useDispatch();
+  const store= useSelector(state=> state)
   const addActiveClass = (e: any) => {
     // setCurrentPage(e.target.id);
     localStorage.setItem("currentPage", e.target.id);
@@ -41,9 +42,7 @@ export default function SideBar() {
   }, []);
   return (
     <>
-      {/* <div className="animation">
-        <Snow />
-      </div> */}
+      
       <div className="h-[100vh]   fixed w-[230px] ">
         <div className="flex sidebar flex-col items-center  pb-[50px] justify-between h-[100%] ">
           <div className=" flex w-[154px]  flex-col gap-[48px] mt-[47px]">
@@ -55,14 +54,15 @@ export default function SideBar() {
                 height="80"
                 id="navbarLogo"
               />
-              <div className="logo__text">
+              <div className="logo__text flex flex-col align-items-center">
                 <h4>Programming</h4>
                 <p>School</p>
+                <p className="rounded bg-green-500 w-[50%] text-black  p-[5px] capitalize">{store.user.email}</p>
               </div>
               <div className="w-[230px] h-[2px] bg-[#F4F7FE]  absolute bottom-[-26px]"></div>
             </div>
             <div className="flex flex-col gap-[10px] sidebar__items">
-              <Link
+              {store.user.rol === 'menejer' ?   <Link
                 id="hisobot"
                 className="id_0 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
                 href="/"
@@ -89,9 +89,10 @@ export default function SideBar() {
                   </defs>
                 </svg>
                 Hisobot
-              </Link>
+              </Link>:null}
+            
 
-              <Link
+             {store.user.rol === 'admin' || store.user.rol === 'menejer' ? <Link
                 id="students"
                 className="id_1 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
                 href="/students"
@@ -118,8 +119,9 @@ export default function SideBar() {
                   </defs>
                 </svg>
                 O`quvchilar
-              </Link>
-              <Link
+              </Link>:null} 
+
+              {store.user.rol === 'menejer' ? <Link
                 id="ishchilar"
                 className="id_1 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
                 href="/workers"
@@ -146,7 +148,8 @@ export default function SideBar() {
                   </defs>
                 </svg>
                 Ishchilar
-              </Link>
+              </Link>:null}
+              
               <Link
                 id="groups"
                 className="id_11 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
@@ -175,7 +178,7 @@ export default function SideBar() {
                 </svg>
                 Dars Jadvali
               </Link>
-              <Link
+              {store.user.rol === 'menejer' ?  <Link
                 id="settings"
                 className="id_10 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
                 href="/nastroyka"
@@ -202,9 +205,10 @@ export default function SideBar() {
                   </defs>
                 </svg>
                 Sozlamalar
-              </Link>
+              </Link>:null}
+             
 
-              <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">
+              {/* <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -248,8 +252,8 @@ export default function SideBar() {
                   </defs>
                 </svg>
                 <span onClick={addActiveClass}>Payouts</span>
-              </div>
-              <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]"></div>
+              </div> */}
+              {/* <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]"></div> */}
             </div>
           </div>
 
@@ -258,7 +262,7 @@ export default function SideBar() {
             <p
               className="m-0"
               onClick={() => {
-                localStorage.removeItem('refreshToken')
+                localStorage.removeItem('token')
                 axios.delete(`${process.env.NEXT_PUBLIC_URL}/api/logout`,{
                   withCredentials: true,
                 })

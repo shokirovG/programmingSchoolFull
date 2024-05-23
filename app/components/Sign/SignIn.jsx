@@ -1,23 +1,24 @@
 "use client";
-import useFetch from "@/app/hooks/useFetch";
+
 import {
   fetchingStudents,
   loaded,
   login,
   loginSpinnerLoaded,
   loginSpinnerLoading,
+  setUser,
   signIn,
 } from "@/app/redux/actions";
 import {
   useDispatch,
   useSelector,
 } from "@/node_modules/react-redux/dist/react-redux";
-import AuthService from "@/services/AuthService";
+
 import React, { useState } from "react";
 import "./sign.scss";
 import axios from "axios";
 import { LoginSpinner } from "../LoginSpinner";
-import store from "@/app/redux/index";
+
 const SignIn = ({ loginBtn }) => {
   const [email, setEmail] = useState("");
   const [parol, setParol] = useState("");
@@ -38,9 +39,10 @@ const SignIn = ({ loginBtn }) => {
 
     if (response.data.accessToken) {
       setInfo("");
-      dispatch(fetchingStudents());
-      localStorage.setItem("refreshToken", response.data.accessToken);
-      dispatch(login(email, parol));
+      // dispatch(fetchingStudents());
+      localStorage.setItem("token", response.data.accessToken);
+      dispatch(login());
+      dispatch(setUser(response.data.user));
     } else {
       setInfo(response.data.message);
     }

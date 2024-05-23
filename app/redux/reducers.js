@@ -15,6 +15,8 @@ const initialState = {
   groups: [],
   isAuth: false,
   loginSpinner: "none",
+  authLoading: true,
+  user: {},
 };
 
 function reducers(state = initialState, action) {
@@ -110,6 +112,8 @@ function reducers(state = initialState, action) {
       return {
         ...state,
         isAuth: false,
+        loading: "none",
+        authLoading: false,
       };
     }
     case "auth": {
@@ -153,7 +157,7 @@ function reducers(state = initialState, action) {
       return {
         ...state,
         isAuth: true,
-        loading: "loaded",
+        loading: "loading",
         loginSpinner: "loaded",
       };
     }
@@ -167,6 +171,18 @@ function reducers(state = initialState, action) {
       return {
         ...state,
         loginSpinner: "loaded",
+      };
+    }
+    case "setAuthLoading": {
+      return {
+        ...state,
+        authLoading: action.payload,
+      };
+    }
+    case "setUser": {
+      return {
+        ...state,
+        user: action.payload,
       };
     }
     default:

@@ -12,7 +12,11 @@ import {
   fetchingStudents,
   loaded,
   login,
+  loginSpinnerLoaded,
+  loginSpinnerLoading,
   logOut,
+  setAuthLoading,
+  setUser,
 } from "@/app/redux/actions";
 import Loader from "../Loader/Loader";
 import useFetch from "@/app/hooks/useFetch";
@@ -25,50 +29,59 @@ const Login = ({ children }) => {
   const router = useRouter();
   const ref = useRef(false);
   useEffect(() => {
-    // dispatch(fetchingStudents());
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (refreshToken && !ref.current) {
+    dispatch(setAuthLoading(true));
+    if (localStorage.getItem("token") && !ref.current) {
       ref.current = true;
+      // dispatch(setAuthLoading(true));
+      dispatch(loginSpinnerLoading());
       axios
         .get(`${process.env.NEXT_PUBLIC_URL}/api/refresh`, {
           withCredentials: true,
         })
-        .then((response) => {
-          console.log(response);
-          if (!response.data.refreshToken) {
-            dispatch(logOut());
+        .then((res) => {
+          if (res.data.accessToken) {
+            localStorage.setItem("token", res.data.accessToken);
+            dispatch(login());
+            dispatch(setAuthLoading(false));
+            dispatch(setUser(res.data.user));
+          } else {
+            console.log("logout");
+            // dispatch(logOut());
+            dispatch(setAuthLoading(false));
           }
-          localStorage.setItem("refreshToken", response.data.refreshToken);
-          dispatch(login());
-
-          // localStorage.setItem("token", response.data.accessToken);
         })
         .catch((e) => {
           console.log(e);
+          localStorage.removeItem("token");
+          dispatch(setAuthLoading(false));
+          dispatch(logOut());
+        })
+        .finally(() => {
+          dispatch(loginSpinnerLoaded());
         });
-    }
-    if (!refreshToken) {
+    } else if (!localStorage.getItem("token")) {
       dispatch(loaded());
+      dispatch(setAuthLoading(false));
     }
-    // dispatch(loaded());
   }, []);
 
-  if (store.isAuth) {
-    return (
-      <>
-        <SideBar />
-        <div className="children">
-          <SelectMonth />
-          <ToastContainer />
-          {children}
-        </div>
-      </>
-    );
-  }
-  if (store.loading === "loading" || store.loading === "none") {
+  if (store.authLoading) {
     return <Loader />;
   }
-  return <SignIn />;
+  if (!store.isAuth) {
+    return <SignIn />;
+  }
+
+  return (
+    <>
+      <SideBar />
+      <div className="children">
+        <SelectMonth />
+        <ToastContainer />
+        {children}
+      </div>
+    </>
+  );
 };
 
 export default Login;

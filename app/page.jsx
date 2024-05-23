@@ -12,10 +12,12 @@ import {
   hisobotFetched,
   loaded,
   monthPriceFetched,
+  setAuthLoading,
 } from "./redux/actions";
 import { useRouter, useParams } from "next/navigation";
 import useFetch from "./hooks/useFetch";
 import SignIn from "./components/Sign/SignIn";
+import { redirect } from "@/node_modules/next/navigation";
 
 export default function Home() {
   const store = useSelector((state) => state);
@@ -25,6 +27,7 @@ export default function Home() {
   const initial2 = useRef(false);
 
   useEffect(() => {
+    dispatch(fetchingStudents());
     localStorage.setItem("currentPage", "hisobot");
     request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
       const workers = res.workers.filter(
@@ -61,14 +64,12 @@ export default function Home() {
             dispatch(fetchedStudents(elem.students));
           }
         });
-        dispatch(loaded());
       });
     }
 
     dispatch(fetchingStudents());
     if (!localStorage.getItem("currentPage")) {
       localStorage.setItem("currentPage", "hisobot");
-      dispatch(loaded());
     }
     request(`${process.env.NEXT_PUBLIC_URL}/hisobot`).then((res) => {
       const currentHisobot = res.hisoblar.filter(
@@ -77,11 +78,17 @@ export default function Home() {
 
       dispatch(hisobotFetched(currentHisobot));
     });
-    dispatch(loaded());
+    // dispatch(loaded());
   }, []);
 
   if (store.loading === "loading") {
     return <Loader />;
+  }
+
+  if (store.user.rol === "admin") {
+    localStorage.setItem("currentPage", "students");
+
+    redirect("/students");
   }
 
   return <List />;
