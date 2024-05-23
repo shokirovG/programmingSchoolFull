@@ -12,10 +12,10 @@ export default function SideBar() {
   const [currentPage, setCurrentPage] = useState("hisobot");
   const dispatch = useDispatch();
   const store= useSelector(state=> state)
-  const addActiveClass = (e: any) => {
+  const addActiveClass = (e) => {
     // setCurrentPage(e.target.id);
     localStorage.setItem("currentPage", e.target.id);
-    const items: any = document.getElementsByClassName("sidebar__item");
+    const items = document.getElementsByClassName("sidebar__item");
     for (let item of items) {
       item.classList.remove("active__bg");
     }
@@ -29,7 +29,7 @@ export default function SideBar() {
   };
   const { request } = useFetch();
   useEffect(() => {
-    const items: any = document.getElementsByClassName("sidebar__item");
+    const items = document.getElementsByClassName("sidebar__item");
 
     for (let item of items) {
       if (item.id == localStorage.getItem("currentPage")) {
