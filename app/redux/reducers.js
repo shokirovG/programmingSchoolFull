@@ -16,7 +16,9 @@ const initialState = {
   isAuth: false,
   loginSpinner: "none",
   authLoading: true,
-  user: {},
+  user: {
+    email: "",
+  },
 };
 
 function reducers(state = initialState, action) {
