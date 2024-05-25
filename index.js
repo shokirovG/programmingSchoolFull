@@ -18,6 +18,15 @@ const cookieParser = require("cookie-parser");
 const router = require("./router/auth");
 dotEnv.config();
 app.use(express.json());
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", process.env.URL_FRONT); // Укажите домен клиента
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.header("Access-Control-Allow-Credentials", true); // Разрешить передачу файлов cookie
+  next();
+});
 app.use(
   cors({
     credentials: true,
