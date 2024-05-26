@@ -33,7 +33,7 @@ app.use(
     origin: process.env.URL_FRONT,
   })
 );
-app.use(cookieParser());
+app.use(cookieParser({}));
 app.use("/api", router);
 mongoose
   .connect(process.env.DB_URL)
