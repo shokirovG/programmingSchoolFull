@@ -75,7 +75,11 @@ const Workers = () => {
     return <Loader />;
   }
 
-  if (store.user.rol === "admin" || store.user.rol === "menejer") {
+  if (
+    store.user.rol === "admin" ||
+    store.user.rol === "menejer" ||
+    store.user.rol === "direktor"
+  ) {
     localStorage.setItem("currentPage", "students");
 
     redirect("/students");

@@ -64,7 +64,7 @@ export default function SideBar() {
               <div className="w-[230px] h-[2px] bg-[#F4F7FE]  absolute bottom-[-26px]"></div>
             </div>
             <div className="flex flex-col gap-[10px] sidebar__items">
-              {store.user.rol === "menejer" ? (
+              {store.user.rol === "menejer" || store.user.rol === "direktor" ? (
                 <Link
                   id="hisobot"
                   className="id_0 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
@@ -95,7 +95,7 @@ export default function SideBar() {
                 </Link>
               ) : null}
 
-              {store.user.rol === "admin" || store.user.rol === "menejer" ? (
+              {store.user.rol === "admin" || store.user.rol === "menejer" || store.user.rol === "direktor" ? (
                 <Link
                   id="students"
                   className="id_1 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
@@ -185,7 +185,7 @@ export default function SideBar() {
                 </svg>
                 Dars Jadvali
               </Link>
-              {store.user.rol === "menejer" ? (
+              {store.user.rol === "menejer" || store.user.rol === "direktor" ? (
                 <Link
                   id="settings"
                   className="id_10 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
