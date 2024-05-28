@@ -74,50 +74,45 @@ const Workers = () => {
   if (store.loading === "loading") {
     return <Loader />;
   }
-  if (store.user.rol === "admin") {
-    if (store.user.rol === "admin") {
-      localStorage.setItem("currentPage", "students");
 
-      redirect("/students");
-    }
+  if (store.user.rol === "admin" || store.user.rol === "menejer") {
+    localStorage.setItem("currentPage", "students");
+
+    redirect("/students");
   }
-  return (
-    <>
-      <Image
-        src="./teacher.svg"
-        width="60"
-        height="60"
-        alt="teacher"
-        className="absolute top-[20px] left-[25px] cursor-pointer"
-        onClick={handleShow}
-      />
-      <WorkerAddModal show={show} handleClose={handleClose} />
-      <div className="workers__list flex flex-wrap  gap-[20px] justify-center mt-[100px] pb-[100px]">
-        {store.workers.map((elem) => (
-          <TeacherItem
-            department={elem.department}
-            chiqimlar={chiqimlar}
-            teacher={elem.name}
-            group={elem.groups}
-            foiz={elem.priceFoiz}
-            price={elem.price}
-            priceType={elem.priceType}
-            id={elem.id}
-            prioritet={elem.prioritet}
-          />
-        ))}
 
-        <FoydaItem chiqimlar={chiqimlar} />
-      </div>
-    </>
-    // <div className="workers__page">
-    //   {store.loading === "loading" ? (
-    //     <Loader />
-    //   ) : (
+  if (store.user.rol === "direktor") {
+    return (
+      <>
+        <Image
+          src="./teacher.svg"
+          width="60"
+          height="60"
+          alt="teacher"
+          className="absolute top-[20px] left-[25px] cursor-pointer"
+          onClick={handleShow}
+        />
+        <WorkerAddModal show={show} handleClose={handleClose} />
+        <div className="workers__list flex flex-wrap  gap-[20px] justify-center mt-[100px] pb-[100px]">
+          {store.workers.map((elem) => (
+            <TeacherItem
+              department={elem.department}
+              chiqimlar={chiqimlar}
+              teacher={elem.name}
+              group={elem.groups}
+              foiz={elem.priceFoiz}
+              price={elem.price}
+              priceType={elem.priceType}
+              id={elem.id}
+              prioritet={elem.prioritet}
+            />
+          ))}
 
-    //   )}
-    // </div>
-  );
+          <FoydaItem chiqimlar={chiqimlar} />
+        </div>
+      </>
+    );
+  }
 };
 
 export default Workers;

@@ -39,6 +39,7 @@ const Login = ({ children }) => {
           withCredentials: true,
         })
         .then((res) => {
+          console.log(res);
           if (res.data.accessToken) {
             localStorage.setItem("token", res.data.accessToken);
             dispatch(login());
