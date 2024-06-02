@@ -146,12 +146,7 @@ body::-webkit-scrollbar-thumb:hover {
   opacity: 0;
   transition: opacity 500ms ease-in;
 }
-.active__student {
-  color: rgba(27, 198, 27, 0.595) !important;
-}
-.danger__student {
-  color: rgba(255, 0, 0, 0.537) !important;
-}
+
 #thead__students tr td {
   font-size: 5px !important;
   width: 30px !important;

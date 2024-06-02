@@ -26,6 +26,8 @@ const StudentsItem = (props) => {
   const date = new Date();
   const studentDate = +moment(priceDate).format("DD/MM/YYYY").slice(0, 2);
   const date2 = +moment(date).format("DD/MM/YYYY").slice(0, 2);
+  const studentMonthPrice = moment(priceDate).format("DD/MM/YYYY").split("/");
+  const dateMonth = date.getMonth() + 1;
 
   return (
     <tr key={id} className={`px-[20px] text-center h-[54px]  `}>
@@ -35,11 +37,18 @@ const StudentsItem = (props) => {
           calcPrice(price, foiz, department) == 0
             ? "active__student"
             : "danger__student"
-        } ${
-          date2 < studentDate && calcPrice(price, foiz, department) !== 0
-            ? "norm__student"
+        }
+        ${
+          +studentMonthPrice[1] < dateMonth &&
+          calcPrice(price, foiz, department) !== 0
+            ? "danger__student"
             : ""
-        }`}
+        }
+         ${
+           date2 < studentDate && calcPrice(price, foiz, department) !== 0
+             ? "norm__student"
+             : ""
+         } `}
       >
         {name}
       </td>

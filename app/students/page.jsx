@@ -273,7 +273,7 @@ const page = ({ params }) => {
                   }}
                 ></div>
                 <div
-                  className={`cursor-pointer w-[40px] h-[20px] bg-red-500 rounded ${
+                  className={`flex justify-center items-center text-white cursor-pointer w-[40px] h-[20px] bg-red-500 rounded ${
                     activeBtnColor === "red"
                       ? "shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]"
                       : ""
@@ -285,9 +285,11 @@ const page = ({ params }) => {
                       sortStudentByColor("red", filterStudents)
                     );
                   }}
-                ></div>
+                >
+                  {sortStudentByColor("red", filterStudents).length}
+                </div>
                 <div
-                  className={`cursor-pointer w-[40px] h-[20px] bg-black rounded ${
+                  className={`flex justify-center items-center text-white cursor-pointer w-[40px] h-[20px] bg-black rounded ${
                     activeBtnColor === "black"
                       ? "shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]"
                       : ""
@@ -299,9 +301,11 @@ const page = ({ params }) => {
                       sortStudentByColor("black", filterStudents)
                     );
                   }}
-                ></div>
+                >
+                  {sortStudentByColor("black", filterStudents).length}
+                </div>
                 <div
-                  className={`cursor-pointer w-[40px] h-[20px] bg-green-500 rounded ${
+                  className={` flex justify-center items-center text-white cursor-pointer w-[40px] h-[20px] bg-green-500 rounded ${
                     activeBtnColor === "green"
                       ? "shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]"
                       : ""
@@ -313,7 +317,9 @@ const page = ({ params }) => {
                       sortStudentByColor("green", filterStudents)
                     );
                   }}
-                ></div>
+                >
+                  {sortStudentByColor("green", filterStudents).length}
+                </div>
               </div>
               <table striped hover variant="light" className="table__students">
                 <thead id="thead__students">
