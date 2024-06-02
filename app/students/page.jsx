@@ -27,7 +27,7 @@ import {
 } from "../redux/actions";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Zero from "../hooks/zero";
-
+import sortStudentByColor from "../hooks/sortStudentByColor";
 /* eslint-disable */
 const page = ({ params }) => {
   const [group, setGroup] = useState("");
@@ -54,7 +54,8 @@ const page = ({ params }) => {
   const [classStudent, setClassStudent] = useState(false);
 
   const [filterGroupsStore, setFilterGroupsStore] = useState([]);
-
+  const [activeBtnColor, setActiveBtnColor] = useState("white");
+  const [sortedStudents, setSortedStudents] = useState([]);
   const addStudentForm = (e) => {
     e.preventDefault();
     const findStudent = store.students.findIndex(
@@ -127,11 +128,13 @@ const page = ({ params }) => {
           if (elem.month == localStorage.getItem("currentMonth")) {
             dispatch(fetchedStudents(elem.students));
             setFilterStudents(elem.students);
+            setSortedStudents(
+              sortStudentByColor(activeBtnColor, elem.students)
+            );
           }
         });
       });
     }
-    // dispatch(loaded());
   }, []);
 
   useEffect(() => {
@@ -148,7 +151,9 @@ const page = ({ params }) => {
       );
     }
   }, [store]);
-
+  useEffect(() => {
+    setSortedStudents(sortStudentByColor(activeBtnColor, filterStudents));
+  }, [filterStudents]);
   return (
     <>
       {store.loading === "loading" ? (
@@ -171,7 +176,7 @@ const page = ({ params }) => {
             <>
               <h4 className="absolute top-[20px] rounded-[5px] text-gray-700 left-[100px] bg-blue-200 p-[7px]">
                 O`quvchilar soni{" "}
-                <span id="count1">{filterStudents.length} </span>
+                <span id="count1">{sortedStudents.length} </span>
               </h4>
               <select
                 className="absolute left-[30%] top-[20px] bg-white p-[10px]"
@@ -256,6 +261,60 @@ const page = ({ params }) => {
                   );
                 })}
               </select>
+              <div className="flex gap-[20px] absolute right-[15%] top-[33px]">
+                <div
+                  className={`border-[1px] cursor-pointer w-[40px] h-[20px] bg-white rounded ${"shadow-[0_3px_10px_rgb(0,0,0,0.2)]"}`}
+                  title="reset"
+                  onClick={() => {
+                    setActiveBtnColor("white");
+                    setSortedStudents(
+                      sortStudentByColor("white", filterStudents)
+                    );
+                  }}
+                ></div>
+                <div
+                  className={`cursor-pointer w-[40px] h-[20px] bg-red-500 rounded ${
+                    activeBtnColor === "red"
+                      ? "shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]"
+                      : ""
+                  }`}
+                  title="To`lov qilmagan"
+                  onClick={() => {
+                    setActiveBtnColor("red");
+                    setSortedStudents(
+                      sortStudentByColor("red", filterStudents)
+                    );
+                  }}
+                ></div>
+                <div
+                  className={`cursor-pointer w-[40px] h-[20px] bg-black rounded ${
+                    activeBtnColor === "black"
+                      ? "shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]"
+                      : ""
+                  }`}
+                  title="To`lov vaqti yetmagan"
+                  onClick={() => {
+                    setActiveBtnColor("black");
+                    setSortedStudents(
+                      sortStudentByColor("black", filterStudents)
+                    );
+                  }}
+                ></div>
+                <div
+                  className={`cursor-pointer w-[40px] h-[20px] bg-green-500 rounded ${
+                    activeBtnColor === "green"
+                      ? "shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]"
+                      : ""
+                  }`}
+                  title="To`lov qilgan"
+                  onClick={() => {
+                    setActiveBtnColor("green");
+                    setSortedStudents(
+                      sortStudentByColor("green", filterStudents)
+                    );
+                  }}
+                ></div>
+              </div>
               <table striped hover variant="light" className="table__students">
                 <thead id="thead__students">
                   <tr className="text-center ">
@@ -273,7 +332,7 @@ const page = ({ params }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filterStudents.map((elem, index) => {
+                  {sortedStudents.map((elem, index) => {
                     return (
                       <StudentsItem key={elem.id} {...elem} index={index} />
                     );
