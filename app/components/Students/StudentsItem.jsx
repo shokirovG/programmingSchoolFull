@@ -34,18 +34,16 @@ const StudentsItem = (props) => {
       <td>{index + 1}</td>
       <td
         className={`${
-          calcPrice(price, foiz, department) == 0
-            ? "active__student"
-            : "danger__student"
+          calcPrice(price, foiz, department) == 0 ? "active__student" : ""
         }
         ${
-          +studentMonthPrice[1] < dateMonth &&
+          +studentMonthPrice[1] <= dateMonth &&
           calcPrice(price, foiz, department) !== 0
             ? "danger__student"
             : ""
         }
          ${
-           date2 < studentDate && calcPrice(price, foiz, department) !== 0
+           date2 <= studentDate && calcPrice(price, foiz, department) !== 0
              ? "norm__student"
              : ""
          } `}

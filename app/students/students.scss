@@ -105,14 +105,15 @@
     overflow-x: auto;
   }
 }
-.norm__student {
-  color: rgb(19, 19, 18) !important;
-}
+
 .active__student {
   color: rgba(27, 198, 27, 0.595) !important;
 }
 .danger__student {
   color: rgba(255, 0, 0, 0.537) !important;
+}
+.norm__student {
+  color: rgb(19, 19, 18) !important;
 }
 .studentGreen {
   color: green !important;
