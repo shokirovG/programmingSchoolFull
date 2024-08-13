@@ -12,14 +12,13 @@ import {
   useDispatch,
   useSelector,
 } from "@/node_modules/react-redux/dist/react-redux";
-import {
-  fetchedGroups,
-  fetchedStudents,
-  fetchingStudents,
-  loaded,
-} from "../redux/actions";
+
 import GroupItem from "./GroupItem";
 import Loader from "../components/Loader/Loader";
+import { loaded, loading } from "../redux/features/loaderSlice";
+import { fetchedGroups } from "../redux/features/groupSlice";
+import { fetchedStudents } from "../redux/features/studentSlice";
+import { getKurses } from "../redux/features/kursSlice";
 
 const page = () => {
   const [open, setOpen] = useState(false);
@@ -29,25 +28,30 @@ const page = () => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const initial = React.useRef(false);
-  const dushanbaTables = store.groups.filter(
+  const dushanbaTables = store.group.groups.filter(
     (elem) => elem.checkBoxValue.Dushanba
   );
-  const shanbaTables = store.groups.filter((elem) => elem.checkBoxValue.Shanba);
-  const seshanbaTables = store.groups.filter(
+  const shanbaTables = store.group.groups.filter(
+    (elem) => elem.checkBoxValue.Shanba
+  );
+  const seshanbaTables = store.group.groups.filter(
     (elem) => elem.checkBoxValue.Seshanba
   );
-  const chorshanbaTables = store.groups.filter(
+  const chorshanbaTables = store.group.groups.filter(
     (elem) => elem.checkBoxValue.Chorshanba
   );
-  const payshanbaTables = store.groups.filter(
+  const payshanbaTables = store.group.groups.filter(
     (elem) => elem.checkBoxValue.Payshanba
   );
-  const jumaTables = store.groups.filter((elem) => elem.checkBoxValue.Juma);
-  const yakshanbaTables = store.groups.filter(
+  const jumaTables = store.group.groups.filter(
+    (elem) => elem.checkBoxValue.Juma
+  );
+  const yakshanbaTables = store.group.groups.filter(
     (elem) => elem.checkBoxValue.Yakshanba
   );
   React.useEffect(() => {
-    dispatch(fetchingStudents());
+    dispatch(loading());
+    dispatch(getKurses({ month: localStorage.getItem("currentMonth") }));
     request(`${process.env.NEXT_PUBLIC_URL}/tables`).then((res) => {
       if (res) {
         if (res) {
@@ -68,11 +72,12 @@ const page = () => {
     if (!initial.current) {
       initial.current = true;
 
-      dispatch(fetchingStudents());
+      dispatch(loading());
       request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
         res.students.forEach((elem) => {
           if (elem.month == localStorage.getItem("currentMonth")) {
             dispatch(fetchedStudents(elem.students));
+            dispatch(loaded());
           }
         });
         dispatch(loaded());
@@ -82,7 +87,7 @@ const page = () => {
 
   return (
     <div className="pb-[70px]">
-      {store.loading === "loading" ? (
+      {store.loader.loading === "loading" ? (
         <Loader />
       ) : (
         <div>
@@ -97,10 +102,10 @@ const page = () => {
             </Fab>
           </Box>
           <div className="absolute top-[33px] left-[120px] text-[22px] rounded bg-slate-300 px-[7px]">
-            Guruhlar soni {store.groups.length}
+            Guruhlar soni {store.group.groups.length}
           </div>
           <div className="flex mx-auto justify-center items-center pt-[20px] gap-[5px] flex-wrap w-[90%]">
-            {store.groups.map((elem) => (
+            {store.group.groups.map((elem) => (
               <GroupItem key={elem ? elem.groupValue : 1} {...elem} />
             ))}
           </div>
@@ -113,8 +118,8 @@ const page = () => {
                     <div class="day-column">
                       <div class="day-header">Dushanba</div>
                       <div class="day-content">
-                        {store.groups.map((elem) => {
-                          const studentsCount = store.students.filter(
+                        {store.group.groups.map((elem) => {
+                          const studentsCount = store.student.students.filter(
                             (item) => item.group === elem.groupValue
                           );
                           if (elem.checkBoxValue.Dushanba) {
@@ -154,8 +159,8 @@ const page = () => {
                     <div class="day-column">
                       <div class="day-header">Seshanba</div>
                       <div class="day-content">
-                        {store.groups.map((elem) => {
-                          const studentsCount = store.students.filter(
+                        {store.group.groups.map((elem) => {
+                          const studentsCount = store.student.students.filter(
                             (item) => item.group === elem.groupValue
                           );
                           if (elem.checkBoxValue.Seshanba) {
@@ -195,8 +200,8 @@ const page = () => {
                     <div class="day-column">
                       <div class="day-header">Chorshanba</div>
                       <div class="day-content">
-                        {store.groups.map((elem) => {
-                          const studentsCount = store.students.filter(
+                        {store.group.groups.map((elem) => {
+                          const studentsCount = store.student.students.filter(
                             (item) => item.group === elem.groupValue
                           );
                           if (elem.checkBoxValue.Chorshanba) {
@@ -236,8 +241,8 @@ const page = () => {
                     <div class="day-column">
                       <div class="day-header">Payshanba</div>
                       <div class="day-content">
-                        {store.groups.map((elem) => {
-                          const studentsCount = store.students.filter(
+                        {store.group.groups.map((elem) => {
+                          const studentsCount = store.student.students.filter(
                             (item) => item.group === elem.groupValue
                           );
                           if (elem.checkBoxValue.Payshanba) {
@@ -277,8 +282,8 @@ const page = () => {
                     <div class="day-column">
                       <div class="day-header">Juma</div>
                       <div class="day-content">
-                        {store.groups.map((elem) => {
-                          const studentsCount = store.students.filter(
+                        {store.group.groups.map((elem) => {
+                          const studentsCount = store.student.students.filter(
                             (item) => item.group === elem.groupValue
                           );
                           if (elem.checkBoxValue.Juma) {
@@ -318,8 +323,8 @@ const page = () => {
                     <div class="day-column">
                       <div class="day-header">Shanba</div>
                       <div class="day-content">
-                        {store.groups.map((elem) => {
-                          const studentsCount = store.students.filter(
+                        {store.group.groups.map((elem) => {
+                          const studentsCount = store.student.students.filter(
                             (item) => item.group === elem.groupValue
                           );
                           if (elem.checkBoxValue.Shanba) {
@@ -359,8 +364,8 @@ const page = () => {
                     <div class="day-column">
                       <div class="day-header">Yakshanba</div>
                       <div class="day-content">
-                        {store.groups.map((elem) => {
-                          const studentsCount = store.students.filter(
+                        {store.group.groups.map((elem) => {
+                          const studentsCount = store.student.students.filter(
                             (item) => item.group === elem.groupValue
                           );
                           if (elem.checkBoxValue.Yakshanba) {

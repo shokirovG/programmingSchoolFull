@@ -1,4 +1,4 @@
-function clickEskiBalans(hisoblar, id) {
+function clickEskiBalans(hisoblar = [], id) {
   let clickEskiBal = 0;
 
   for (let item of hisoblar) {

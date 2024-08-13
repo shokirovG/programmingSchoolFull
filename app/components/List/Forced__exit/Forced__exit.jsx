@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-  fetchedMajburiy,
-  spinnerLoaded,
-  spinnerLoading,
-} from "@/app/redux/actions";
+
 import {
   useDispatch,
   useSelector,
@@ -14,6 +10,8 @@ import { v4 } from "uuid";
 import { toast } from "react-toastify";
 import Spinner from "../../Students/Spinner";
 import numberTrim from "@/app/hooks/number";
+import { fetchedMajburiy } from "@/app/redux/features/hisobotSlice";
+import { spinnerLoaded, spinnerLoading } from "@/app/redux/features/loaderSlice";
 function ForcedExit(props) {
   const store = useSelector((state) => state);
   const { request } = useFetch();
@@ -24,7 +22,7 @@ function ForcedExit(props) {
   const [removeShow, setRemoveShow] = useState(true);
   const removeChiqim = (id) => {
     setRemoveShow(false);
-    const chiqimlar = store.majburiyChiqimlar[0].chiqimlar.filter(
+    const chiqimlar = store.hisobot.majburiyChiqimlar[0].chiqimlar.filter(
       (el) => el.id !== id
     );
     request(
@@ -51,7 +49,7 @@ function ForcedExit(props) {
       chiqimNomi: chiqimValue,
       chiqimMiqdori: miqdorValue,
     };
-    const chiqimlar = store.majburiyChiqimlar.map((elem) => {
+    const chiqimlar = store.hisobot.majburiyChiqimlar.map((elem) => {
       if (elem.month === localStorage.getItem("currentMonth")) {
         return {
           ...elem,
@@ -61,7 +59,7 @@ function ForcedExit(props) {
         return elem;
       }
     });
-    
+
     request(
       `${process.env.NEXT_PUBLIC_URL}/chiqimlar`,
       "POST",
@@ -82,12 +80,12 @@ function ForcedExit(props) {
       const currentMonthChiqim = res.chiqimlar.filter(
         (el) => el.month === localStorage.getItem("currentMonth")
       );
-    
+
       dispatch(fetchedMajburiy(currentMonthChiqim));
     });
   }, []);
   useEffect(() => {
-    const currentMonthChiqim = store.majburiyChiqimlar.filter(
+    const currentMonthChiqim = store.hisobot.majburiyChiqimlar.filter(
       (el) => el.month === localStorage.getItem("currentMonth")
     );
 
@@ -147,7 +145,7 @@ function ForcedExit(props) {
                   }}
                 />
                 <div>
-                  {store.spinnerLoader === "loading" ? (
+                  {store.loader.spinnerLoader === "loading" ? (
                     <Spinner />
                   ) : (
                     <button

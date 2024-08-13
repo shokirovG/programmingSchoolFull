@@ -1,11 +1,6 @@
 //eslint-disable-line
 // eslint-disable-next-line no-use-before-define
 import useFetch from "@/app/hooks/useFetch";
-import {
-  hisobotFetched,
-  spinnerDeleteLoaded,
-  spinnerDeleteLoading,
-} from "@/app/redux/actions";
 
 import {
   useDispatch,
@@ -21,6 +16,12 @@ import calcClickKirim from "@/app/hooks/calcClickKirim";
 import calcClickChiqim from "@/app/hooks/calcClickChiqim";
 import { v4 } from "uuid";
 import Spinner from "../../Students/Spinner";
+import {
+  loaded,
+  spinnerDeleteLoaded,
+  spinnerDeleteLoading,
+} from "@/app/redux/features/loaderSlice";
+import { hisobotFetched } from "@/app/redux/features/hisobotSlice";
 const ChiqimItemModal = ({
   show,
   handleClose,
@@ -42,7 +43,7 @@ const ChiqimItemModal = ({
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
- 
+
   const changeChiqimItem = () => {
     dispatch(spinnerDeleteLoading());
     const newCost = {
@@ -53,7 +54,7 @@ const ChiqimItemModal = ({
       tolovType: tolovTypeS,
       userAvans: userAvansValue,
     };
-    const newHisoblar = store.hisobot[0].hisoblar.map((elem) => {
+    const newHisoblar = store.hisobot.hisobot[0].hisoblar.map((elem) => {
       if (elem.kun == localStorage.getItem("currentDay")) {
         return {
           ...elem,
@@ -100,6 +101,7 @@ const ChiqimItemModal = ({
           },
         ])
       );
+      dispatch(loaded());
       // setCostType("");
       // setCostValue("");
       // setInfoValue("");
@@ -150,7 +152,7 @@ const ChiqimItemModal = ({
             <option value="Kimga" selected disabled>
               Kimga
             </option>
-            {store.workers.map((elem) => (
+            {store.worker.workers.map((elem) => (
               <option value={elem.name}>{elem.name}</option>
             ))}
           </select>
@@ -197,7 +199,7 @@ const ChiqimItemModal = ({
         </div>
       </Modal.Body>
       <Modal.Footer>
-        {store.spinnerDeleteLoader == "loading" ? (
+        {store.loader.spinnerDeleteLoader == "loading" ? (
           <Spinner />
         ) : (
           <Button variant="primary" onClick={changeChiqimItem}>

@@ -8,16 +8,17 @@ import SelectMonth from "../List/Select__Month/SelectMonth";
 import SideBar from "../SideBar";
 import SignIn from "./SignIn";
 import {
-  auth,
-  fetchingStudents,
   loaded,
-  login,
   loginSpinnerLoaded,
   loginSpinnerLoading,
-  logOut,
   setAuthLoading,
+} from "@/app/redux/features/loaderSlice";
+import {
+  getMarkazName,
+  login,
+  logOut,
   setUser,
-} from "@/app/redux/actions";
+} from "@/app/redux/features/authSlice";
 import Loader from "../Loader/Loader";
 import useFetch from "@/app/hooks/useFetch";
 import { redirect, useRouter } from "@/node_modules/next/navigation";
@@ -25,15 +26,17 @@ import axios from "axios";
 const Login = ({ children }) => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { request } = useFetch();
-  const router = useRouter();
+
   const ref = useRef(false);
   useEffect(() => {
     dispatch(setAuthLoading(true));
+    console.log("dispatch");
+    dispatch(getMarkazName());
     if (localStorage.getItem("token") && !ref.current) {
       ref.current = true;
       // dispatch(setAuthLoading(true));
       dispatch(loginSpinnerLoading());
+      dispatch(getMarkazName());
       axios
         .get(`${process.env.NEXT_PUBLIC_URL}/api/refresh`, {
           withCredentials: true,
@@ -43,6 +46,8 @@ const Login = ({ children }) => {
           if (res.data.accessToken) {
             localStorage.setItem("token", res.data.accessToken);
             dispatch(login());
+            dispatch(loaded());
+            dispatch(loginSpinnerLoaded());
             dispatch(setAuthLoading(false));
             dispatch(setUser(res.data.user));
           } else {
@@ -66,10 +71,10 @@ const Login = ({ children }) => {
     }
   }, []);
 
-  if (store.authLoading) {
+  if (store.loader.authLoading) {
     return <Loader />;
   }
-  if (!store.isAuth) {
+  if (!store.auth.isAuth) {
     return <SignIn />;
   }
 

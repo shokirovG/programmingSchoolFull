@@ -1,6 +1,6 @@
 import numberTrim from "@/app/hooks/number";
 import { useSelector } from "@/node_modules/react-redux/dist/react-redux";
-import React from "react";
+import React, { useEffect } from "react";
 import "./table__total.scss";
 import calcPriceTolov from "@/app/hooks/calcPriceTolov";
 import calcQarzPrice from "@/app/hooks/calcQarzPrice";
@@ -8,16 +8,26 @@ import calcCategoryPrice from "@/app/hooks/calcCategoryPrice";
 import calcFoyda from "@/app/hooks/calcFoyda";
 function TableTotal(props) {
   const store = useSelector((state) => state);
+  const yigildiTotal = store.kurs.kurses.reduce((s, item) => {
+    return s + calcPriceTolov(store.student.students, item.kurs);
+  }, 0);
+
+  const yigilishiKerakTotal = store.kurs.kurses.reduce((s, item) => {
+    return s + calcQarzPrice(store.student.students, item.kurs);
+  }, 0);
   let totalPrice = 0;
-  if (store.majburiyChiqimlar.length > 0) {
-    totalPrice = store.majburiyChiqimlar[0].chiqimlar.reduce((s, item) => {
-      return s + Number(item.chiqimMiqdori);
-    }, 0);
+  if (store.hisobot.majburiyChiqimlar.length > 0) {
+    totalPrice = store.hisobot.majburiyChiqimlar[0].chiqimlar.reduce(
+      (s, item) => {
+        return s + Number(item.chiqimMiqdori);
+      },
+      0
+    );
   }
 
   let chiqimlar = [];
-  if (store.hisobot.length > 0) {
-    chiqimlar = store.hisobot[0].hisoblar;
+  if (store.hisobot.hisobot.length > 0) {
+    chiqimlar = store.hisobot.hisobot[0].hisoblar;
   }
 
   return (
@@ -27,88 +37,25 @@ function TableTotal(props) {
           <tr>
             <th>Yig`ildi</th>
             <th>Yig`ilishi kerak</th>
-
-            <th>Balans</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td data-th="Movie Title">
-              Dasturlash:{" "}
-              {numberTrim(calcPriceTolov(store.students, "Dasturlash"))}
-            </td>
-            <td data-th="Movie Title">
-              Dasturlash:{" "}
-              {numberTrim(calcQarzPrice(store.students, "Dasturlash")+calcQarzPrice(store.students, "Dasturlash","Front-12"))}
-            </td>
+          {store.kurs.kurses.map((el) => (
+            <tr>
+              <td data-th="Movie Title">
+                {el.kurs}:{" "}
+                {numberTrim(calcPriceTolov(store.student.students, el.kurs))}
+              </td>
+              <td data-th="Movie Title">
+                {el.kurs}:{" "}
+                {numberTrim(calcQarzPrice(store.student.students, el.kurs))}
+              </td>
+            </tr>
+          ))}
 
-            <td data-th="Year">Kassa: {0}</td>
-          </tr>
-          <tr>
-            <td data-th="Movie Title">
-              K.Savodxonlik: {numberTrim(calcPriceTolov(store.students, "K.S"))}
-            </td>
-            <td data-th="Movie Title">
-              K.Savodxonlik: {numberTrim(calcQarzPrice(store.students, "K.S"))}
-            </td>
-
-            <td data-th="Year">Karta: {0}</td>
-          </tr>
-          <tr>
-            <td data-th="Movie Title">
-              Ingliz tili:{" "}
-              {numberTrim(calcPriceTolov(store.students, "Ingliz-tili"))}
-            </td>
-            <td data-th="Movie Title">
-              Ingliz tili:{" "}
-              {numberTrim(calcQarzPrice(store.students, "Ingliz-tili"))}
-            </td>
-
-            <td data-th="Year"></td>
-          </tr>
-          <tr>
-            <td data-th="Movie Title">
-              Scretch: {numberTrim(calcPriceTolov(store.students, "Scretch"))}
-            </td>
-            <td>
-              Scretch: {numberTrim(calcQarzPrice(store.students, "Scretch"))}
-            </td>
-
-            <td data-th="Year"></td>
-          </tr>
-          <tr>
-            <td data-th="Movie Title"></td>
-
-            <td data-th="Year"></td>
-            <td data-th="Year"></td>
-          </tr>
-          <tr>
-            <td data-th="Movie Title"></td>
-
-            <td data-th="Year"></td>
-            <td data-th="Year"></td>
-          </tr>
           <tr className="table__total_footer">
-            <td data-th="Movie Title">
-              Jami:{" "}
-              {numberTrim(
-                calcPriceTolov(store.students, "Dasturlash") +
-                  calcPriceTolov(store.students, "K.S") +
-                  calcPriceTolov(store.students, "Ingliz-tili") +
-                  calcPriceTolov(store.students, "Scretch")
-              )}
-            </td>
-            <td>
-              Jami:{" "}
-              {numberTrim(
-                calcQarzPrice(store.students, "Dasturlash") +
-                  calcQarzPrice(store.students, "K.S") +
-                  calcQarzPrice(store.students, "Ingliz-tili") +
-                  calcQarzPrice(store.students, "Scretch")
-              )}
-            </td>
-
-            <td data-th="Gross">Jami: 0</td>
+            <td data-th="Movie Title">Jami: {numberTrim(yigildiTotal)}</td>
+            <td>Jami: {numberTrim(yigilishiKerakTotal)}</td>
           </tr>
         </tbody>
       </table>
@@ -121,8 +68,8 @@ function TableTotal(props) {
             </tr>
           </thead>
           <tbody>
-            {store.majburiyChiqimlar.length > 0
-              ? store.majburiyChiqimlar[0].chiqimlar.map((elem) => (
+            {store.hisobot.majburiyChiqimlar.length > 0
+              ? store.hisobot.majburiyChiqimlar[0].chiqimlar.map((elem) => (
                   <tr key={elem.id}>
                     <td data-th="Movie Title">
                       {elem.chiqimNomi}: {numberTrim(+elem.chiqimMiqdori)} so`m
@@ -147,99 +94,99 @@ function TableTotal(props) {
             <tr>
               <td data-th="Gross">
                 Markaz(Naqd):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Markaz", "Naqd"))
-                  : null}
+                  : 0}
               </td>
             </tr>
             <tr>
               <td data-th="Gross">
                 Markaz(Click):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Markaz", "Click"))
-                  : null}
+                  : 0}
               </td>
             </tr>
             <tr>
               <td data-th="Gross">
                 Avans(Naqd):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Avans", "Naqd"))
-                  : null}
+                  : 0}
               </td>
             </tr>
             <tr>
               <td data-th="Gross">
                 Avans(Click):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Avans", "Click"))
-                  : null}
+                  : 0}
               </td>
             </tr>
 
             <tr>
               <td data-th="Gross">
                 Kredit(Click):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Kredit", "Click"))
-                  : null}
+                  : 0}
               </td>
             </tr>
             <tr>
               <td data-th="Gross">
                 Kredit(Naqd):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Kredit", "Naqd"))
-                  : null}
+                  : 0}
               </td>
             </tr>
 
             <tr>
               <td data-th="Gross">
                 Oylik(Naqd):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Oylik", "Naqd"))
-                  : null}
+                  : 0}
               </td>
             </tr>
             <tr>
               <td data-th="Gross">
                 Oylik(Click):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Oylik", "Click"))
-                  : null}
+                  : 0}
               </td>
             </tr>
             <tr>
               <td data-th="Gross">
                 Arenda(Naqd):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Arenda", "Naqd"))
-                  : null}
+                  : 0}
               </td>
             </tr>
             <tr>
               <td data-th="Gross">
                 Arenda(Click):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Arenda", "Click"))
-                  : null}
+                  : 0}
               </td>
             </tr>
             <tr>
               <td data-th="Gross">
                 Qarzlar(Naqd):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Qarzlar", "Naqd"))
-                  : null}
+                  : 0}
               </td>
             </tr>
             <tr>
               <td data-th="Gross">
                 Qarzlar(Click):{" "}
-                {chiqimlar.length > 0
+                {chiqimlar?.length > 0
                   ? numberTrim(calcCategoryPrice(chiqimlar, "Qarzlar", "Click"))
-                  : null}
+                  : 0}
               </td>
             </tr>
             <tr className="table__total_footer">

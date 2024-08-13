@@ -5,16 +5,17 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import useFetch from "@/app/hooks/useFetch";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchedStudents,
-  spinnerLoaded,
-  spinnerLoading,
-} from "@/app/redux/actions";
+
 import Spinner from "./Spinner";
 import { toast } from "react-toastify";
 import Zero from "@/app/hooks/zero";
 import moment from "moment";
-
+import {
+  loaded,
+  spinnerLoaded,
+  spinnerLoading,
+} from "../../redux/features/loaderSlice";
+import { fetchedStudents } from "../../redux/features/studentSlice";
 const StudentChangeModal = ({
   id,
   name,
@@ -57,7 +58,7 @@ const StudentChangeModal = ({
   const changeStudent = (e) => {
     e.preventDefault();
     dispatch(spinnerLoading());
-    const newStudents = store.students.map((el) => {
+    const newStudents = store.student.students.map((el) => {
       if (el.id === id) {
         return {
           ...el,
@@ -75,10 +76,11 @@ const StudentChangeModal = ({
     request(
       `${process.env.NEXT_PUBLIC_URL}/students`,
       "PUT",
-      JSON.stringify({ month: store.currentMonth, students: newStudents })
+      JSON.stringify({ month: store.month.currentMonth, students: newStudents })
     ).then(() => {
       dispatch(fetchedStudents(newStudents));
       dispatch(spinnerLoaded());
+      dispatch(loaded());
       handleClose();
       toast.info("o'quvchi ma'lumoti yangilandi!");
     });
@@ -117,7 +119,7 @@ const StudentChangeModal = ({
                 Guruh
               </option>
 
-              {store.groups.map((elem) => (
+              {store.group.groups.map((elem) => (
                 <option value={elem.groupValue}>{elem.groupValue}</option>
               ))}
             </select>
@@ -194,7 +196,7 @@ const StudentChangeModal = ({
                 }}
               />
             </div>
-            {store.spinnerLoader === "loading" ? (
+            {store.loader.spinnerLoader === "loading" ? (
               <Spinner />
             ) : (
               <input

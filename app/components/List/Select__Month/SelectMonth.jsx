@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import "./month.scss";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  changeMonthAction,
-  fetchedStudents,
-  fetchedWorkers,
-  fetchingStudents,
-  hisobotFetched,
-  loaded,
-} from "../../../redux/actions";
+
 import useFetch from "../../../hooks/useFetch";
+import { loaded, loading } from "../../../redux/features/loaderSlice";
+import { fetchedWorkers } from "../../../redux/features/workerSlice";
+import { hisobotFetched } from "../../../redux/features/hisobotSlice";
+import { fetchedStudents } from "../../../redux/features/studentSlice";
+import { changeMonthAction } from "../../../redux/features/monthSlice";
+import { getKurses } from "@/app/redux/features/kursSlice";
 function SelectMonth() {
   const date = new Date();
   const dispatch = useDispatch();
@@ -17,7 +16,8 @@ function SelectMonth() {
   const { request } = useFetch();
 
   const changeMonth = (e) => {
-    dispatch(fetchingStudents());
+    dispatch(loading());
+
     request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
       const workers = res.workers.filter(
         (elem) => elem.month === e.target.value
@@ -34,6 +34,7 @@ function SelectMonth() {
         (el) => el.month === localStorage.getItem("currentMonth")
       );
       dispatch(hisobotFetched(currentHisobot));
+      dispatch(loaded());
     });
 
     localStorage.setItem("currentMonth", e.target.value);
@@ -56,16 +57,18 @@ function SelectMonth() {
           k++;
 
           dispatch(fetchedStudents(elem.students));
+          dispatch(loaded());
         }
       }
       if (k === 0) {
         dispatch(fetchedStudents([]));
+        dispatch(loaded());
       }
     });
   };
   useEffect(() => {
     const options = document.querySelectorAll("#monthOption");
-
+    dispatch(getKurses({ month: localStorage.getItem("currentMonth") }));
     for (let option of options) {
       if (option.value == localStorage.getItem("currentMonth")) {
         option.setAttribute("selected", true);
@@ -87,6 +90,9 @@ function SelectMonth() {
       dispatch(changeMonthAction(localStorage.getItem("currentMonth")));
     }
   }, []);
+  useEffect(() => {
+    dispatch(getKurses({ month: localStorage.getItem("currentMonth") }));
+  }, [localStorage.getItem("currentMonth")]);
   return (
     <div className="selectdiv">
       <label>

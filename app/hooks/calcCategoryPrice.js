@@ -1,4 +1,4 @@
-function calcCategoryPrice(chiqimlar, category, type) {
+function calcCategoryPrice(chiqimlar , category, type) {
   let chiqimlarTotal = 0;
   for (let el of chiqimlar) {
     const chiqimlarFilter = el.hisobot.chiqim.filter(

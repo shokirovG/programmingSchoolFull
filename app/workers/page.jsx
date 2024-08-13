@@ -3,13 +3,7 @@
 import { useSelector } from "react-redux";
 import React, { useEffect, useRef, useState } from "react";
 import TeacherItem from "./TeacherItem";
-import {
-  fetchedStudents,
-  fetchedWorkers,
-  fetchingStudents,
-  hisobotFetched,
-  loaded,
-} from "../redux/actions";
+
 import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
 import useFetch from "../hooks/useFetch";
 import Loader from "../components/Loader/Loader";
@@ -22,6 +16,10 @@ import WorkerModal from "./WorkerModal";
 import WorkerAddModal from "./WorkerAddModal";
 import Image from "@/node_modules/next/image";
 import { redirect } from "@/node_modules/next/navigation";
+import { loaded, loading } from "../redux/features/loaderSlice";
+import { fetchedWorkers } from "../redux/features/workerSlice";
+import { fetchedStudents } from "../redux/features/studentSlice";
+import { hisobotFetched } from "../redux/features/hisobotSlice";
 const Workers = () => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -35,12 +33,12 @@ const Workers = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   useEffect(() => {
-    dispatch(fetchingStudents());
+    dispatch(loading());
     request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
       const workers = res.workers.filter(
         (elem) => elem.month === localStorage.getItem("currentMonth")
       );
-
+      fetchedStudents;
       if (workers.length > 0) {
         dispatch(fetchedWorkers(workers[0].workers));
       }
@@ -52,6 +50,7 @@ const Workers = () => {
         res.students.forEach((elem) => {
           if (elem.month == localStorage.getItem("currentMonth")) {
             dispatch(fetchedStudents(elem.students));
+            dispatch(loaded());
           }
         });
         dispatch(loaded());
@@ -62,26 +61,27 @@ const Workers = () => {
         );
 
         dispatch(hisobotFetched(currentHisobot));
+        dispatch(loaded());
       });
     }
   }, []);
 
   useEffect(() => {
-    if (store.hisobot.length > 0) {
-      setChiqimlar(store.hisobot[0].hisoblar);
+    if (store.hisobot.hisobot.length > 0) {
+      setChiqimlar(store.hisobot.hisobot[0].hisoblar);
     }
   }, [store]);
-  if (store.loading === "loading") {
+  if (store.loader.loading === "loading") {
     return <Loader />;
   }
 
-  if (store.user.rol === "admin" || store.user.rol === "menejer") {
+  if (store.auth.user.rol === "admin" || store.auth.user.rol === "menejer") {
     localStorage.setItem("currentPage", "students");
 
     redirect("/students");
   }
 
-  if (store.user.rol === "direktor") {
+  if (store.auth.user.rol === "direktor") {
     return (
       <>
         <Image
@@ -94,7 +94,7 @@ const Workers = () => {
         />
         <WorkerAddModal show={show} handleClose={handleClose} />
         <div className="workers__list flex flex-wrap  gap-[20px] justify-center mt-[100px] pb-[100px]">
-          {store.workers.map((elem) => (
+          {store.worker.workers.map((elem) => (
             <TeacherItem
               department={elem.department}
               chiqimlar={chiqimlar}

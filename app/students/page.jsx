@@ -16,18 +16,18 @@ import StudentChangeModal from "../components/Students/StudentChangeModal";
 import Loader from "../components/Loader/Loader";
 import Spinner from "../components/Students/Spinner";
 import StudentsItem from "../components/Students/StudentsItem";
-import {
-  fetchedStudents,
-  fetchingStudents,
-  addStudent,
-  loaded,
-  spinnerLoading,
-  spinnerLoaded,
-  fetchedGroups,
-} from "../redux/actions";
+import { fetchedGroups } from "../redux/features/groupSlice";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Zero from "../hooks/zero";
 import sortStudentByColor from "../hooks/sortStudentByColor";
+import {
+  loaded,
+  loading,
+  spinnerLoaded,
+  spinnerLoading,
+} from "../redux/features/loaderSlice";
+import { addStudent, fetchedStudents } from "../redux/features/studentSlice";
+import { getKurses } from "../redux/features/kursSlice";
 /* eslint-disable */
 const page = ({ params }) => {
   const [group, setGroup] = useState("");
@@ -40,7 +40,7 @@ const page = ({ params }) => {
 
   const dispatch = useDispatch();
   const store = useSelector((state) => state);
-  const currentMonth = store.currentMonth;
+  const currentMonth = store.month.currentMonth;
   const [filterStudents, setFilterStudents] = useState([]);
   const [filterGroup, setFilterGroup] = useState("Barcha guruhlar");
   const date = new Date();
@@ -58,7 +58,7 @@ const page = ({ params }) => {
   const [sortedStudents, setSortedStudents] = useState([]);
   const addStudentForm = (e) => {
     e.preventDefault();
-    const findStudent = store.students.findIndex(
+    const findStudent = store.student.students.findIndex(
       (el) => el.name.trim() == name.trim()
     );
     if (findStudent > 0) {
@@ -82,7 +82,7 @@ const page = ({ params }) => {
           "POST",
           JSON.stringify({
             month: localStorage.getItem("currentMonth"),
-            students: [...store.students, newStudent],
+            students: [...store.student.students, newStudent],
           })
         )
           .then((res) => {})
@@ -92,6 +92,7 @@ const page = ({ params }) => {
             toast.success("asdsad");
 
             dispatch(addStudent(newStudent));
+            dispatch(loaded());
             dispatch(spinnerLoaded());
           });
       } else {
@@ -103,7 +104,8 @@ const page = ({ params }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchingStudents());
+    dispatch(loading());
+    dispatch(getKurses({ month: localStorage.getItem("currentMonth") }));
     request(`${process.env.NEXT_PUBLIC_URL}/tables`).then((res) => {
       if (res) {
         if (res) {
@@ -127,6 +129,7 @@ const page = ({ params }) => {
         res.students.forEach((elem) => {
           if (elem.month == localStorage.getItem("currentMonth")) {
             dispatch(fetchedStudents(elem.students));
+            dispatch(loaded());
             setFilterStudents(elem.students);
             setSortedStudents(
               sortStudentByColor(activeBtnColor, elem.students)
@@ -138,13 +141,16 @@ const page = ({ params }) => {
   }, []);
 
   useEffect(() => {
-    const newStudents = store.students.filter((el) => el.group === filterGroup);
-    const departmentStudents = store.students.filter(
+    const newStudents = store.student.students.filter(
+      (el) => el.group === filterGroup
+    );
+    const departmentStudents = store.student.students.filter(
       (el) => el.department === filterDepartment
     );
-    const a = filterGroup !== "Barcha guruhlar" ? newStudents : store.students;
+    const a =
+      filterGroup !== "Barcha guruhlar" ? newStudents : store.student.students;
     if (filterDepartment === "Barcha kafedralar") {
-      setFilterStudents(store.students);
+      setFilterStudents(store.student.students);
     } else {
       setFilterStudents(
         filterGroup === "Barcha guruhlar" ? departmentStudents : newStudents
@@ -154,9 +160,10 @@ const page = ({ params }) => {
   useEffect(() => {
     setSortedStudents(sortStudentByColor(activeBtnColor, filterStudents));
   }, [filterStudents]);
+  console.log("a", store.kurs);
   return (
     <>
-      {store.loading === "loading" ? (
+      {store.loader.loading === "loading" ? (
         <Loader />
       ) : (
         <div>
@@ -170,7 +177,7 @@ const page = ({ params }) => {
             data-bs-toggle="modal"
             data-bs-target="#exampleModalAddStudent"
           />
-          {store.students.length === 0 ? (
+          {store.student.students.length === 0 ? (
             <h2 className="emptyH2">O'quvchilar topilmadi!</h2>
           ) : (
             <>
@@ -185,8 +192,8 @@ const page = ({ params }) => {
                   setFilterGroup("Barcha guruhlar");
                   const newGroups =
                     e.target.value === "Barcha kafedralar"
-                      ? store.groups
-                      : store.groups.filter(
+                      ? store.group.groups
+                      : store.group.groups.filter(
                           (elem) => elem.departmentValue === e.target.value
                         );
                   setFilterGroupsStore(newGroups);
@@ -196,13 +203,13 @@ const page = ({ params }) => {
                   for (let item of newGroups) {
                     newStudents2 = [
                       ...newStudents2,
-                      ...store.students.filter(
+                      ...store.student.students.filter(
                         (el) => el.group === item.groupValue
                       ),
                     ];
                   }
                   if (e.target.value === "Barcha kafedralar") {
-                    setFilterStudents(store.students);
+                    setFilterStudents(store.student.students);
                   } else {
                     setFilterStudents(newStudents2);
                   }
@@ -211,20 +218,16 @@ const page = ({ params }) => {
                 <option selected value="Barcha kafedralar">
                   Barcha Kafedralar
                 </option>
-                <option value="Dasturlash">Dasturlash</option>
-                <option value="K.S">K.S</option>
-
-                <option value="Scretch">Scretch</option>
-                <option value="Ingliz-tili">Ingliz-tili</option>
-                <option value="Python">Python</option>
-                <option value="Grafik-Dizayn">Grafik-Dizayn</option>
+                {store.kurs.kurses.map((kurs) => (
+                  <option value={kurs.kurs}>{kurs.kurs}</option>
+                ))}
               </select>
               <select
                 className="absolute left-[45%] top-[20px] bg-white p-[10px]"
                 value={filterGroup}
                 onChange={(e) => {
                   setFilterGroup(e.target.value);
-                  const newStudents = store.students.filter(
+                  const newStudents = store.student.students.filter(
                     (el) => el.group === e.target.value
                   );
                   let newStudents2 = [];
@@ -232,7 +235,7 @@ const page = ({ params }) => {
                   for (let item of filterGroupsStore) {
                     newStudents2 = [
                       ...newStudents2,
-                      ...store.students.filter(
+                      ...store.student.students.filter(
                         (el) => el.group === item.groupValue
                       ),
                     ];
@@ -242,7 +245,7 @@ const page = ({ params }) => {
                     e.target.value === "Barcha guruhlar" &&
                     filterDepartment === "Barcha kafedralar"
                   ) {
-                    setFilterStudents(store.students);
+                    setFilterStudents(store.student.students);
                   } else {
                     setFilterStudents(
                       e.target.value !== "Barcha guruhlar"
@@ -385,7 +388,7 @@ const page = ({ params }) => {
                       <option selected disabled>
                         Guruh
                       </option>
-                      {store.groups.map((elem) => (
+                      {store.group.groups.map((elem) => (
                         <option value={elem.groupValue}>
                           {elem.groupValue}
                         </option>
@@ -464,7 +467,7 @@ const page = ({ params }) => {
                         Guruh va Kafedrani tanlang
                       </p>
                     ) : null}
-                    {store.spinnerLoader === "loading" ? (
+                    {store.loader.spinnerLoader === "loading" ? (
                       <Spinner />
                     ) : (
                       <button class="btn btn-success" id="addStudentBtn">

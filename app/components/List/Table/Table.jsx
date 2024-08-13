@@ -66,20 +66,26 @@ function Table(props) {
         <h5 className="m-0 text-cyan-400 text-[15px]">
           Kassa:{" "}
           {numberTrim(
-            naqdEskiBalans(store.hisobot[0].hisoblar, props.hisobot.id)
+            naqdEskiBalans(store.hisobot.hisobot[0].hisoblar, props.hisobot.id)
           )}
         </h5>
         <h5 className="m-0 text-blue-200 text-[15px]">
           Karta:{" "}
           {numberTrim(
-            clickEskiBalans(store.hisobot[0].hisoblar, props.hisobot.id)
+            clickEskiBalans(store.hisobot.hisobot[0].hisoblar, props.hisobot.id)
           )}
         </h5>
         <h5 className="m-0 text-[15px]">
           Umumiy Balans:{" "}
           {numberTrim(
-            naqdEskiBalans(store.hisobot[0].hisoblar, props.hisobot.id) +
-              clickEskiBalans(store.hisobot[0].hisoblar, props.hisobot.id)
+            naqdEskiBalans(
+              store.hisobot.hisobot[0].hisoblar,
+              props.hisobot.id
+            ) +
+              clickEskiBalans(
+                store.hisobot.hisobot[0].hisoblar,
+                props.hisobot.id
+              )
           )}
         </h5>
       </div>

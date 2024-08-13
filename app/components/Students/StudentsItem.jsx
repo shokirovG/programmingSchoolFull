@@ -1,5 +1,5 @@
 "use client";
-import Image from "@/node_modules/next/image";
+
 import React from "react";
 import StudentChangeModal from "./StudentChangeModal";
 import { useState } from "react";
@@ -7,7 +7,8 @@ import numberTrim from "@/app/hooks/number";
 import { calcPrice } from "@/app/hooks/calcPrice";
 import StudentRemoveModal from "../Students/StudentRemoveModal";
 import moment from "moment";
-import { render } from "react-dom";
+import { useSelector } from "@/node_modules/react-redux/dist/react-redux";
+
 const StudentsItem = (props) => {
   const [show, setShow] = useState(false);
   const {
@@ -28,22 +29,26 @@ const StudentsItem = (props) => {
   const date2 = +moment(date).format("DD/MM/YYYY").slice(0, 2);
   const studentMonthPrice = moment(priceDate).format("DD/MM/YYYY").split("/");
   const dateMonth = date.getMonth() + 1;
+  const store = useSelector((state) => state);
 
   return (
     <tr key={id} className={`px-[20px] text-center h-[54px]  `}>
       <td>{index + 1}</td>
       <td
         className={`${
-          calcPrice(price, foiz, department) == 0 ? "active__student" : ""
+          calcPrice(price, foiz, department, store) == 0
+            ? "active__student"
+            : ""
         }
         ${
           +studentMonthPrice[1] <= dateMonth &&
-          calcPrice(price, foiz, department) !== 0
+          calcPrice(price, foiz, department, store) !== 0
             ? "danger__student"
             : ""
         }
          ${
-           date2 <= studentDate && calcPrice(price, foiz, department) !== 0
+           date2 <= studentDate &&
+           calcPrice(price, foiz, department, store) !== 0
              ? "norm__student"
              : ""
          } `}
@@ -53,18 +58,18 @@ const StudentsItem = (props) => {
       <td>{group}</td>
       <td>{department}</td>
       <td>{numberTrim(price)} so`m</td>
-      <td>{numberTrim(calcPrice(price, foiz, department))} so`m</td>
+      <td>{numberTrim(calcPrice(price, foiz, department, store))} so`m</td>
 
       <td>{numberTrim(foiz)} so`m</td>
 
       <td>{moment(created).format("DD/MM/YYYY")}</td>
       <td
         className={`${
-          calcPrice(price, foiz, department) == 0
+          calcPrice(price, foiz, department, store) == 0
             ? "active__student"
             : "danger__student"
         } ${
-          date2 < studentDate && calcPrice(price, foiz, department) !== 0
+          date2 < studentDate && calcPrice(price, foiz, department, store) !== 0
             ? "norm__student"
             : ""
         }`}

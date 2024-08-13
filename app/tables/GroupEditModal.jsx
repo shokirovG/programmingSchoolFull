@@ -4,12 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Checkbox from "@mui/material/Checkbox";
 import { pink } from "@mui/material/colors";
-import {
-  fetchedGroups,
-  fetchedWorkers,
-  spinnerLoaded,
-  spinnerLoading,
-} from "../redux/actions";
+
 import { toast } from "react-toastify";
 import {
   useDispatch,
@@ -17,8 +12,9 @@ import {
 } from "@/node_modules/react-redux/dist/react-redux";
 import useFetch from "../hooks/useFetch";
 import Spinner from "../components/Students/Spinner";
+import { spinnerLoaded, spinnerLoading } from "../redux/features/loaderSlice";
+import { fetchedGroups } from "../redux/features/groupSlice";
 const GroupEditModal = ({ handleClose, show, props }) => {
- 
   const [departmentValue, setDepartmentValue] = useState(props.departmentValue);
   const [teacherValue, setTeacherValue] = useState(props.teacherValue);
   const [groupValue, setGroupValue] = useState(props.groupValue);
@@ -33,8 +29,8 @@ const GroupEditModal = ({ handleClose, show, props }) => {
   const addGroup = () => {
     dispatch(spinnerLoading());
 
-    const a = store.groups.filter((elem) => elem.groupValue == "sdsa");
-    const groups = store.groups.map((elem) => {
+    const a = store.group.groups.filter((elem) => elem.groupValue == "sdsa");
+    const groups = store.group.groups.map((elem) => {
       if (elem.id == props.id) {
         return {
           ...elem,
@@ -65,7 +61,7 @@ const GroupEditModal = ({ handleClose, show, props }) => {
   const removeGroup = () => {
     dispatch(spinnerLoading());
 
-    const groups = store.groups.filter((elem) => elem.id !== props.id);
+    const groups = store.group.groups.filter((elem) => elem.id !== props.id);
 
     request(
       `${process.env.NEXT_PUBLIC_URL}/tables`,
@@ -110,10 +106,9 @@ const GroupEditModal = ({ handleClose, show, props }) => {
               <option selected disabled>
                 Kafedra
               </option>
-              <option value="Dasturlash">Dasturlash</option>
-              <option value="Scretch">Scretch</option>
-              <option value="K.S">K.S</option>
-              <option value="Ingliz-tili">Ingliz-tili</option>
+              {store.kurs.kurses.map((kurs) => (
+                <option value={kurs.kurs}>{kurs.kurs}</option>
+              ))}
             </select>
             <input
               type="text"
@@ -134,7 +129,7 @@ const GroupEditModal = ({ handleClose, show, props }) => {
               <option selected disabled>
                 O`qituvchisi
               </option>
-              {store.workers.map((item) => (
+              {store.worker.workers.map((item) => (
                 <option key={item.name} value={item.name}>
                   {item.name}
                 </option>
@@ -164,6 +159,7 @@ const GroupEditModal = ({ handleClose, show, props }) => {
                 setLessonTimeValue(e.target.value);
               }}
             />
+
             <div className="flex gap-[5px] items-center flex-wrap justify-evenly">
               <div className="border-[1px] border-black-200 inline-block rounded pl-[3px]">
                 <span>Dushanba</span>{" "}
@@ -270,7 +266,7 @@ const GroupEditModal = ({ handleClose, show, props }) => {
             </Button>
             <div className="flex gap-[10px] items-center">
               <Button variant="secondary">Chiqish</Button>
-              {store.spinnerLoader === "loading" ? (
+              {store.loader.spinnerLoader === "loading" ? (
                 <Spinner />
               ) : (
                 <Button variant="success" onClick={addGroup}>

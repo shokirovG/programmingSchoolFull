@@ -27,14 +27,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { request } = useFetch();
+  
 
-  useEffect(() => {
-    // request(`${process.env.NEXT_PUBLIC_URL}/auth`).then((res: any) => {
-    //   if (!res.isAuth) {
-    //   }
-    // });
-  });
+
 
   return (
     <Provider store={store}>

@@ -20,6 +20,3 @@ BAGLAR:
 6.mart oyi boshidan avans berish dagi selectDAGILARNI baza bo`yicha chiqadigan qilish kerak , agar hozir qilsam ismi o`zgarib avans ni hisoblamaydi
 7.to`lovlarni ham o`quvchilarni guruhini ham hammasini id bo`yicha bazaga qo`shadigan qilish kerak
 
-BAG-1 
-chiqimni aynan avansni o`zgartirsa boshqa joyga ham chiqib qolayabdi.
-kirimni ham test qilib korish kerak

@@ -1,0 +1,7 @@
+export { default as authSlice } from "./authSlice";
+export { default as groupSlice } from "./groupSlice";
+export { default as hisobotSlice } from "./hisobotSlice";
+export { default as loaderSlice } from "./loaderSlice";
+export { default as monthSlice } from "./monthSlice";
+export { default as studentSlice } from "./studentSlice";
+export { default as workerSlice } from "./workerSlice";

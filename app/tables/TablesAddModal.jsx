@@ -5,12 +5,7 @@ import Button from "react-bootstrap/Button";
 import Checkbox from "@mui/material/Checkbox";
 import { pink } from "@mui/material/colors";
 import { v4 } from "uuid";
-import {
-  fetchedGroups,
-  fetchedWorkers,
-  spinnerLoaded,
-  spinnerLoading,
-} from "../redux/actions";
+
 import { toast } from "react-toastify";
 import {
   useDispatch,
@@ -18,6 +13,9 @@ import {
 } from "@/node_modules/react-redux/dist/react-redux";
 import useFetch from "../hooks/useFetch";
 import Spinner from "../components/Students/Spinner";
+import { spinnerLoaded, spinnerLoading } from "../redux/features/loaderSlice";
+import { fetchedGroups } from "../redux/features/groupSlice";
+import { fetchedWorkers } from "../redux/features/workerSlice";
 const TablesAddModal = ({ handleClose, open }) => {
   const [departmentValue, setDepartmentValue] = useState("Kafedra");
   const [teacherValue, setTeacherValue] = useState("O`qituvchisi");
@@ -77,7 +75,7 @@ const TablesAddModal = ({ handleClose, open }) => {
   const addGroup = () => {
     dispatch(spinnerLoading());
     const groups = [
-      ...store.groups,
+      ...store.group.groups,
       {
         id: v4(),
         departmentValue,
@@ -144,10 +142,9 @@ const TablesAddModal = ({ handleClose, open }) => {
               <option selected disabled>
                 Kafedra
               </option>
-              <option value="Dasturlash">Dasturlash</option>
-              <option value="Scretch">Scretch</option>
-              <option value="K.S">K.S</option>
-              <option value="Ingliz-tili">Ingliz-tili</option>
+              {store.kurs.kurses.map((kurs) => (
+                <option value={kurs.kurs}>{kurs.kurs}</option>
+              ))}
             </select>
             <input
               type="text"
@@ -168,7 +165,7 @@ const TablesAddModal = ({ handleClose, open }) => {
               <option selected disabled>
                 O`qituvchisi
               </option>
-              {store.workers.map((item) => (
+              {store.worker.workers.map((item) => (
                 <option key={item.name} value={item.name}>
                   {item.name}
                 </option>
@@ -301,7 +298,7 @@ const TablesAddModal = ({ handleClose, open }) => {
           <Button variant="secondary" onClick={handleClose}>
             Chiqish
           </Button>
-          {store.spinnerLoader === "loading" ? (
+          {store.loader.spinnerLoader === "loading" ? (
             <Spinner />
           ) : (
             <Button variant="success" onClick={addGroup}>

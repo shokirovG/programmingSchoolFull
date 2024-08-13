@@ -29,9 +29,9 @@ const TeacherItem = ({
     }
   }
   const foizOylik = group.reduce((s, elem) => {
-    const hisob = store.students.reduce((s, item) => {
+    const hisob = store.student.students.reduce((s, item) => {
       if (item.group.toUpperCase() === elem.toUpperCase()) {
-        const narx = calcPrice(0, item.foiz, department);
+        const narx = calcPrice(0, item.foiz, department, store);
 
         return s + Number(narx);
       } else {
@@ -41,9 +41,9 @@ const TeacherItem = ({
 
     return s + Number(hisob);
   }, 0);
-
+  console.log("oylik", foizOylik);
   let balans = group.reduce((s, elem) => {
-    const hisob = store.students.reduce((s, item) => {
+    const hisob = store.student.students.reduce((s, item) => {
       if (item.group.toUpperCase() === elem.toUpperCase()) {
         const narx = item.price;
 

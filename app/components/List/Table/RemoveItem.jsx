@@ -1,5 +1,5 @@
 import useFetch from "@/app/hooks/useFetch";
-import { hisobotFetched } from "@/app/redux/actions";
+
 import {
   useDispatch,
   useSelector,
@@ -7,13 +7,15 @@ import {
 import { toast } from "react-toastify";
 import Image from "next/image";
 import React from "react";
+import { hisobotFetched } from "@/app/redux/features/hisobotSlice";
+import { loaded } from "@/app/redux/features/loaderSlice";
 
 const RemoveItem = ({ kun }) => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
   const removeTodo = () => {
-    const newHisoblar = store.hisobot[0].hisoblar.filter(
+    const newHisoblar = store.hisobot.hisobot[0].hisoblar.filter(
       (elem) => elem.kun != localStorage.getItem("currentDay")
     );
     request(
@@ -32,7 +34,7 @@ const RemoveItem = ({ kun }) => {
           },
         ])
       );
-
+      dispatch(loaded());
       toast.error("hisobot o`chirildi!");
     });
   };

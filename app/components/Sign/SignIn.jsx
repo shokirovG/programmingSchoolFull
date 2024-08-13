@@ -1,15 +1,6 @@
 "use client";
 
 import {
-  fetchingStudents,
-  loaded,
-  login,
-  loginSpinnerLoaded,
-  loginSpinnerLoading,
-  setUser,
-  signIn,
-} from "@/app/redux/actions";
-import {
   useDispatch,
   useSelector,
 } from "@/node_modules/react-redux/dist/react-redux";
@@ -18,6 +9,12 @@ import React, { useState } from "react";
 import "./sign.scss";
 import axios from "axios";
 import { LoginSpinner } from "../LoginSpinner";
+import { login, setUser } from "@/app/redux/features/authSlice";
+import {
+  loaded,
+  loginSpinnerLoaded,
+  loginSpinnerLoading,
+} from "@/app/redux/features/loaderSlice";
 
 const SignIn = ({ loginBtn }) => {
   const [email, setEmail] = useState("");
@@ -42,6 +39,8 @@ const SignIn = ({ loginBtn }) => {
       // dispatch(fetchingStudents());
       localStorage.setItem("token", response.data.accessToken);
       dispatch(login());
+      dispatch(loaded());
+      dispatch(loginSpinnerLoaded());
       dispatch(setUser(response.data.user));
     } else {
       setInfo(response.data.message);
@@ -74,7 +73,7 @@ const SignIn = ({ loginBtn }) => {
             type="submit"
             class="btn btn-primary btn-block btn-large btnLogin"
           >
-            {store.loginSpinner === "loading" ? (
+            {store.loader.loginSpinner === "loading" ? (
               <LoginSpinner />
             ) : (
               <span>Kirish</span>

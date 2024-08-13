@@ -6,10 +6,11 @@ import calcPriceTolov from "@/app/hooks/calcPriceTolov";
 import calcQarzPrice from "@/app/hooks/calcQarzPrice";
 import calcCategoryPrice from "@/app/hooks/calcCategoryPrice";
 import useFetch from "../hooks/useFetch";
-import { fetchedMajburiy } from "../redux/actions";
+
 import balans1 from "../hooks/foyda/balans1";
 import balans2 from "../hooks/foyda/balans2";
 import foyda from "../hooks/foyda/foyda";
+import { fetchedMajburiy } from "../redux/features/hisobotSlice";
 const FoydaItem = ({ chiqimlar }) => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -17,24 +18,20 @@ const FoydaItem = ({ chiqimlar }) => {
   const [showCard, setShowCard] = useState({ show: false });
   let majburiyTotal = 0;
   let totalPriceFoyda = 0;
-  for (let worker of store.workers) {
+  for (let worker of store.worker.workers) {
     if (worker.priceType === "foiz") {
       for (let group of worker.groups) {
         totalPriceFoyda +=
-          calcPriceTolov(store.students, worker.department, group) +
-          calcQarzPrice(store.students, worker.department);
+          calcPriceTolov(store.student.students, worker.department, group) +
+          calcQarzPrice(store.student.students, worker.department);
       }
     } else if (worker.priceType === "o`zgarmas" && worker.groups.length !== 0) {
       totalPriceFoyda += worker.price;
     }
   }
 
-
-
-
-
   let foydaBalans = 0;
-  for (let item of store.students) {
+  for (let item of store.student.students) {
     if (item.department === "Ingliz-tili" || item.group === "Front-12") {
       foydaBalans += item.price * 0.5;
     }
@@ -61,7 +58,7 @@ const FoydaItem = ({ chiqimlar }) => {
       const currentMonthChiqim = res.chiqimlar.filter(
         (el) => el.month === localStorage.getItem("currentMonth")
       );
-   
+
       dispatch(fetchedMajburiy(currentMonthChiqim));
     });
   }, []);
@@ -81,23 +78,26 @@ const FoydaItem = ({ chiqimlar }) => {
         <span className="text-[22px] ">Markaz</span>{" "}
         <span
           className={`${
-            balans1(store.students, store.workers, chiqimlar) >= 0
+            balans1(store.student.students, store.worker.workers, chiqimlar) >=
+            0
               ? "text-green-500"
               : "text-red-500"
           }`}
         >
           {numberTrim(
-            Math.floor(balans1(store.students, store.workers, chiqimlar))
+            Math.floor(
+              balans1(store.student.students, store.worker.workers, chiqimlar)
+            )
           )}
         </span>
         /
         <span
           className={`${
             balans2(
-              store.students,
-              store.workers,
+              store.student.students,
+              store.worker.workers,
               chiqimlar,
-              store.majburiyChiqimlar
+              store.hisobot.majburiyChiqimlar
             ) >= 0
               ? "text-green-500"
               : "text-red-500"
@@ -106,10 +106,10 @@ const FoydaItem = ({ chiqimlar }) => {
           {numberTrim(
             Math.floor(
               balans2(
-                store.students,
-                store.workers,
+                store.student.students,
+                store.worker.workers,
                 chiqimlar,
-                store.majburiyChiqimlar
+                store.hisobot.majburiyChiqimlar
               )
             )
           )}
@@ -124,10 +124,10 @@ const FoydaItem = ({ chiqimlar }) => {
             {numberTrim(
               Math.floor(
                 foyda(
-                  store.students,
-                  store.workers,
+                  store.student.students,
+                  store.worker.workers,
                   chiqimlar,
-                  store.majburiyChiqimlar
+                  store.hisobot.majburiyChiqimlar
                 )
               )
             )}{" "}
@@ -160,10 +160,10 @@ const FoydaItem = ({ chiqimlar }) => {
           <span>
             {Math.floor(
               foyda(
-                store.students,
-                store.workers,
+                store.student.students,
+                store.worker.workers,
                 chiqimlar,
-                store.majburiyChiqimlar
+                store.hisobot.majburiyChiqimlar
               ) -
                 (calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
                   calcCategoryPrice(chiqimlar, "Markaz", "Click") +
@@ -180,10 +180,10 @@ const FoydaItem = ({ chiqimlar }) => {
                 {numberTrim(
                   Math.floor(
                     foyda(
-                      store.students,
-                      store.workers,
+                      store.student.students,
+                      store.worker.workers,
                       chiqimlar,
-                      store.majburiyChiqimlar
+                      store.hisobot.majburiyChiqimlar
                     ) -
                       (calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
                         calcCategoryPrice(chiqimlar, "Markaz", "Click") +
@@ -202,10 +202,10 @@ const FoydaItem = ({ chiqimlar }) => {
                 {numberTrim(
                   Math.floor(
                     foyda(
-                      store.students,
-                      store.workers,
+                      store.student.students,
+                      store.worker.workers,
                       chiqimlar,
-                      store.majburiyChiqimlar
+                      store.hisobot.majburiyChiqimlar
                     ) -
                       (calcCategoryPrice(chiqimlar, "Markaz", "Naqd") +
                         calcCategoryPrice(chiqimlar, "Markaz", "Click") +

@@ -25,8 +25,8 @@ function List() {
   const [tableItems, setTableItems] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (store.hisobot.length > 0) {
-      setTableItems(store.hisobot[0].hisoblar);
+    if (store.hisobot.hisobot.length > 0) {
+      setTableItems(store.hisobot.hisobot[0].hisoblar);
     } else {
       setTableItems([]);
     }
@@ -35,14 +35,14 @@ function List() {
   return (
     <>
       <ToastContainer />
-      {tableItems.length === 0 && store.loading === "loading" ? (
+      {tableItems?.length === 0 && store.loader.loading === "loading" ? (
         <Loader />
       ) : (
         <>
           <div className="List">
-            {tableItems.length > 0 ? (
+            {tableItems?.length > 0 ? (
               <ul style={{ "--length": 30 }}>
-                {sortArray(tableItems).map((elem, index) => (
+                {sortArray(tableItems)?.map((elem, index) => (
                   <ListItem key={elem.kun} {...elem} index={index} />
                 ))}
               </ul>

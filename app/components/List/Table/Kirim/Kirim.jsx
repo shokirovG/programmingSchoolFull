@@ -6,14 +6,7 @@ import {
   useDispatch,
   useSelector,
 } from "@/node_modules/react-redux/dist/react-redux";
-import {
-  fetchedStudents,
-  fetchingStudents,
-  hisobotFetched,
-  loaded,
-  spinnerLoaded,
-  spinnerLoading,
-} from "@/app/redux/actions";
+
 import Spinner from "../../../Students/Spinner";
 import useFetch from "@/app/hooks/useFetch";
 import numberTrim from "@/app/hooks/number";
@@ -23,6 +16,13 @@ import calcNaqdKirim from "@/app/hooks/calcNaqdKirim";
 import calcNaqdChiqim from "@/app/hooks/calcNaqdChiqim";
 import calcClickKirim from "@/app/hooks/calcClickKirim";
 import calcClickChiqim from "@/app/hooks/calcClickChiqim";
+import {
+  loaded,
+  spinnerLoaded,
+  spinnerLoading,
+} from "@/app/redux/features/loaderSlice";
+import { hisobotFetched } from "@/app/redux/features/hisobotSlice";
+import { fetchedStudents } from "@/app/redux/features/studentSlice";
 const Kirim = (props) => {
   const months = [
     "Yanvar",
@@ -45,11 +45,15 @@ const Kirim = (props) => {
   const [foizValue, setFoizValue] = useState(0);
   const [tolovTypeValue, setTolovTypeValue] = useState("Naqd");
   const [oyValue, setOyValue] = useState(
-    months[store.currentMonth.slice(0, store.currentMonth.length - 5) - 1]
+    months[
+      store.month.currentMonth.slice(0, store.month.currentMonth.length - 5) - 1
+    ]
   );
   const [departmentValue, setDepartmentValue] = useState("Kafedra");
 
-  const studentsFilter = store.students.filter((el) => el.group === groupValue);
+  const studentsFilter = store.student.students.filter(
+    (el) => el.group === groupValue
+  );
   const [eskiTolov, setEskiTolov] = useState(0);
   const dispatch = useDispatch();
   const { request } = useFetch();
@@ -80,7 +84,7 @@ const Kirim = (props) => {
         priceMonth: oyValue,
         foiz: foizValue,
       };
-      const newStudents = store.students.map((el) => {
+      const newStudents = store.student.students.map((el) => {
         if (el.name === studentValue) {
           return {
             ...el,
@@ -92,7 +96,7 @@ const Kirim = (props) => {
       });
       const naqdTolov = tolovTypeValue == "Naqd" ? Number(tolovValue) : 0;
       const clickTolov = tolovTypeValue == "Click" ? Number(tolovValue) : 0;
-      const newHisoblar = store.hisobot[0].hisoblar.map((elem) => {
+      const newHisoblar = store.hisobot.hisobot[0].hisoblar.map((elem) => {
         if (elem.kun == localStorage.getItem("currentDay")) {
           return {
             ...elem,
@@ -115,7 +119,7 @@ const Kirim = (props) => {
           return elem;
         }
       });
-  
+
       request(
         `${process.env.NEXT_PUBLIC_URL}/hisobot`,
         "POST",
@@ -132,11 +136,12 @@ const Kirim = (props) => {
             },
           ])
         );
+        dispatch(loaded());
         request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
           res.students.forEach((elem) => {
             if (elem.month == localStorage.getItem("currentMonth")) {
-           
               dispatch(fetchedStudents(elem.students));
+              dispatch(loaded());
             }
           });
           dispatch(loaded());
@@ -166,7 +171,7 @@ const Kirim = (props) => {
       setAddValid(true);
     }
   };
-
+  useEffect(() => {}, []);
   return (
     <div>
       <button
@@ -214,11 +219,9 @@ const Kirim = (props) => {
                   <option selected disabled>
                     Kafedra
                   </option>
-                  <option value="Dasturlash">Dasturlash</option>
-                  <option value="Scretch">Scretch</option>
-                  <option value="K.S">K.S</option>
-                  <option value="Ingliz-tili">Ingliz-tili</option>
-                  <option value="Markaz">Markaz</option>
+                  {store.kurs.kurses.map((kurs) => (
+                    <option value={kurs.kurs}>{kurs.kurs}</option>
+                  ))}
                 </select>
                 <select
                   className="form-select"
@@ -233,9 +236,11 @@ const Kirim = (props) => {
                   <option selected disabled>
                     Guruh
                   </option>
-                  {store.groups.map((elem) => (
-                    <option value={elem.groupValue}>{elem.groupValue}</option>
-                  ))}
+                  {store.group.groups.map((elem) =>
+                    elem.departmentValue === departmentValue ? (
+                      <option value={elem.groupValue}>{elem.groupValue}</option>
+                    ) : null
+                  )}
                 </select>
                 <select
                   className="form-select"
@@ -246,7 +251,7 @@ const Kirim = (props) => {
                     const stFilter = studentsFilter.filter(
                       (el) => el.name === e.target.value
                     );
-                    
+
                     setEskiTolov(stFilter[0].price);
                     setFoizValue(stFilter[0].foiz);
                     setCurrentStudent(stFilter[0]);
@@ -286,16 +291,16 @@ const Kirim = (props) => {
                       calcPrice(
                         tolovValue + eskiTolov,
                         foizValue,
-                        departmentValue
+                        departmentValue,
+                        store
                       )
                     )}
                   </span>
                   {" so`m"}
                   <br />
-                  Kurs narxi: {numberTrim(
-                    calcPrice(0, 0, departmentValue)
-                  )}{" "}
-                  so`m ({numberTrim(foizValue)} so`m chegirma)
+                  Kurs narxi:{" "}
+                  {numberTrim(calcPrice(0, 0, departmentValue, store))} so`m (
+                  {numberTrim(foizValue)} so`m chegirma)
                 </p>
                 <select
                   className="form-select"
@@ -338,7 +343,7 @@ const Kirim = (props) => {
                 </h6>
               ) : null}
 
-              {store.spinnerLoader === "loading" ? (
+              {store.loader.spinnerLoader === "loading" ? (
                 <Spinner />
               ) : (
                 <button

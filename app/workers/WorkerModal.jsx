@@ -11,15 +11,16 @@ import {
 } from "@/node_modules/react-redux/dist/react-redux";
 import useFetch from "../hooks/useFetch";
 import { v4 } from "uuid";
+
+import Spinner from "../components/Students/Spinner";
+import { toast } from "react-toastify";
 import {
-  fetchedWorkers,
   spinnerDeleteLoaded,
   spinnerDeleteLoading,
   spinnerLoaded,
   spinnerLoading,
-} from "../redux/actions";
-import Spinner from "../components/Students/Spinner";
-import { toast } from "react-toastify";
+} from "../redux/features/loaderSlice";
+import { fetchedWorkers } from "../redux/features/workerSlice";
 const WorkerModal = ({
   show,
   handleClose,
@@ -49,7 +50,7 @@ const WorkerModal = ({
   };
   const delWorker = () => {
     if (delWorkerValue === name) {
-      const workers = store.workers.filter((elem) => elem.id !== id);
+      const workers = store.worker.workers.filter((elem) => elem.id !== id);
 
       dispatch(spinnerDeleteLoading());
       request(
@@ -69,7 +70,7 @@ const WorkerModal = ({
     }
   };
   const updateWorker = () => {
-    const workers = store.workers.map((elem) => {
+    const workers = store.worker.workers.map((elem) => {
       if (elem.id === id) {
         return {
           ...elem,
@@ -180,10 +181,9 @@ const WorkerModal = ({
                 <option value="Kafedra" disabled selected>
                   Kafedra
                 </option>
-                <option value="Dasturlash">Dasturlash</option>
-                <option value="K.S">K.S</option>
-                <option value="Scretch">Scretch</option>
-                <option value="Ingliz-tili">Ingliz-tili</option>
+                {store.kurs.kurses.map((kurs) => (
+                  <option value={kurs.kurs}>{kurs.kurs}</option>
+                ))}
               </select>
               <Stack direction="row" spacing={1}>
                 {groupsValue.map((elem) => (
@@ -238,7 +238,7 @@ const WorkerModal = ({
                   setDelWorkerValue(e.target.value);
                 }}
               />
-              {store.spinnerDeleteLoader === "loading" ? (
+              {store.loader.spinnerDeleteLoader === "loading" ? (
                 <Box sx={{ display: "flex" }}>
                   <CircularProgress />
                 </Box>
@@ -253,7 +253,7 @@ const WorkerModal = ({
                 Chiqish
               </Button>
               <div>
-                {store.spinnerLoader === "loading" ? (
+                {store.loader.spinnerLoader === "loading" ? (
                   <Spinner />
                 ) : (
                   <Button variant="success" onClick={updateWorker}>

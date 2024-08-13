@@ -6,9 +6,10 @@ import { toast } from "react-toastify";
 import useFetch from "@/app/hooks/useFetch";
 import { useSelector, useDispatch } from "react-redux";
 import Chiqim from "../Сonsumption/Chiqim";
-import { addTodo } from "@/app/redux/actions";
+
 import zero from "@/app/hooks/zero";
 import { v4 } from "uuid";
+import { addTodo } from "@/app/redux/features/hisobotSlice";
 function Income(props) {
   const currentMonth = new Date();
   const initialDate = `${currentMonth.getFullYear()}-${zero(
@@ -25,8 +26,10 @@ function Income(props) {
   const month =
     Number(todoMonth.getMonth() + 1) + "_" + todoMonth.getFullYear();
   const newTodo = () => {
-    const findItem = store.hisobot.findIndex((el) => el.month === month);
-    const currentMonthData = store.hisobot.filter(
+    const findItem = store.hisobot.hisobot.findIndex(
+      (el) => el.month === month
+    );
+    const currentMonthData = store.hisobot.hisobot.filter(
       (elem) => elem.month === month
     );
     let findDay = -100000;
@@ -36,7 +39,7 @@ function Income(props) {
       );
     }
 
-    if (store.currentMonth === month) {
+    if (store.month.currentMonth === month) {
       if (findItem < 0 || findDay < 0) {
         const newTodo =
           currentMonthData.length > 0
@@ -71,12 +74,11 @@ function Income(props) {
             hisoblar: newTodo,
           })
         ).then(() => {
-          dispatch(addTodo(month, newTodo));
-         
+          dispatch(addTodo({ month, newTodo }));
+
           toast.success("yangi hisobot yaratildi!");
         });
       } else {
-       
         toast.error("ushbu kun uchun hisobot oldin yaratilgan!");
       }
     } else {

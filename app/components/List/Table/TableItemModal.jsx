@@ -3,13 +3,7 @@ import { useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import {
-  fetchedStudents,
-  hisobotFetched,
-  loaded,
-  spinnerLoaded,
-  spinnerLoading,
-} from "@/app/redux/actions";
+
 import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
 import useFetch from "@/app/hooks/useFetch";
 import calcClickKirim from "@/app/hooks/calcClickKirim";
@@ -17,6 +11,13 @@ import calcNaqdChiqim from "@/app/hooks/calcNaqdChiqim";
 import calcNaqdKirim from "@/app/hooks/calcNaqdKirim";
 import calcClickChiqim from "@/app/hooks/calcClickChiqim";
 import Spinner from "../../Students/Spinner";
+import {
+  loaded,
+  spinnerLoaded,
+  spinnerLoading,
+} from "@/app/redux/features/loaderSlice";
+import { hisobotFetched } from "@/app/redux/features/hisobotSlice";
+import { fetchedStudents } from "@/app/redux/features/studentSlice";
 const TableItemModal = ({
   show,
   handleClose,
@@ -44,7 +45,7 @@ const TableItemModal = ({
   const changeItem = (e) => {
     e.preventDefault();
     dispatch(spinnerLoading());
-    const findStudentTotalPrice = store.students.filter(
+    const findStudentTotalPrice = store.student.students.filter(
       (el) => el.name === student
     );
     console.log("findStudent", findStudentTotalPrice);
@@ -64,7 +65,7 @@ const TableItemModal = ({
     const naqdTolov = tolovTypeValue == "Naqd" ? Number(tolovValue) : 0;
     const clickTolov = tolovTypeValue == "Click" ? Number(tolovValue) : 0;
 
-    const newHisoblar = store.hisobot[0].hisoblar.map((elem) => {
+    const newHisoblar = store.hisobot.hisobot[0].hisoblar.map((elem) => {
       if (elem.kun == localStorage.getItem("currentDay")) {
         const removeKirim = elem.hisobot.kirim.filter((el) => el.id !== id);
 
@@ -108,10 +109,12 @@ const TableItemModal = ({
           },
         ])
       );
+      dispatch(loaded());
       request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
         res.students.forEach((elem) => {
           if (elem.month == localStorage.getItem("currentMonth")) {
             dispatch(fetchedStudents(elem.students));
+            dispatch(loaded());
           }
         });
         dispatch(loaded());
@@ -120,7 +123,7 @@ const TableItemModal = ({
       toast.success("baza o`zgardi!");
     });
 
-    const newStudents = store.students.map((el) => {
+    const newStudents = store.student.students.map((el) => {
       if (el.name == student) {
         return {
           ...el,
@@ -179,7 +182,7 @@ const TableItemModal = ({
                 <option selected disabled>
                   Guruh
                 </option>
-                {store.groups.map((elem) => (
+                {store.group.groups.map((elem) => (
                   <option value={elem.groupValue}>{elem.groupValue}</option>
                 ))}
               </select>
@@ -191,7 +194,7 @@ const TableItemModal = ({
                   setStudentValue(e.target.value);
                 }}
               >
-                {store.students.map((el) => (
+                {store.student.students.map((el) => (
                   <option key={el.name}>{el.name}</option>
                 ))}
               </select>
@@ -246,7 +249,7 @@ const TableItemModal = ({
           </form>
         </Modal.Body>
         <Modal.Footer>
-          {store.spinnerLoader === "loading" ? (
+          {store.loader.spinnerLoader === "loading" ? (
             <Spinner />
           ) : (
             <Button variant="success" onClick={changeItem}>

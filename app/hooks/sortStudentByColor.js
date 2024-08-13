@@ -20,12 +20,12 @@ const sortStudentByColor = (color, filterStudents) => {
           .split("/");
         if (
           +studentMonthPrice[1] < dateMonth &&
-          calcPrice(price, foiz, department, priceDate) != 0
+          calcPrice(price, foiz, department) != 0
         ) {
           sortedStudent.push(student);
         } else if (
           date2 >= +moment(priceDate).format("DD/MM/YYYY").slice(0, 2) &&
-          calcPrice(price, foiz, department, priceDate) != 0
+          calcPrice(price, foiz, department) != 0
         ) {
           sortedStudent.push(student);
         }
@@ -45,7 +45,7 @@ const sortStudentByColor = (color, filterStudents) => {
           .split("/");
         if (
           +studentMonthPrice[1] >= dateMonth &&
-          calcPrice(price, foiz, department, priceDate) != 0 &&
+          calcPrice(price, foiz, department) != 0 &&
           date2 < +moment(priceDate).format("DD/MM/YYYY").slice(0, 2)
         ) {
           sortedStudent.push(student);

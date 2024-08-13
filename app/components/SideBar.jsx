@@ -3,7 +3,7 @@
 import Link from "@/node_modules/next/link";
 import Image from "@/node_modules/next/image";
 import { useState, useEffect } from "react";
-import { fetchedMajburiy, logOut } from "../redux/actions";
+
 import {
   useDispatch,
   useSelector,
@@ -11,6 +11,8 @@ import {
 import Snow from "./animations/Snow";
 import useFetch from "../hooks/useFetch";
 import axios from "axios";
+import { logOut } from "../redux/features/authSlice";
+import { loaded } from "../redux/features/loaderSlice";
 export default function SideBar() {
   const [currentPage, setCurrentPage] = useState("hisobot");
   const dispatch = useDispatch();
@@ -41,6 +43,7 @@ export default function SideBar() {
       }
     }
   }, []);
+
   return (
     <>
       <div className="h-[100vh]   fixed w-[230px] ">
@@ -55,16 +58,19 @@ export default function SideBar() {
                 id="navbarLogo"
               />
               <div className="logo__text flex flex-col align-items-center">
-                <h4>Programming</h4>
-                <p>School</p>
+                <h4>{store.auth.LCName.split(" ")[0]}</h4>
+                <p className="text-black">
+                  {store.auth.LCName.split(" ").slice(1).join(" ")}
+                </p>
                 <p className="rounded bg-green-500 w-[50%] text-black  p-[5px] capitalize">
-                  {store.user.email}
+                  {store.auth.user.email}
                 </p>
               </div>
               <div className="w-[230px] h-[2px] bg-[#F4F7FE]  absolute bottom-[-26px]"></div>
             </div>
             <div className="flex flex-col gap-[10px] sidebar__items">
-              {store.user.rol === "menejer" || store.user.rol === "direktor" ? (
+              {store.auth.user.rol === "menejer" ||
+              store.auth.user.rol === "direktor" ? (
                 <Link
                   id="hisobot"
                   className="id_0 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
@@ -95,7 +101,9 @@ export default function SideBar() {
                 </Link>
               ) : null}
 
-              {store.user.rol === "admin" || store.user.rol === "menejer" || store.user.rol === "direktor" ? (
+              {store.auth.user.rol === "admin" ||
+              store.auth.user.rol === "menejer" ||
+              store.auth.user.rol === "direktor" ? (
                 <Link
                   id="students"
                   className="id_1 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
@@ -126,7 +134,7 @@ export default function SideBar() {
                 </Link>
               ) : null}
 
-              {store.user.rol === "direktor" ? (
+              {store.auth.user.rol === "direktor" ? (
                 <Link
                   id="ishchilar"
                   className="id_1 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
@@ -185,7 +193,8 @@ export default function SideBar() {
                 </svg>
                 Dars Jadvali
               </Link>
-              {store.user.rol === "menejer" || store.user.rol === "direktor" ? (
+              {store.auth.user.rol === "menejer" ||
+              store.auth.user.rol === "direktor" ? (
                 <Link
                   id="settings"
                   className="id_10 sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px] "
@@ -216,7 +225,10 @@ export default function SideBar() {
                 </Link>
               ) : null}
 
-              {/* <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">
+              <Link
+                href="/davomat"
+                className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -230,10 +242,10 @@ export default function SideBar() {
                     fill="#A3AED0"
                   />
                 </svg>
-                <span onClick={addActiveClass}>Security</span>
-              </div>
+                <span onClick={addActiveClass}>Davomat</span>
+              </Link>
 
-              <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">
+              {/* <div className="sidebar__item flex gap-[14px] items-center pl-[10px] rounded-[5px] text-[#A3AED0] cursor-pointer hover:text-[#FFFFFF] hover:bg-[#4318FF] w-[154px] h-[35px]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -277,6 +289,7 @@ export default function SideBar() {
                   })
                   .then((res) => {});
                 dispatch(logOut());
+                dispatch(loaded());
               }}
             >
               Log Out

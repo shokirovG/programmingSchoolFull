@@ -1,9 +1,5 @@
 import useFetch from "@/app/hooks/useFetch";
-import {
-  hisobotFetched,
-  spinnerLoaded,
-  spinnerLoading,
-} from "@/app/redux/actions";
+
 import {
   useDispatch,
   useSelector,
@@ -18,6 +14,12 @@ import calcNaqdKirim from "@/app/hooks/calcNaqdKirim";
 import calcNaqdChiqim from "@/app/hooks/calcNaqdChiqim";
 import calcClickKirim from "@/app/hooks/calcClickKirim";
 import calcClickChiqim from "@/app/hooks/calcClickChiqim";
+import {
+  loaded,
+  spinnerLoaded,
+  spinnerLoading,
+} from "@/app/redux/features/loaderSlice";
+import { hisobotFetched } from "@/app/redux/features/hisobotSlice";
 const HarajatItemModal = ({ show, handleClose, handleShow }) => {
   const [costType, setCostType] = useState("Harajat turi");
   const [costValue, setCostValue] = useState();
@@ -31,7 +33,6 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
 
   const addCost = () => {
     if (costType !== "" && costValue && infoValue !== "") {
-  
       dispatch(spinnerLoading());
       const newCost = {
         id: v4(),
@@ -44,8 +45,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
       const naqdTolov = tolovType == "Naqd" ? Number(costValue) : 0;
       const clickTolov = tolovType == "Click" ? Number(costValue) : 0;
 
-     
-      const newHisoblar = store.hisobot[0].hisoblar.map((elem) => {
+      const newHisoblar = store.hisobot.hisobot[0].hisoblar.map((elem) => {
         if (elem.kun == localStorage.getItem("currentDay")) {
           return {
             ...elem,
@@ -68,7 +68,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
           return elem;
         }
       });
-     
+
       request(
         `${process.env.NEXT_PUBLIC_URL}/hisobot`,
         "POST",
@@ -77,7 +77,6 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
           hisoblar: newHisoblar,
         })
       ).then(() => {
-      
         dispatch(
           hisobotFetched([
             {
@@ -86,6 +85,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
             },
           ])
         );
+        dispatch(loaded());
         setCostType("Harajat turi");
         setCostValue(0);
         setTolovType("To`lov turi");
@@ -140,7 +140,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
               <option value="Kimga" selected disabled>
                 Kimga
               </option>
-              {store.workers.map((elem) => (
+              {store.worker.workers.map((elem) => (
                 <option value={elem.name}>{elem.name}</option>
               ))}
             </select>
@@ -182,7 +182,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
         </form>
       </Modal.Body>
       <Modal.Footer>
-        {store.spinnerLoader === "loading" ? (
+        {store.loader.spinnerLoader === "loading" ? (
           <Spinner />
         ) : (
           <button type="button" className="btn btn-success" onClick={addCost}>

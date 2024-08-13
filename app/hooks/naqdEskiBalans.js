@@ -1,4 +1,4 @@
-function naqdEskiBalans(hisoblar, id) {
+function naqdEskiBalans(hisoblar = [], id) {
   let naqdEskiBal = 0;
 
   for (let item of hisoblar) {

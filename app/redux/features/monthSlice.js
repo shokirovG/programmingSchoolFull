@@ -1,16 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   currentMonth: "",
+  monthPrice: {},
 };
 const monthSlice = createSlice({
   name: "month",
   initialState,
   reducers: {
-    changeMonth: (state, action) => {
+    changeMonthAction: (state, action) => {
       state.currentMonth = action.payload;
+    },
+    monthPriceFetched: (state, action) => {
+      state.monthPrice = action.payload;
     },
   },
 });
 
-export const { changeMonth } = monthSlice.actions;
+export const { changeMonthAction, monthPriceFetched } = monthSlice.actions;
 export default monthSlice.reducer;

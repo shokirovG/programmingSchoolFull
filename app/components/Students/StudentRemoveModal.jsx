@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import useFetch from "@/app/hooks/useFetch";
 import { toast } from "react-toastify";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { loaded } from "../../redux/features/loaderSlice";
 const StudentRemoveModal = ({ name, group, id, price }) => {
   const [show, setShow] = useState(false);
   const { request } = useFetch();
@@ -28,6 +29,7 @@ const StudentRemoveModal = ({ name, group, id, price }) => {
         setShow(false);
         toast.error(`${name} bazadan ochirildi`);
         dispatch(fetchedStudents(newStudents));
+        dispatch(loaded())
       });
     } else {
       toast.error(

@@ -1,4 +1,4 @@
-function sortArray(arr) {
+function sortArray(arr ) {
   const arrKun = arr.map((el) => +el.kun);
 
   const arrKunSort = arrKun.sort(function (a, b) {

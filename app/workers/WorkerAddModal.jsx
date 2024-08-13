@@ -10,13 +10,11 @@ import {
   useDispatch,
   useSelector,
 } from "@/node_modules/react-redux/dist/react-redux";
-import {
-  fetchedWorkers,
-  spinnerLoaded,
-  spinnerLoading,
-} from "../redux/actions";
+
 import Spinner from "../components/Students/Spinner";
 import { v4 } from "uuid";
+import { spinnerLoaded, spinnerLoading } from "../redux/features/loaderSlice";
+import { fetchedWorkers } from "../redux/features/workerSlice";
 const WorkerAddModal = ({ show, handleClose }) => {
   const [nameValue, setNameValue] = useState("");
   const [priceTypeValue, setPriceTypeValue] = useState("o`zgarmas");
@@ -36,7 +34,7 @@ const WorkerAddModal = ({ show, handleClose }) => {
 
   const addWorker = () => {
     const workers = [
-      ...store.workers,
+      ...store.worker.workers,
       {
         id: v4(),
         name: nameValue,
@@ -78,7 +76,6 @@ const WorkerAddModal = ({ show, handleClose }) => {
       );
 
       if (workers.length > 0) {
-        
         dispatch(fetchedWorkers(workers[0].workers));
       }
     });
@@ -162,10 +159,9 @@ const WorkerAddModal = ({ show, handleClose }) => {
                 <option value="Kafedra" disabled selected>
                   Kafedra
                 </option>
-                <option value="Dasturlash">Dasturlash</option>
-                <option value="K.S">K.S</option>
-                <option value="Scretch">Scretch</option>
-                <option value="Ingliz-tili">Ingliz-tili</option>
+                {store.kurs.kurses.map((kurs) => (
+                  <option value={kurs.kurs}>{kurs.kurs}</option>
+                ))}
               </select>
               <Stack direction="row" spacing={1}>
                 {groupsValue.map((elem) => (
@@ -213,7 +209,7 @@ const WorkerAddModal = ({ show, handleClose }) => {
           <Button variant="secondary" onClick={handleClose}>
             Chiqish
           </Button>
-          {store.spinnerLoader === "loading" ? (
+          {store.loader.spinnerLoader === "loading" ? (
             <Spinner />
           ) : (
             <Button variant="success" onClick={addWorker}>
