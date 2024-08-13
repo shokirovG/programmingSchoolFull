@@ -1,3 +1,5 @@
+const kursController = require("../../controllers/kurs-controller");
+const markazController = require("../../controllers/markaz-controller");
 const userController = require("../../controllers/user-controller");
 
 const Router = require("express").Router;
@@ -10,4 +12,14 @@ router.delete("/logout", userController.logout);
 router.get("/refresh", userController.refresh);
 router.get("/users", userController.getUsers);
 
+//KURSES ROUTER
+
+router.post("/addkurs", kursController.addKurs);
+router.post("/allkurses", kursController.allKurses);
+router.delete("/removekurs/:id", kursController.removeKurs);
+router.post("/updatekurs", kursController.updateKurs);
 module.exports = router;
+
+//MARKAZ ROUTER
+router.post("/setmarkaz", markazController.setMarkazName);
+router.get("/getmarkaz", markazController.getMarkazName);

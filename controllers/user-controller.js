@@ -58,6 +58,7 @@ class UserController {
         SameSite: "none",
         secure: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
       });
 
       return res.json(userData);
@@ -69,7 +70,7 @@ class UserController {
 
   async getUsers(req, res, next) {
     try {
-      res.json(["asdasd", "332424"]);
+      res.json({});
     } catch (error) {}
   }
 }

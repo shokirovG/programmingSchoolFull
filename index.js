@@ -35,6 +35,7 @@ app.use(
 );
 app.use(cookieParser({}));
 app.use("/api", router);
+
 mongoose
   .connect(process.env.DB_URL)
   .then(() => {
