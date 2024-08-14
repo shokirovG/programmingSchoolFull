@@ -8,7 +8,7 @@ import {
   useDispatch,
   useSelector,
 } from "@/node_modules/react-redux/dist/react-redux";
-import Snow from "./animations/Snow";
+
 import useFetch from "../hooks/useFetch";
 import axios from "axios";
 import { logOut } from "../redux/features/authSlice";

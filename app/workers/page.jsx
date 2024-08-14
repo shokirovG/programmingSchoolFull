@@ -7,12 +7,9 @@ import TeacherItem from "./TeacherItem";
 import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
 import useFetch from "../hooks/useFetch";
 import Loader from "../components/Loader/Loader";
-import { setgroups } from "process";
-import AdminItem from "./AdminItem";
-import AdminYordamchi from "./AdminYordamchi";
+
 import FoydaItem from "./FoydaItem";
-import balans1 from "../hooks/foyda/balans1";
-import WorkerModal from "./WorkerModal";
+
 import WorkerAddModal from "./WorkerAddModal";
 import Image from "@/node_modules/next/image";
 import { redirect } from "@/node_modules/next/navigation";

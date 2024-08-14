@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { spinnerLoaded, spinnerLoading } from "./loaderSlice";
+import { spinnerLoaded } from "./loaderSlice";
 const initialState = {
   kurses: [],
 };

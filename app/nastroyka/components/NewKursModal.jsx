@@ -1,7 +1,7 @@
 import Spinner from "@/app/components/Students/Spinner";
 import { addKurs } from "@/app/redux/features/kursSlice";
 import {
-  spinnerLoaded,
+  
   spinnerLoading,
 } from "@/app/redux/features/loaderSlice";
 import {

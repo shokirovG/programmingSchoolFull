@@ -2,26 +2,21 @@
 // eslint-disable-next-line no-use-before-define
 //eslint-disable-line
 import "./globals.scss";
-import SideBar from "@/app/components/SideBar";
+
 import {
   Provider,
-  useDispatch,
-  useSelector,
+ 
 } from "@/node_modules/react-redux/dist/react-redux";
 /* eslint-disable */
 import store from "./redux/index";
-import SelectMonth from "./components/List/Select__Month/SelectMonth";
-import { ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 
 
-import useFetch from "./hooks/useFetch";
+
 
 import Login from "./components/Sign/Login";
-import Snow from "@/app/components/animations/Snow";
-import { useRouter } from "@/node_modules/next/router";
-import { Sign } from "crypto";
-import SignIn from "./components/Sign/SignIn";
+
 export default function RootLayout({
   children,
 }: {

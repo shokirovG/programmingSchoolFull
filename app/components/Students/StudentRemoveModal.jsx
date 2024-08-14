@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchedStudents } from "@/app/redux/actions";
+import { fetchedStudents } from "../../redux/features/studentSlice";
 import Image from "next/image";
 import React from "react";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import useFetch from "@/app/hooks/useFetch";
 import { toast } from "react-toastify";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+
 import { loaded } from "../../redux/features/loaderSlice";
 const StudentRemoveModal = ({ name, group, id, price }) => {
   const [show, setShow] = useState(false);
@@ -29,7 +29,7 @@ const StudentRemoveModal = ({ name, group, id, price }) => {
         setShow(false);
         toast.error(`${name} bazadan ochirildi`);
         dispatch(fetchedStudents(newStudents));
-        dispatch(loaded())
+        dispatch(loaded());
       });
     } else {
       toast.error(

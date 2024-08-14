@@ -2,21 +2,21 @@
 
 import React, { useEffect, useState } from "react";
 import "./list.css";
-import Table from "@/app/components/List/Table/Table";
+
 import TableTotal from "@/app/components/List/Table_total/TableTotal";
-import SelectMonth from "@/app/components/List/Select__Month/SelectMonth";
+
 import Income from "@/app/components/List/Income/Income";
 import Forced__exit from "@/app/components/List/Forced__exit/Forced__exit";
-import Chiqim from "@/app/components/List/Сonsumption/Chiqim";
+
 import { ToastContainer } from "react-toastify";
 import ListItem from "./ListItem";
 import {
   useDispatch,
   useSelector,
 } from "@/node_modules/react-redux/dist/react-redux";
-import { v4 } from "uuid";
+
 import Loader from "../Loader/Loader";
-import { fetchingStudents, loaded } from "@/app/redux/actions";
+
 import sortArray from "../../hooks/sortArray";
 import Image from "@/node_modules/next/image";
 

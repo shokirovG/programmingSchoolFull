@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Image from "@/node_modules/next/image";
+
 import KursItem from "./KursItem";
 import NewKursModal from "./NewKursModal";
 import { useSelector } from "@/node_modules/react-redux/dist/react-redux";

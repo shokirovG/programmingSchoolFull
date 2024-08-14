@@ -1,12 +1,12 @@
 import numberTrim from "@/app/hooks/number";
 import { useSelector } from "@/node_modules/react-redux/dist/react-redux";
-import React, { useEffect } from "react";
+import React from "react";
 import "./table__total.scss";
 import calcPriceTolov from "@/app/hooks/calcPriceTolov";
 import calcQarzPrice from "@/app/hooks/calcQarzPrice";
 import calcCategoryPrice from "@/app/hooks/calcCategoryPrice";
-import calcFoyda from "@/app/hooks/calcFoyda";
-function TableTotal(props) {
+
+function TableTotal() {
   const store = useSelector((state) => state);
   const yigildiTotal = store.kurs.kurses.reduce((s, item) => {
     return s + calcPriceTolov(store.student.students, item.kurs);
