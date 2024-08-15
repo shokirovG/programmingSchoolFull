@@ -3,6 +3,7 @@ import Image from "@/node_modules/next/image";
 import { removeKurs } from "@/app/redux/features/kursSlice";
 import { useDispatch } from "@/node_modules/react-redux/dist/react-redux";
 import KursEditModal from "./KursEditModal";
+import numberTrim from "../../hooks/number";
 const KursItem = ({ kurs, price, _id }) => {
   const dispatch = useDispatch();
   const removeKursFn = () => {
@@ -12,7 +13,7 @@ const KursItem = ({ kurs, price, _id }) => {
     <div className="shadow flex p-[20px] w-[30%] justify-between rounded mt-[20px]">
       <span>{kurs}</span>
       <div className="flex gap-[10px]">
-        <span>{price} so`m</span>
+        <span>{numberTrim(price)} so`m</span>
         <div className="flex items-center gap-[10px]">
           <KursEditModal {...{ kurs, price, _id }} />
           <Image

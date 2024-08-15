@@ -23,7 +23,7 @@ const SignIn = ({ loginBtn }) => {
   const dispatch = useDispatch();
   const store = useSelector((state) => state);
   const submitForm = async (e) => {
-    e.preventDefault();redux/actions
+    e.preventDefault();
     dispatch(loginSpinnerLoading());
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_URL}/api/login`,
