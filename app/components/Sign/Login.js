@@ -40,6 +40,7 @@ const Login = ({ children }) => {
       axios
         .get(`${process.env.NEXT_PUBLIC_URL}/api/refresh`, {
           withCredentials: true,
+          credentials: "include",
         })
         .then((res) => {
           console.log(res);
