@@ -7,7 +7,7 @@ class UserController {
       const { email, password, rol } = req.body;
       const userData = await userService.reg(email, password, rol);
       res.cookie("refreshToken", userData.refreshToken, {
-        SameSite: "none",
+        SameSite: "None",
         secure: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
@@ -25,7 +25,7 @@ class UserController {
       const userData = await userService.login(email, password);
 
       res.cookie("refreshToken", userData.refreshToken, {
-        SameSite: "none",
+        SameSite: "None",
         secure: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
