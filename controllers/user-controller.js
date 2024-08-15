@@ -55,7 +55,7 @@ class UserController {
       const userData = await userService.refresh(refreshToken);
       console.log("cookie refresh", userData);
       res.cookie("refreshToken", userData.refreshToken, {
-        SameSite: "none",
+        SameSite: "None",
         secure: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,

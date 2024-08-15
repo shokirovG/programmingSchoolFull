@@ -29,8 +29,8 @@ app.use(function (req, res, next) {
 });
 app.use(
   cors({
-    credentials: true,
     origin: process.env.URL_FRONT,
+    credentials: true,
   })
 );
 app.use(cookieParser({}));
