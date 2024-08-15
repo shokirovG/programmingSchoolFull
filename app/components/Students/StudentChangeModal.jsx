@@ -135,20 +135,9 @@ const StudentChangeModal = ({
               <option selected disabled className="optionDepartment">
                 Kafedrasi
               </option>
-              <option value="Dasturlash" className="optionDepartment">
-                Dasturlash
-              </option>
-              <option value="K.S" className="optionDepartment">
-                K.S
-              </option>
-              <option value="Scretch" className="optionDepartment">
-                Scretch
-              </option>
-              <option value="Ingliz-tili" className="optionDepartment">
-                Ingliz-tili
-              </option>
-              <option value="Python">Python</option>
-              <option value="Grafik-Dizayn">Grafik-Dizayn</option>
+              {store.kurs.kurses.map((kurs) => (
+                <option value={kurs.kurs}>{kurs.kurs}</option>
+              ))}
             </select>
             <input
               required
