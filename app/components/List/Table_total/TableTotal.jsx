@@ -9,11 +9,11 @@ import calcCategoryPrice from "@/app/hooks/calcCategoryPrice";
 function TableTotal() {
   const store = useSelector((state) => state);
   const yigildiTotal = store.kurs.kurses.reduce((s, item) => {
-    return s + calcPriceTolov(store.student.students, item.kurs);
+    return s + calcPriceTolov(store, item.kurs);
   }, 0);
 
   const yigilishiKerakTotal = store.kurs.kurses.reduce((s, item) => {
-    return s + calcQarzPrice(store.student.students, item.kurs);
+    return s + calcQarzPrice(store, item.kurs);
   }, 0);
   let totalPrice = 0;
   if (store.hisobot.majburiyChiqimlar.length > 0) {
@@ -37,18 +37,29 @@ function TableTotal() {
           <tr>
             <th>Yig`ildi</th>
             <th>Yig`ilishi kerak</th>
+            <th>Jami</th>
           </tr>
         </thead>
         <tbody>
           {store.kurs.kurses.map((el) => (
             <tr>
-              <td data-th="Movie Title">
-                {el.kurs}:{" "}
-                {numberTrim(calcPriceTolov(store.student.students, el.kurs))}
+              <td className="flex">
+                <div>{el.kurs}</div>
+                <div>{numberTrim(calcPriceTolov(store, el.kurs))} so`m</div>
               </td>
-              <td data-th="Movie Title">
-                {el.kurs}:{" "}
-                {numberTrim(calcQarzPrice(store.student.students, el.kurs))}
+              <td className="flex">
+                <div>{el.kurs}</div>
+                <div>{numberTrim(calcQarzPrice(store, el.kurs))} so`m</div>
+              </td>
+              <td>
+                <div>{el.kurs}</div>
+                <div>
+                  {numberTrim(
+                    calcPriceTolov(store, el.kurs) +
+                      calcQarzPrice(store, el.kurs)
+                  )}{" "}
+                  so`m
+                </div>
               </td>
             </tr>
           ))}
@@ -56,6 +67,7 @@ function TableTotal() {
           <tr className="table__total_footer">
             <td data-th="Movie Title">Jami: {numberTrim(yigildiTotal)}</td>
             <td>Jami: {numberTrim(yigilishiKerakTotal)}</td>
+            <td>Jami: {numberTrim(yigilishiKerakTotal + yigildiTotal)}</td>
           </tr>
         </tbody>
       </table>

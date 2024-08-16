@@ -22,8 +22,8 @@ const FoydaItem = ({ chiqimlar }) => {
     if (worker.priceType === "foiz") {
       for (let group of worker.groups) {
         totalPriceFoyda +=
-          calcPriceTolov(store.student.students, worker.department, group) +
-          calcQarzPrice(store.student.students, worker.department);
+          calcPriceTolov(store, worker.department) +
+          calcQarzPrice(store, worker.department);
       }
     } else if (worker.priceType === "o`zgarmas" && worker.groups.length !== 0) {
       totalPriceFoyda += worker.price;
