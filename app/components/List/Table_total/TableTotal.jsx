@@ -5,7 +5,7 @@ import "./table__total.scss";
 import calcPriceTolov from "@/app/hooks/calcPriceTolov";
 import calcQarzPrice from "@/app/hooks/calcQarzPrice";
 import calcCategoryPrice from "@/app/hooks/calcCategoryPrice";
-
+import Progress from "../../Progress";
 function TableTotal() {
   const store = useSelector((state) => state);
   const yigildiTotal = store.kurs.kurses.reduce((s, item) => {
@@ -46,6 +46,16 @@ function TableTotal() {
               <td className="flex">
                 <div>{el.kurs}</div>
                 <div>{numberTrim(calcPriceTolov(store, el.kurs))} so`m</div>
+                <div className="w-[50%] mx-auto">
+                  <Progress
+                    now={Math.floor(
+                      (calcPriceTolov(store, el.kurs) /
+                        (calcPriceTolov(store, el.kurs) +
+                          calcQarzPrice(store, el.kurs))) *
+                        100
+                    )}
+                  />
+                </div>
               </td>
               <td className="flex">
                 <div>{el.kurs}</div>
