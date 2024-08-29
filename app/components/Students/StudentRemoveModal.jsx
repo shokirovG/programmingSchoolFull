@@ -20,7 +20,9 @@ const StudentRemoveModal = ({ name, group, id, price }) => {
   const handleShow = () => setShow(true);
   const removeStudent = () => {
     if (price == 0) {
-      const newStudents = store.students.filter((elem) => elem.id !== id);
+      const newStudents = store.student.students.filter(
+        (elem) => elem.id !== id
+      );
       request(
         `${process.env.NEXT_PUBLIC_URL}/students`,
         "PUT",
