@@ -3,7 +3,7 @@ const Markaz = require("../models/Markaz");
 class MarkazService {
   async setName(LCName) {
     const res = await Markaz.findOne({});
-    if (res.length !== 0) {
+    if (res) {
       console.log(res);
       res.LCName = LCName;
       return res.save();
