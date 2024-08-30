@@ -5,6 +5,9 @@ const markazSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  logo: {
+    type: String,
+  },
 });
 
 const Markaz = mongoose.model("Markaz", markazSchema);

@@ -3,9 +3,9 @@ const markazService = require("../services/markaz-service");
 class MarkazController {
   async setMarkazName(req, res, next) {
     try {
-      const { LCName } = req.body;
+      const { LCName, logo } = req.body;
       console.log(LCName);
-      const markazData = await markazService.setName(LCName);
+      const markazData = await markazService.setName(LCName,logo);
       return res.json(markazData);
     } catch (error) {
       console.log(error);
