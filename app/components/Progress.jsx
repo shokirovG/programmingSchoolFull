@@ -10,7 +10,8 @@ function Progress({ now }) {
         animated
         now={now}
         label={`${now}%`}
-        style={{ fontSize: "18px", height: "20px" }}
+        style={{ fontSize: "18px", height: "20px", color: 'black' }}
+        variant={now == 100 ? "success" : "warning"}
       />
     </>
   );

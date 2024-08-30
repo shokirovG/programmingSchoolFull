@@ -9,6 +9,7 @@ const initialState = {
     rol: "",
   },
   LCName: "",
+  logo: "",
 };
 export const getMarkazName = createAsyncThunk(
   "auth/getMarkazName",
@@ -45,6 +46,7 @@ const authSlice = createSlice({
     },
     setName: (state, action) => {
       state.LCName = action.payload.LCName;
+      state.logo = action.payload.logo;
     },
   },
 });

@@ -52,7 +52,7 @@ export default function SideBar() {
             <div className="flex flex-col items-center gap-[12px] relative">
               <Image
                 alt="#"
-                src="/logo.png"
+                src={store.auth.logo}
                 width="80"
                 height="80"
                 id="navbarLogo"
