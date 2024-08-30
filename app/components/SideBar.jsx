@@ -62,7 +62,7 @@ export default function SideBar() {
                 <p className="text-black">
                   {store.auth.LCName.split(" ").slice(1).join(" ")}
                 </p>
-                <p className="rounded bg-green-500 w-[50%] text-black  p-[5px] capitalize">
+                <p className="rounded bg-green-500 w-[100%] text-black  p-[5px] capitalize">
                   {store.auth.user.email}
                 </p>
               </div>
