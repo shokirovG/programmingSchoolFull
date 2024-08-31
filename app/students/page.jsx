@@ -125,18 +125,23 @@ const page = ({ params }) => {
     if (!initial.current) {
       initial.current = true;
 
-      request(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
-        res.students.forEach((elem) => {
-          if (elem.month == localStorage.getItem("currentMonth")) {
-            dispatch(fetchedStudents(elem.students));
-            dispatch(loaded());
-            setFilterStudents(elem.students);
-            setSortedStudents(
-              sortStudentByColor(activeBtnColor, elem.students)
-            );
-          }
+      request(`${process.env.NEXT_PUBLIC_URL}/students`)
+        .then((res) => {
+          res.students.forEach((elem) => {
+            if (elem.month == localStorage.getItem("currentMonth")) {
+              dispatch(fetchedStudents(elem.students));
+              dispatch(loaded());
+              setFilterStudents(elem.students);
+              setSortedStudents(
+                sortStudentByColor(activeBtnColor, elem.students)
+              );
+            }
+          });
+          dispatch(loaded());
+        })
+        .catch((e) => {
+          dispatch(loaded());
         });
-      });
     }
   }, []);
 
