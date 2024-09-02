@@ -132,7 +132,7 @@ const StudentChangeModal = ({
                 setDepartmentValue(e.target.value);
               }}
             >
-              <option selected disabled className="optionDepartment">
+              <option selected className="optionDepartment">
                 Kafedrasi
               </option>
               {store.kurs.kurses.map((kurs) => (

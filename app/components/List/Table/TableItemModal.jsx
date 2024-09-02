@@ -164,13 +164,10 @@ const TableItemModal = ({
                   setDepartmentValue(e.target.value);
                 }}
               >
-                <option selected disabled>
-                  Kafedra
-                </option>
-                <option value="Dasturlash">Dasturlash</option>
-                <option value="Scretch">Scretch</option>
-                <option value="K.S">K.S</option>
-                <option value="Ingliz-tili">Ingliz-tili</option>
+                <option selected>Kafedra</option>
+                {store.kurs.kurses.map((kurs) => (
+                  <option value={kurs.kurs}>{kurs.kurs}</option>
+                ))}
               </select>
               <select
                 className="form-select"

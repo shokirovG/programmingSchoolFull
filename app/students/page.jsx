@@ -390,9 +390,7 @@ const page = ({ params }) => {
                         setValidText(false);
                       }}
                     >
-                      <option selected disabled>
-                        Guruh
-                      </option>
+                      <option selected>Guruh</option>
                       {store.group.groups.map((elem) => (
                         <option value={elem.groupValue}>
                           {elem.groupValue}
@@ -408,16 +406,10 @@ const page = ({ params }) => {
                         setValidText(false);
                       }}
                     >
-                      <option selected disabled>
-                        Kafedrasi
-                      </option>
-                      <option value="Dasturlash">Dasturlash</option>
-                      <option value="K.S">K.S</option>
-                      <option value="Scretch">Scretch</option>
-                      <option value="Ingliz-tili">Ingliz-tili</option>
-                      <option value="Python">Python</option>
-                      <option value="Grafik-Dizayn">Grafik-Dizayn</option>
-                      <option value="Markaz">Markaz</option>
+                      <option selected>Kafedrasi</option>
+                      {store.kurs.kurses.map((kurs) => (
+                        <option value={kurs.kurs}>{kurs.kurs}</option>
+                      ))}
                     </select>
                     <input
                       required
