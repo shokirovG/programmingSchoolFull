@@ -156,7 +156,7 @@ const WorkerAddModal = ({ show, handleClose }) => {
                   setDepartmentValue(e.target.value);
                 }}
               >
-                <option value="Kafedra" disabled selected>
+                <option value="Kafedra" selected>
                   Kafedra
                 </option>
                 {store.kurs.kurses.map((kurs) => (

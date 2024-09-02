@@ -115,7 +115,7 @@ const StudentChangeModal = ({
                 setGroupValue(e.target.value);
               }}
             >
-              <option selected disabled>
+              <option selected >
                 Guruh
               </option>
 

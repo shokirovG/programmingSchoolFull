@@ -216,7 +216,7 @@ const Kirim = (props) => {
                     setDepartmentValue(e.target.value);
                   }}
                 >
-                  <option selected disabled>
+                  <option selected >
                     Kafedra
                   </option>
                   {store.kurs.kurses.map((kurs) => (
@@ -257,7 +257,7 @@ const Kirim = (props) => {
                     setCurrentStudent(stFilter[0]);
                   }}
                 >
-                  <option selected disabled>
+                  <option selected >
                     O`quvchi
                   </option>
                   {studentsFilter.map((elem) => {

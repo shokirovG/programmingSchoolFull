@@ -149,7 +149,7 @@ const ChiqimItemModal = ({
               setUserAvans(e.target.value);
             }}
           >
-            <option value="Kimga" selected disabled>
+            <option value="Kimga" selected >
               Kimga
             </option>
             {store.worker.workers.map((elem) => (

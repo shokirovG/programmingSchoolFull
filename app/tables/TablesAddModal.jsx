@@ -144,7 +144,7 @@ const TablesAddModal = ({ handleClose, open }) => {
                 setDepartmentValue(e.target.value);
               }}
             >
-              <option selected disabled>
+              <option selected >
                 Kafedra
               </option>
               {store.kurs.kurses.map((kurs) => (
@@ -183,7 +183,7 @@ const TablesAddModal = ({ handleClose, open }) => {
                 setRoom(e.target.value);
               }}
             >
-              <option value="sinf-xona" selected disabled>
+              <option value="sinf-xona" selected >
                 sinf-xona
               </option>
 

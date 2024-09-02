@@ -97,9 +97,7 @@ const GroupEditModal = ({ handleClose, show, props }) => {
                 setDepartmentValue(e.target.value);
               }}
             >
-              <option selected disabled>
-                Kafedra
-              </option>
+              <option selected>Kafedra</option>
               {store.kurs.kurses.map((kurs) => (
                 <option value={kurs.kurs}>{kurs.kurs}</option>
               ))}
@@ -136,7 +134,7 @@ const GroupEditModal = ({ handleClose, show, props }) => {
                 setRoom(e.target.value);
               }}
             >
-              <option value="sinf-xona" selected disabled>
+              <option value="sinf-xona" selected >
                 sinf-xona
               </option>
               {store.group.rooms.map((elem) => (
