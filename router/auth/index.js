@@ -1,5 +1,6 @@
 const kursController = require("../../controllers/kurs-controller");
 const markazController = require("../../controllers/markaz-controller");
+const roomController = require("../../controllers/room-controller");
 const userController = require("../../controllers/user-controller");
 
 const Router = require("express").Router;
@@ -23,3 +24,9 @@ module.exports = router;
 //MARKAZ ROUTER
 router.post("/setmarkaz", markazController.setMarkazName);
 router.get("/getmarkaz", markazController.getMarkazName);
+
+// Room ROUTER
+
+router.post("/addroom", roomController.addRoom);
+router.get("/getrooms", roomController.getRooms);
+router.post("/removeroom", roomController.removeRoom);
