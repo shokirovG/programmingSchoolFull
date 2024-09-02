@@ -19,7 +19,7 @@ import { loaded, loading } from "../redux/features/loaderSlice";
 import { fetchedGroups } from "../redux/features/groupSlice";
 import { fetchedStudents } from "../redux/features/studentSlice";
 import { getKurses } from "../redux/features/kursSlice";
-
+import RoomList from "../components/room/RoomList";
 const page = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -109,6 +109,7 @@ const page = () => {
               <GroupItem key={elem ? elem.groupValue : 1} {...elem} />
             ))}
           </div>
+          <RoomList />
           <TablesAddModal handleClose={handleClose} open={open} />
           <div className="mt-[70px]">
             <div class="container ">

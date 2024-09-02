@@ -87,7 +87,7 @@ const HarajatItemModal = ({ show, handleClose, handleShow }) => {
         );
         dispatch(loaded());
         setCostType("Harajat turi");
-        setCostValue(0);
+        setCostValue("");
         setTolovType("To`lov turi");
         setInfoValue("");
         setUserAvans("Kimga");

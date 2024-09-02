@@ -123,7 +123,12 @@ const TablesAddModal = ({ handleClose, open }) => {
       }
     });
   }, []);
-
+  useEffect(() => {
+    const isRoom = store.group.rooms.includes(room);
+    if (!isRoom) {
+      setRoom("sinf-xona");
+    }
+  }, [store.group.rooms]);
   return (
     <div>
       <Modal show={open} onHide={handleClose}>
@@ -181,10 +186,10 @@ const TablesAddModal = ({ handleClose, open }) => {
               <option value="sinf-xona" selected disabled>
                 sinf-xona
               </option>
-              <option value="1-xona">1-xona</option>
-              <option value="2-xona">2-xona</option>
-              <option value="3-xona">3-xona</option>
-              <option value="zal">zal</option>
+
+              {store.group.rooms.map((elem) => (
+                <option value={elem.roomName}>{elem.roomName}</option>
+              ))}
             </select>
             <input
               type="text"

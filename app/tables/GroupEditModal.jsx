@@ -75,19 +75,13 @@ const GroupEditModal = ({ handleClose, show, props }) => {
       toast.info(`${groupValue} guruh o'chirildi!`);
     });
   };
-  // useEffect(() => {
-  //   request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
-  //     if (res) {
-  //       const currentWorkers = res.workers.filter(
-  //         (elem) => elem.month === localStorage.getItem("currentMonth")
-  //       );
-  //       if (currentWorkers.length !== 0) {
-  //         dispatch(fetchedWorkers(currentWorkers[0].workers));
-  //       }
-  //     }
-  //   });
-  // }, []);
 
+  useEffect(() => {
+    const isRoom = store.group.rooms.includes(room);
+    if (!isRoom) {
+      setRoom("sinf-xona");
+    }
+  }, [store.group.rooms]);
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
@@ -145,10 +139,9 @@ const GroupEditModal = ({ handleClose, show, props }) => {
               <option value="sinf-xona" selected disabled>
                 sinf-xona
               </option>
-              <option value="1-xona">1-xona</option>
-              <option value="2-xona">2-xona</option>
-              <option value="3-xona">3-xona</option>
-              <option value="zal">zal</option>
+              {store.group.rooms.map((elem) => (
+                <option value={elem.roomName}>{elem.roomName}</option>
+              ))}
             </select>
             <input
               type="text"
