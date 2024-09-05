@@ -1,3 +1,4 @@
+const checkController = require("../../controllers/check-controller");
 const kursController = require("../../controllers/kurs-controller");
 const markazController = require("../../controllers/markaz-controller");
 const roomController = require("../../controllers/room-controller");
@@ -30,3 +31,6 @@ router.get("/getmarkaz", markazController.getMarkazName);
 router.post("/addroom", roomController.addRoom);
 router.get("/getrooms", roomController.getRooms);
 router.post("/removeroom", roomController.removeRoom);
+
+//cheklar bo`limi
+router.post("/printcheck", checkController.printCheck);
