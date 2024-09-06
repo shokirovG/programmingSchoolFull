@@ -5,15 +5,25 @@ function Progress({ now }) {
     return null;
   }
   return (
-    <>
+    <div style={{ position: "relative", width: "100%" }}>
       <ProgressBar
         animated
-        now={now}
-        label={`${now}%`}
-        style={{ fontSize: "18px", height: "20px", color: 'black' }}
+        style={{ fontSize: "18px", height: "20px", color: "blue" }}
         variant={now == 100 ? "success" : "warning"}
+        className="progressBar"
       />
-    </>
+      <span
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          color: "black", // Matn rangini o'zgartirish
+          fontWeight: "bold",
+          fontSize: "18px",
+        }}
+      >{`${now}%`}</span>
+    </div>
   );
 }
 
