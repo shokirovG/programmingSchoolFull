@@ -78,10 +78,11 @@ app.get("/students", async (req, res) => {
   res.json({ students });
 });
 app.put("/students", async (req, res) => {
-  await Todos.findOneAndUpdate(
+  const data = await Todos.findOneAndUpdate(
     { month: req.body.month },
     { month: req.body.month, students: req.body.students }
   );
+  console.log("data", req.body.month);
   res.json({ month: req.body.month, students: req.body.students });
 });
 app.post("/students", async (req, res) => {
