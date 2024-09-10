@@ -9,7 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import useFetch from "@/app/hooks/useFetch";
 import { toast } from "react-toastify";
-
+import axios from "axios";
 import { loaded } from "../../redux/features/loaderSlice";
 const StudentRemoveModal = ({ name, group, id, price }) => {
   const [show, setShow] = useState(false);
@@ -23,11 +23,16 @@ const StudentRemoveModal = ({ name, group, id, price }) => {
       const newStudents = store.student.students.filter(
         (elem) => elem.id !== id
       );
+
       request(
         `${process.env.NEXT_PUBLIC_URL}/students`,
         "PUT",
-        JSON.stringify({ month: store.currentMonth, students: newStudents })
-      ).then(() => {
+        JSON.stringify({
+          month: store.month.currentMonth,
+          students: newStudents,
+        })
+      ).then((res) => {
+        console.log("res", res);
         setShow(false);
         toast.error(`${name} bazadan ochirildi`);
         dispatch(fetchedStudents(newStudents));

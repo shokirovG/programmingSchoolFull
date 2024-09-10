@@ -8,6 +8,7 @@ function Progress({ now }) {
     <div style={{ position: "relative", width: "100%" }}>
       <ProgressBar
         animated
+        nav={now}
         style={{ fontSize: "18px", height: "20px", color: "blue" }}
         variant={now == 100 ? "success" : "warning"}
         className="progressBar"
