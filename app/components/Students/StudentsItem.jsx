@@ -38,20 +38,12 @@ const StudentsItem = (props) => {
         className={`${
           calcPrice(price, foiz, department, store) == 0
             ? "active__student"
+            : "danger__student"
+        } ${
+          date2 < studentDate && calcPrice(price, foiz, department, store) !== 0
+            ? "norm__student"
             : ""
-        }
-        ${
-          +studentMonthPrice[1] <= dateMonth &&
-          calcPrice(price, foiz, department, store) !== 0
-            ? "danger__student"
-            : ""
-        }
-         ${
-           date2 <= studentDate &&
-           calcPrice(price, foiz, department, store) !== 0
-             ? "norm__student"
-             : ""
-         } `}
+        }`}
       >
         {name}
       </td>

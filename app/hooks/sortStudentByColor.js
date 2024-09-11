@@ -1,36 +1,44 @@
 import moment from "moment";
+
 import { calcPrice } from "./calcPrice";
 
-const sortStudentByColor = (color, filterStudents) => {
+const sortStudentByColor = (color, filterStudents, store) => {
   const date = new Date();
   const dateMonth = date.getMonth() + 1;
+
   switch (color) {
     case "white": {
       return filterStudents;
     }
     case "red": {
       const date = new Date();
-      const date2 = +moment(date).format("DD/MM/YYYY").slice(0, 2);
+      const date2 = +moment(date).format("DD/MM/YYYY").slice(0, 2); //11
 
       let sortedStudent = [];
       for (let student of filterStudents) {
         const { price, foiz, department, priceDate } = student;
         const studentMonthPrice = moment(priceDate)
           .format("DD/MM/YYYY")
-          .split("/");
+          .split("/"); // ["11","09","2024"]
+        // if (
+        //   +studentMonthPrice[1] < dateMonth &&
+        //   calcPrice(price, foiz, department, store) != 0
+        // ) {
+        //   sortedStudent.push(student);
+        // } else if (
+        //   date2 >= +moment(priceDate).format("DD/MM/YYYY").slice(0, 2) &&
+        //   calcPrice(price, foiz, department, store) != 0
+        // ) {
+        //   sortedStudent.push(student);
+        // }
         if (
-          +studentMonthPrice[1] < dateMonth &&
-          calcPrice(price, foiz, department) != 0
-        ) {
-          sortedStudent.push(student);
-        } else if (
           date2 >= +moment(priceDate).format("DD/MM/YYYY").slice(0, 2) &&
-          calcPrice(price, foiz, department) != 0
+          calcPrice(price, foiz, department, store) != 0
         ) {
           sortedStudent.push(student);
         }
       }
-
+      console.log("students", sortedStudent);
       return sortedStudent;
     }
     case "black": {
@@ -44,8 +52,7 @@ const sortStudentByColor = (color, filterStudents) => {
           .format("DD/MM/YYYY")
           .split("/");
         if (
-          +studentMonthPrice[1] >= dateMonth &&
-          calcPrice(price, foiz, department) != 0 &&
+          calcPrice(price, foiz, department, store) != 0 &&
           date2 < +moment(priceDate).format("DD/MM/YYYY").slice(0, 2)
         ) {
           sortedStudent.push(student);
@@ -57,7 +64,7 @@ const sortStudentByColor = (color, filterStudents) => {
     case "green": {
       const sortedStudent = filterStudents.filter(
         ({ price, foiz, department, priceDate }) =>
-          calcPrice(price, foiz, department) == 0
+          calcPrice(price, foiz, department, store) == 0
       );
       return sortedStudent;
     }

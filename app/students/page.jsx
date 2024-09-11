@@ -165,7 +165,7 @@ const page = ({ params }) => {
   useEffect(() => {
     setSortedStudents(sortStudentByColor(activeBtnColor, filterStudents));
   }, [filterStudents]);
-  console.log("a", store.kurs);
+
   return (
     <>
       {store.loader.loading === "loading" ? (
@@ -186,6 +186,7 @@ const page = ({ params }) => {
             <h2 className="emptyH2">O'quvchilar topilmadi!</h2>
           ) : (
             <>
+              <div className="table__students"></div>
               <h4 className="absolute top-[20px] rounded-[5px] text-gray-700 left-[100px] bg-blue-200 p-[7px]">
                 O`quvchilar soni{" "}
                 <span id="count1">{sortedStudents.length} </span>
@@ -276,7 +277,7 @@ const page = ({ params }) => {
                   onClick={() => {
                     setActiveBtnColor("white");
                     setSortedStudents(
-                      sortStudentByColor("white", filterStudents)
+                      sortStudentByColor("white", filterStudents, store)
                     );
                   }}
                 ></div>
@@ -290,11 +291,11 @@ const page = ({ params }) => {
                   onClick={() => {
                     setActiveBtnColor("red");
                     setSortedStudents(
-                      sortStudentByColor("red", filterStudents)
+                      sortStudentByColor("red", filterStudents, store)
                     );
                   }}
                 >
-                  {sortStudentByColor("red", filterStudents).length}
+                  {sortStudentByColor("red", filterStudents, store).length}
                 </div>
                 <div
                   className={`flex justify-center items-center text-white cursor-pointer w-[40px] h-[20px] bg-black rounded ${
@@ -306,11 +307,11 @@ const page = ({ params }) => {
                   onClick={() => {
                     setActiveBtnColor("black");
                     setSortedStudents(
-                      sortStudentByColor("black", filterStudents)
+                      sortStudentByColor("black", filterStudents, store)
                     );
                   }}
                 >
-                  {sortStudentByColor("black", filterStudents).length}
+                  {sortStudentByColor("black", filterStudents, store).length}
                 </div>
                 <div
                   className={` flex justify-center items-center text-white cursor-pointer w-[40px] h-[20px] bg-green-500 rounded ${
@@ -322,11 +323,11 @@ const page = ({ params }) => {
                   onClick={() => {
                     setActiveBtnColor("green");
                     setSortedStudents(
-                      sortStudentByColor("green", filterStudents)
+                      sortStudentByColor("green", filterStudents, store)
                     );
                   }}
                 >
-                  {sortStudentByColor("green", filterStudents).length}
+                  {sortStudentByColor("green", filterStudents, store).length}
                 </div>
               </div>
               <table striped hover variant="light" className="table__students">

@@ -95,7 +95,7 @@ body {
 body::-webkit-scrollbar {
   position: fixed;
   width: 16px;
-  z-index: 999999999;
+  z-index: 22;
 }
 
 body::-webkit-scrollbar-track {
@@ -196,4 +196,8 @@ body::-webkit-scrollbar-thumb:hover {
 }
 .progressBar {
   color: red !important;
+}
+.modal-open {
+  // overflow: auto !important;
+  z-index: 59999999999;
 }
