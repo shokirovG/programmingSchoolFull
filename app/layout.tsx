@@ -48,6 +48,7 @@ export default function RootLayout({
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossOrigin="anonymous"
           />
+         
         </head>
         <body className="app flex">
           <Login children={children} />

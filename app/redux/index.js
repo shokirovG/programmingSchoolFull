@@ -7,8 +7,9 @@ import {
   monthSlice,
   workerSlice,
   studentSlice,
+  kursSlice,
+  teacherSlice,
 } from "../redux/features";
-import kursSlice from "./features/kursSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     worker: workerSlice,
     student: studentSlice,
     kurs: kursSlice,
+    teacher: teacherSlice,
   },
 });
 export default store;

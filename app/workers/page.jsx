@@ -35,7 +35,7 @@ const Workers = () => {
       const workers = res.workers.filter(
         (elem) => elem.month === localStorage.getItem("currentMonth")
       );
-      fetchedStudents;
+
       if (workers.length > 0) {
         dispatch(fetchedWorkers(workers[0].workers));
       }

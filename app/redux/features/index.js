@@ -5,3 +5,5 @@ export { default as loaderSlice } from "./loaderSlice";
 export { default as monthSlice } from "./monthSlice";
 export { default as studentSlice } from "./studentSlice";
 export { default as workerSlice } from "./workerSlice";
+export { default as teacherSlice } from "./teacherSlice";
+export { default as kursSlice } from "./kursSlice";
