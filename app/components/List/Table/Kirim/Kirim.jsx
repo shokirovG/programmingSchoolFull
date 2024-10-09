@@ -23,7 +23,7 @@ import {
 } from "@/app/redux/features/loaderSlice";
 import { hisobotFetched } from "@/app/redux/features/hisobotSlice";
 import { fetchedStudents } from "@/app/redux/features/studentSlice";
-import axios from 'axios'
+import axios from "axios";
 const Kirim = (props) => {
   const months = [
     "Yanvar",
@@ -85,7 +85,7 @@ const Kirim = (props) => {
         priceMonth: oyValue,
         foiz: foizValue,
       };
-    
+
       const naqdTolov = tolovTypeValue == "Naqd" ? Number(tolovValue) : 0;
       const clickTolov = tolovTypeValue == "Click" ? Number(tolovValue) : 0;
       const newHisoblar = store.hisobot.hisobot[0].hisoblar.map((elem) => {
@@ -121,7 +121,7 @@ const Kirim = (props) => {
             hisoblar: newHisoblar,
           }
         )
-        .then(() => {
+        .then(async() => {
           dispatch(
             hisobotFetched([
               {
@@ -131,43 +131,44 @@ const Kirim = (props) => {
             ])
           );
           dispatch(loaded());
-          axios.get(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
-            res.data.students.forEach((elem) => {
-              if (elem.month == localStorage.getItem("currentMonth")) {
-                dispatch(fetchedStudents(elem.students));
-                dispatch(loaded());
-              }
-            });
-            dispatch(loaded());
+          // axios.get(`${process.env.NEXT_PUBLIC_URL}/students`).then((res) => {
+          //   res.data.students.forEach((elem) => {
+          //     if (elem.month == localStorage.getItem("currentMonth")) {
+          //       dispatch(fetchedStudents(elem.students));
+          //       dispatch(loaded());
+          //     }
+          //   });
+          //   dispatch(loaded());
+          // });
+          const newStudents = store.student.students.map((el) => {
+            if (el.name === studentValue) {
+              return {
+                ...el,
+                price: Number(el.price) + Number(tolovValue),
+              };
+            } else {
+              return el;
+            }
           });
+          await axios
+            .put(
+              `${process.env.NEXT_PUBLIC_URL}/students`,
+      
+              {
+                month: localStorage.getItem("currentMonth"),
+                students: newStudents,
+              }
+            )
+            .then(() => {
+              toast.info("student to`lov o`zgardi!");
+            });
           toast.success("bazaga qo`shildi!");
           dispatch(spinnerLoaded());
         });
     } else {
       setAddValid(true);
     }
-    const newStudents = store.student.students.map((el) => {
-      if (el.name === studentValue) {
-        return {
-          ...el,
-          price: Number(el.price) + Number(tolovValue),
-        };
-      } else {
-        return el;
-      }
-    });
-    await axios
-      .put(
-        `${process.env.NEXT_PUBLIC_URL}/students`,
-
-        {
-          month: localStorage.getItem("currentMonth"),
-          students: newStudents,
-        }
-      )
-      .then(() => {
-        toast.info("student to`lov o`zgardi!");
-      });
+   
     setAddValid(false);
     setDepartmentValue("Kafedra");
     setGroupValue("Guruh");
@@ -177,6 +178,7 @@ const Kirim = (props) => {
 
     setEskiTolov(0);
   };
+  console.log("tolov", store);
   useEffect(() => {}, []);
   return (
     <div>
