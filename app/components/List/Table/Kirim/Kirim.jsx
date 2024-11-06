@@ -85,7 +85,6 @@ const Kirim = (props) => {
         priceMonth: oyValue,
         foiz: foizValue,
       };
-
       const naqdTolov = tolovTypeValue == "Naqd" ? Number(tolovValue) : 0;
       const clickTolov = tolovTypeValue == "Click" ? Number(tolovValue) : 0;
       const newHisoblar = store.hisobot.hisobot[0].hisoblar.map((elem) => {
@@ -111,7 +110,16 @@ const Kirim = (props) => {
           return elem;
         }
       });
-
+      const newStudents = store.student.students.map((el) => {
+        if (el.name === studentValue) {
+          return {
+            ...el,
+            price: Number(el.price) + Number(tolovValue),
+          };
+        } else {
+          return el;
+        }
+      });
       await axios
         .post(
           `${process.env.NEXT_PUBLIC_URL}/hisobot`,
@@ -121,7 +129,7 @@ const Kirim = (props) => {
             hisoblar: newHisoblar,
           }
         )
-        .then(async() => {
+        .then(async () => {
           dispatch(
             hisobotFetched([
               {
@@ -140,20 +148,11 @@ const Kirim = (props) => {
           //   });
           //   dispatch(loaded());
           // });
-          const newStudents = store.student.students.map((el) => {
-            if (el.name === studentValue) {
-              return {
-                ...el,
-                price: Number(el.price) + Number(tolovValue),
-              };
-            } else {
-              return el;
-            }
-          });
+
           await axios
             .put(
               `${process.env.NEXT_PUBLIC_URL}/students`,
-      
+
               {
                 month: localStorage.getItem("currentMonth"),
                 students: newStudents,
@@ -168,7 +167,7 @@ const Kirim = (props) => {
     } else {
       setAddValid(true);
     }
-   
+
     setAddValid(false);
     setDepartmentValue("Kafedra");
     setGroupValue("Guruh");
