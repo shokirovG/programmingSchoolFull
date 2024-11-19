@@ -163,19 +163,18 @@ const Kirim = (props) => {
             });
           toast.success("bazaga qo`shildi!");
           dispatch(spinnerLoaded());
+          setAddValid(false);
+          setDepartmentValue("Kafedra");
+          setGroupValue("Guruh");
+          setStudentValue("O`quvchi");
+          setTolovValue(0);
+          setTolovTypeValue("Naqd");
+
+          setEskiTolov(0);
         });
     } else {
       setAddValid(true);
     }
-
-    setAddValid(false);
-    setDepartmentValue("Kafedra");
-    setGroupValue("Guruh");
-    setStudentValue("O`quvchi");
-    setTolovValue(0);
-    setTolovTypeValue("Naqd");
-
-    setEskiTolov(0);
   };
   console.log("tolov", store);
   useEffect(() => {}, []);
