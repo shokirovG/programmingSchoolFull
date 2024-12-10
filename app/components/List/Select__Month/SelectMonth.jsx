@@ -131,7 +131,7 @@ function SelectMonth() {
           <option id="monthOption" value="11_2024">
             Noyabr
           </option>
-          <option id="monthOption" value="12_2023" className="active__month">
+          <option id="monthOption" value="12_2024" className="active__month">
             Dekabr
           </option>
         </select>
