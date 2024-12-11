@@ -168,7 +168,7 @@ function page() {
                 <option value="9_2024">Sentabr</option>
                 <option value="10_2024">Oktabr</option>
                 <option value="11_2024">Noyabr</option>
-                <option value="12_2023">Dekabr</option>
+                <option value="12_2024">Dekabr</option>
               </Form.Select>
             </div>
             <div>
@@ -192,7 +192,7 @@ function page() {
                 <option value="9_2024">Sentabr</option>
                 <option value="10_2024">Oktabr</option>
                 <option value="11_2024">Noyabr</option>
-                <option value="12_2023">Dekabr</option>
+                <option value="12_2024">Dekabr</option>
               </Form.Select>
             </div>
           </div>
