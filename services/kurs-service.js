@@ -60,6 +60,13 @@ class KursService {
     kurs.save();
     return kurs;
   }
+  async setKurses({ month, kurses }) {
+   const data =  await KursModel.create({
+      month,
+      kurses,
+    });
+    return data
+  }
 }
 
 module.exports = new KursService();

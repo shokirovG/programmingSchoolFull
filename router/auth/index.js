@@ -20,6 +20,7 @@ router.post("/addkurs", kursController.addKurs);
 router.post("/allkurses", kursController.allKurses);
 router.delete("/removekurs/:id", kursController.removeKurs);
 router.post("/updatekurs", kursController.updateKurs);
+router.post("/setKurses", kursController.setKurses);
 module.exports = router;
 
 //MARKAZ ROUTER

@@ -44,6 +44,17 @@ class kursController {
     }
     next();
   }
+
+  async setKurses(req,res,next){
+   
+    try {
+      const kurs = await kursService.setKurses(req.body);
+      return res.json(kurs);
+    } catch (error) {
+      console.log(error);
+    }
+    next()
+  }
 }
 
 module.exports = new kursController();
