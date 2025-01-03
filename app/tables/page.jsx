@@ -84,7 +84,7 @@ const page = () => {
       });
     }
   }, []);
-
+  console.log("store", store);
   return (
     <div className="pb-[70px]">
       {store.loader.loading === "loading" ? (

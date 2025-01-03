@@ -7,6 +7,7 @@ const initialState = {
 export const getKurses = createAsyncThunk(
   "kurs/getKurses",
   async (payload, { rejectedWidth, dispatch }) => {
+    console.log("get curse");
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_URL}/api/allkurses`,
       {
@@ -17,6 +18,35 @@ export const getKurses = createAsyncThunk(
     if (res.data) {
       console.log(res);
       dispatch(fetchedKurses(res.data.kurses));
+    } else {
+      console.log("kurs topilmadi");
+      dispatch(fetchedKurses([]));
+    }
+  }
+);
+export const setKurses = createAsyncThunk(
+  "kurs/getKurses",
+  async (payload, { rejectedWidth, dispatch }) => {
+    console.log("get curse");
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL}/api/allkurses`,
+      {
+        month: payload.month,
+      }
+    );
+
+    if (res.data) {
+      const data = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL}/api/setKurses`,
+        {
+          month: payload.cloneMonth,
+          kurses: res.data.kurses,
+        }
+      );
+      console.log("kk", data);
+      if (data.data) {
+        dispatch(fetchedKurses(res.data.kurses));
+      }
     } else {
       console.log("kurs topilmadi");
       dispatch(fetchedKurses([]));

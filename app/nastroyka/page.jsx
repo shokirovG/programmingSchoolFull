@@ -24,30 +24,44 @@ import {
 } from "../redux/features/loaderSlice";
 /* eslint-disable */
 import KursPrice from "./components/KursPrice";
-import { getKurses } from "../redux/features/kursSlice";
+import { getKurses, setKurses } from "../redux/features/kursSlice";
 function page() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [monthClone_1, setMonthClone_1] = useState("1_2024");
-  const [monthClone_2, setMonthClone_2] = useState("2_2024");
-
+  const [monthClone_1, setMonthClone_1] = useState("1_2025");
+  const [monthClone_2, setMonthClone_2] = useState("2_2025");
+  const monthArray = [
+    "Yanvar",
+    "Fevral",
+    "Mart",
+    "Aprel",
+    "May",
+    "Iyun",
+    "Iyul",
+    "Avgust",
+    "Sentabr",
+    "Oktabr",
+    "Noyabr",
+    "Dekabr",
+  ];
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const { request } = useFetch();
   useEffect(() => {
     dispatch(loading());
-    setMonthClone_1("1_2024");
-    setMonthClone_2("2_2024");
+    setMonthClone_1("1_2025");
+    setMonthClone_2("2_2025");
     dispatch(getKurses({ month: localStorage.getItem("currentMonth") }));
     dispatch(loaded());
   }, []);
-
+  
   const monthCloneFn = () => {
     let setCurrentStudents = [];
     let setCurrentWorkers = [];
     let setCurrentGroups = [];
     dispatch(spinnerLoading());
+    dispatch(setKurses({ month: monthClone_1, cloneMonth: monthClone_2 }));
     request(`${process.env.NEXT_PUBLIC_URL}/students`)
       .then((res) => {
         res.students.forEach((elem) => {
@@ -144,55 +158,106 @@ function page() {
 
     redirect("/students");
   }
+  
   return (
     <div className="flex flex-col items-center pt-[150px]">
       <div className="container w-[80%] flex flex-col gap-[50px] pb-[150px]">
         <div className="monthClone text-center p-[20px] rounded  min-h-[200px] flex flex-col items-center gap-[20px]">
           <h4>Eski oydan nusxa olish</h4>
           <div className="flex gap-[30px] items-center">
-            <div className="w-[200px]">
+            <div className="w-[200px] flex flex-col gap-[10px]">
               <Form.Select
                 value={monthClone_1}
                 onChange={(e) => {
                   setMonthClone_1(e.target.value);
                 }}
               >
-                <option value="1_2024">Yanvar</option>
-                <option value="2_2024">Fevral</option>
-                <option value="3_2024">Mart</option>
-                <option value="4_2024">Aprel</option>
-                <option value="5_2024">May</option>
-                <option value="6_2024">Iyun</option>
-                <option value="7_2024">Iyul</option>
-                <option value="8_2024">Avgust</option>
-                <option value="9_2024">Sentabr</option>
-                <option value="10_2024">Oktabr</option>
-                <option value="11_2024">Noyabr</option>
-                <option value="12_2024">Dekabr</option>
+                {monthArray.map((month, index) => (
+                  <option value={index + 1 + "_" + monthClone_1.split("_")[1]}>
+                    {month}
+                  </option>
+                ))}
+              </Form.Select>
+              <Form.Select
+                value={monthClone_1}
+                onChange={(e) => {
+                  setMonthClone_1(e.target.value);
+                }}
+              >
+                <option
+                  id="monthOption"
+                  value={monthClone_1.split("_")[0] + "_" + "2024"}
+                >
+                  2024
+                </option>
+                <option
+                  id="monthOption"
+                  value={monthClone_1.split("_")[0] + "_" + "2025"}
+                  className="active__month"
+                >
+                  2025
+                </option>
+                <option
+                  id="monthOption"
+                  value={monthClone_1.split("_")[0] + "_" + "2026"}
+                >
+                  2026
+                </option>
+                <option
+                  id="monthOption"
+                  value={monthClone_1.split("_")[0] + "_" + "2027"}
+                >
+                  2027
+                </option>
               </Form.Select>
             </div>
             <div>
               <Image src="arrow-right.svg" width="45" height="45" />
             </div>
-            <div className="w-[200px]">
+            <div className="w-[200px] flex flex-col gap-[10px]">
               <Form.Select
                 value={monthClone_2}
                 onChange={(e) => {
                   setMonthClone_2(e.target.value);
                 }}
               >
-                <option value="1_2024">Yanvar</option>
-                <option value="2_2024">Fevral</option>
-                <option value="3_2024">Mart</option>
-                <option value="4_2024">Aprel</option>
-                <option value="5_2024">May</option>
-                <option value="6_2024">Iyun</option>
-                <option value="7_2024">Iyul</option>
-                <option value="8_2024">Avgust</option>
-                <option value="9_2024">Sentabr</option>
-                <option value="10_2024">Oktabr</option>
-                <option value="11_2024">Noyabr</option>
-                <option value="12_2024">Dekabr</option>
+                {monthArray.map((month, index) => (
+                  <option value={index + 1 + "_" + monthClone_2.split("_")[1]}>
+                    {month}
+                  </option>
+                ))}
+              </Form.Select>
+              <Form.Select
+                value={monthClone_2}
+                onChange={(e) => {
+                  setMonthClone_2(e.target.value);
+                }}
+              >
+                <option
+                  id="monthOption"
+                  value={monthClone_2.split("_")[0] + "_" + "2024"}
+                >
+                  2024
+                </option>
+                <option
+                  id="monthOption"
+                  value={monthClone_2.split("_")[0] + "_" + "2025"}
+                  className="active__month"
+                >
+                  2025
+                </option>
+                <option
+                  id="monthOption"
+                  value={monthClone_2.split("_")[0] + "_" + "2026"}
+                >
+                  2026
+                </option>
+                <option
+                  id="monthOption"
+                  value={monthClone_2.split("_")[0] + "_" + "2027"}
+                >
+                  2027
+                </option>
               </Form.Select>
             </div>
           </div>

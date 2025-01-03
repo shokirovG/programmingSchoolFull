@@ -270,7 +270,7 @@ const page = ({ params }) => {
                   );
                 })}
               </select>
-              <div className="flex gap-[20px] absolute right-[15%] top-[33px]">
+              <div className="flex gap-[20px] absolute right-[25%] top-[33px]">
                 <div
                   className={`border-[1px] cursor-pointer w-[40px] h-[20px] bg-white rounded ${"shadow-[0_3px_10px_rgb(0,0,0,0.2)]"}`}
                   title="reset"

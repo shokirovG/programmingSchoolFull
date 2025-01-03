@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./month.scss";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -14,14 +14,19 @@ function SelectMonth() {
   const dispatch = useDispatch();
   const store = useSelector((state) => state);
   const { request } = useFetch();
-
+  const [monthValue, setMonthValue] = useState(
+    localStorage.getItem("currentMonth").split("_")[0]
+  );
+  const [yearValue, setYearValue] = useState(
+    localStorage.getItem("currentMonth").split("_")[1]
+  );
   const changeMonth = (e) => {
+    const monthYear = `${monthValue}_${yearValue}`;
+    console.log("change", `${monthValue}_${yearValue}`);
     dispatch(loading());
 
     request(`${process.env.NEXT_PUBLIC_URL}/workers`).then((res) => {
-      const workers = res.workers.filter(
-        (elem) => elem.month === e.target.value
-      );
+      const workers = res.workers.filter((elem) => elem.month === monthYear);
 
       if (workers.length > 0) {
         dispatch(fetchedWorkers(workers[0].workers));
@@ -37,8 +42,8 @@ function SelectMonth() {
       dispatch(loaded());
     });
 
-    localStorage.setItem("currentMonth", e.target.value);
-    dispatch(changeMonthAction(e.target.value));
+    localStorage.setItem("currentMonth", monthYear);
+    dispatch(changeMonthAction(monthYear));
     const options = document.querySelectorAll("#monthOption");
 
     for (let option of options) {
@@ -94,47 +99,80 @@ function SelectMonth() {
     dispatch(getKurses({ month: localStorage.getItem("currentMonth") }));
   }, [localStorage.getItem("currentMonth")]);
   return (
-    <div className="selectdiv">
-      <label>
-        <select onChange={changeMonth}>
+    <div className="selectdiv absolute w-[500px] ">
+      <label className="flex gap-[10px] items-center">
+        <select
+          onChange={(e) => {
+            setMonthValue(e.target.value);
+          }}
+          value={monthValue}
+        >
           <option selected disabled></option>
-          <option id="monthOption" value="1_2024">
+          <option id="monthOption" value="1" className="active__month">
             Yanvar
           </option>
-          <option id="monthOption" value="2_2024">
+          <option id="monthOption" value="2">
             Fevral
           </option>
-          <option id="monthOption" value="3_2024">
+          <option id="monthOption" value="3">
             Mart
           </option>
-          <option id="monthOption" value="4_2024">
+          <option id="monthOption" value="4">
             Aprel
           </option>
-          <option id="monthOption" value="5_2024">
+          <option id="monthOption" value="5">
             May
           </option>
-          <option id="monthOption" value="6_2024">
+          <option id="monthOption" value="6">
             Iyun
           </option>
-          <option id="monthOption" value="7_2024">
+          <option id="monthOption" value="7">
             Iyul
           </option>
-          <option id="monthOption" value="8_2024">
+          <option id="monthOption" value="8">
             Avgust
           </option>
-          <option id="monthOption" value="9_2024">
+          <option id="monthOption" value="9">
             Sentabr
           </option>
-          <option id="monthOption" value="10_2024">
+          <option id="monthOption" value="10">
             Oktabr
           </option>
-          <option id="monthOption" value="11_2024">
+          <option id="monthOption" value="11">
             Noyabr
           </option>
-          <option id="monthOption" value="12_2024" className="active__month">
+          <option id="monthOption" value="12">
             Dekabr
           </option>
         </select>
+        <select
+          onChange={(e) => {
+            setYearValue(e.target.value);
+          }}
+          value={yearValue}
+          className="w-[50px]"
+        >
+          <option selected disabled></option>
+          <option id="monthOption" value="2024">
+            2024
+          </option>
+          <option id="monthOption" value="2025" className="active__month">
+            2025
+          </option>
+          <option id="monthOption" value="2026">
+            2026
+          </option>
+          <option id="monthOption" value="2027">
+            2027
+          </option>
+        </select>
+
+        <button
+          onClick={changeMonth}
+          className="w-[200px] bg-cyan-500 h-[50px] rounded-md text-white"
+        >
+          OK
+        </button>
       </label>
     </div>
   );
