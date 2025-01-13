@@ -149,7 +149,7 @@ const Kirim = (props) => {
           //   dispatch(loaded());
           // });
 
-          await axios
+          axios
             .put(
               `${process.env.NEXT_PUBLIC_URL}/students`,
 
