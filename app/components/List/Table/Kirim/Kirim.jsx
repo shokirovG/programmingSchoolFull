@@ -159,6 +159,7 @@ const Kirim = (props) => {
               }
             )
             .then(() => {
+              dispatch(fetchedStudents(newStudents));
               toast.info("student to`lov o`zgardi!");
             });
           toast.success("bazaga qo`shildi!");
@@ -176,8 +177,7 @@ const Kirim = (props) => {
       setAddValid(true);
     }
   };
-  console.log("tolov", store);
-  useEffect(() => {}, []);
+
   return (
     <div>
       <button
