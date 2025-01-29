@@ -110,16 +110,16 @@ const Kirim = (props) => {
           return elem;
         }
       });
-      const newStudents = store.student.students.map((el) => {
-        if (el.name === studentValue) {
-          return {
-            ...el,
-            price: Number(el.price) + Number(tolovValue),
-          };
-        } else {
-          return el;
-        }
-      });
+      // const newStudents = store.student.students.map((el) => {
+      //   if (el.name === studentValue) {
+      //     return {
+      //       ...el,
+      //       price: Number(el.price) + Number(tolovValue),
+      //     };
+      //   } else {
+      //     return el;
+      //   }
+      // });
       await axios
         .post(
           `${process.env.NEXT_PUBLIC_URL}/hisobot`,
@@ -149,17 +149,20 @@ const Kirim = (props) => {
           //   dispatch(loaded());
           // });
 
-          axios
-            .put(
-              `${process.env.NEXT_PUBLIC_URL}/students`,
+          await axios
+            .post(
+              `${process.env.NEXT_PUBLIC_URL}/api/studentprice`,
 
               {
                 month: localStorage.getItem("currentMonth"),
-                students: newStudents,
+                tolovValue,
+                studentValue,
+
+                students: store.student.students,
               }
             )
-            .then(() => {
-              dispatch(fetchedStudents(newStudents));
+            .then((res) => {
+              dispatch(fetchedStudents(res.data.data.students));
               toast.info("student to`lov o`zgardi!");
             });
           toast.success("bazaga qo`shildi!");
