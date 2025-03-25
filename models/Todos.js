@@ -29,6 +29,10 @@ const todosSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      telNumber: {
+        type: String,
+        required: true,
+      },
       created: {
         type: Date,
         default: new Date(),
