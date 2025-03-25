@@ -28,8 +28,10 @@ const StudentChangeModal = ({
   handleShow,
   created,
   priceDate,
+  telNumber,
 }) => {
   const [nameValue, setNameValue] = useState(name);
+  const [telNumberValue, setTelNumberValue] = useState(telNumber);
   const [foizValue, setFoizValue] = useState(foiz);
   const [departmentValue, setDepartmentValue] = useState(department);
   const [groupValue, setGroupValue] = useState(group);
@@ -63,6 +65,7 @@ const StudentChangeModal = ({
         return {
           ...el,
           name: nameValue,
+          telNumber: telNumberValue,
           foiz: foizValue,
           department: departmentValue,
           group: groupValue,
@@ -115,9 +118,7 @@ const StudentChangeModal = ({
                 setGroupValue(e.target.value);
               }}
             >
-              <option selected >
-                Guruh
-              </option>
+              <option selected>Guruh</option>
 
               {store.group.groups.map((elem) => (
                 <option value={elem.groupValue}>{elem.groupValue}</option>
@@ -149,6 +150,15 @@ const StudentChangeModal = ({
               value={nameValue}
               onChange={(e) => {
                 setNameValue(e.target.value);
+              }}
+            />
+            <input
+              type="text"
+              className="form-control"
+              required
+              value={telNumberValue}
+              onChange={(e) => {
+                setTelNumberValue(e.target.value);
               }}
             />
             <input

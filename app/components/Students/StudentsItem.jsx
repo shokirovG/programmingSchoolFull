@@ -21,6 +21,7 @@ const StudentsItem = (props) => {
     foiz,
     created,
     priceDate,
+    telNumber,
   } = props;
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -30,7 +31,27 @@ const StudentsItem = (props) => {
   const studentMonthPrice = moment(priceDate).format("DD/MM/YYYY").split("/");
   const dateMonth = date.getMonth() + 1;
   const store = useSelector((state) => state);
-
+  const removeZero = (num) => {
+    const numString = num.toString();
+    if (numString[0] == 0) {
+      return numString.slice(1);
+    }
+    return numString;
+  };
+  const monthName = [
+    "yanvar",
+    "fevral",
+    "mart",
+    "aprel",
+    "may",
+    "iyun",
+    "iyul",
+    "avgust",
+    "sentabr",
+    "oktabr",
+    "noyabr",
+    "dekabr",
+  ];
   return (
     <tr key={id} className={`px-[20px] text-center h-[54px]  `}>
       <td>{index + 1}</td>
@@ -47,6 +68,7 @@ const StudentsItem = (props) => {
       >
         {name}
       </td>
+      <td>{telNumber}</td>
       <td>{group}</td>
       <td>{department}</td>
       <td>{numberTrim(price)} so`m</td>
@@ -66,7 +88,10 @@ const StudentsItem = (props) => {
             : ""
         }`}
       >
-        {moment(priceDate).format("DD/MM/YYYY")}
+        {removeZero(moment(priceDate).format("DD")) +
+          "-" +
+          monthName[date.getMonth()] +
+          "gacha"}
       </td>
 
       <td className="flex  justify-around items-center h-[54px] gap-[10px] px-0">

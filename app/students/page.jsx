@@ -35,7 +35,9 @@ const page = ({ params }) => {
   const [name, setName] = useState("");
   const [validText, setValidText] = useState(false);
   const [foiz, setFoiz] = useState(0);
+  const [telNumber, setTelNumber] = useState("+998");
   const [students, setStudents] = useState([]);
+
   const { request } = useFetch();
 
   const dispatch = useDispatch();
@@ -70,6 +72,7 @@ const page = ({ params }) => {
           group,
           department,
           name,
+          telNumber,
           price: 0,
           id: v4(),
           foiz,
@@ -90,7 +93,7 @@ const page = ({ params }) => {
             setName("");
             setFoiz(0);
             toast.success("asdsad");
-
+            setTelNumber("+998");
             dispatch(addStudent(newStudent));
             dispatch(loaded());
             dispatch(spinnerLoaded());
@@ -335,6 +338,7 @@ const page = ({ params }) => {
                   <tr className="text-center ">
                     <th className="th_1">№</th>
                     <th className="th_2">F.I.SH</th>
+                    <th className="th_2">Tel</th>
                     <th className="th_3">Guruh</th>
                     <th className="th_4">Kafedra</th>
                     <th className="th_5">Qilgan to'lov</th>
@@ -424,6 +428,15 @@ const page = ({ params }) => {
                       value={name}
                       onChange={(e) => {
                         setName(e.target.value);
+                      }}
+                    />
+                    <input
+                      required
+                      className="form-control"
+                      type="text"
+                      value={telNumber}
+                      onChange={(e) => {
+                        setTelNumber(e.target.value);
                       }}
                     />
                     <input

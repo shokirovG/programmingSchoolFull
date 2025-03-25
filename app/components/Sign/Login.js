@@ -26,12 +26,18 @@ import axios from "axios";
 const Login = ({ children }) => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
-
+  const date = new Date();
   const ref = useRef(false);
   useEffect(() => {
     dispatch(setAuthLoading(true));
     console.log("dispatch");
     dispatch(getMarkazName());
+    if (!localStorage.getItem("currentMonth")) {
+      localStorage.setItem(
+        "currentMonth",
+        `${date.getMonth() + 1}_${date.getFullYear()}`
+      );
+    }
     if (localStorage.getItem("token") && !ref.current) {
       ref.current = true;
       // dispatch(setAuthLoading(true));

@@ -16,42 +16,6 @@ const FoydaItem = ({ chiqimlar }) => {
   const dispatch = useDispatch();
   const { request } = useFetch();
   const [showCard, setShowCard] = useState({ show: false });
-  let majburiyTotal = 0;
-  let totalPriceFoyda = 0;
-  for (let worker of store.worker.workers) {
-    if (worker.priceType === "foiz") {
-      for (let group of worker.groups) {
-        totalPriceFoyda +=
-          calcPriceTolov(store, worker.department) +
-          calcQarzPrice(store, worker.department);
-      }
-    } else if (worker.priceType === "o`zgarmas" && worker.groups.length !== 0) {
-      totalPriceFoyda += worker.price;
-    }
-  }
-
-  let foydaBalans = 0;
-  for (let item of store.student.students) {
-    if (item.department === "Ingliz-tili" || item.group === "Front-12") {
-      foydaBalans += item.price * 0.5;
-    }
-    if (item.department === "Scretch") {
-      foydaBalans += item.price * 0.75;
-    }
-    if (
-      item.department === "K.S" ||
-      item.group === "Front-5" ||
-      item.group === "Front-8" ||
-      item.group === "Front-10" ||
-      item.group === "Front-13" ||
-      item.group === "Front-14"
-    ) {
-      foydaBalans += item.price * 0.4;
-    }
-    if (item.department === "Markaz") {
-      foydaBalans += item.price;
-    }
-  }
 
   useEffect(() => {
     request(`${process.env.NEXT_PUBLIC_URL}/chiqimlar`).then((res) => {
@@ -127,7 +91,8 @@ const FoydaItem = ({ chiqimlar }) => {
                   store.student.students,
                   store.worker.workers,
                   chiqimlar,
-                  store.hisobot.majburiyChiqimlar
+                  store.hisobot.majburiyChiqimlar,
+                  store
                 )
               )
             )}{" "}

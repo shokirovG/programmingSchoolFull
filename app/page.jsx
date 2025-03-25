@@ -21,7 +21,7 @@ export default function Home() {
   const { request } = useFetch();
   const initial = useRef(false);
   const initial2 = useRef(false);
-
+  const date = new Date("");
   useEffect(() => {
     dispatch(loading());
     dispatch(getKurses({ month: localStorage.getItem("currentMonth") }));
