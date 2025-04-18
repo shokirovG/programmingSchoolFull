@@ -1,5 +1,9 @@
 const numberTrim = (num = 0) => {
-  const numToStr = num.toString().split("").reverse().join("");
+  let numToStr = 0;
+  if (typeof num == "number") {
+    numToStr = num.toString().split("").reverse().join("");
+  }
+
   let k = "";
 
   for (let i = 0; i < numToStr.length; i++) {
