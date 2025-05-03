@@ -31,7 +31,7 @@ const todosSchema = new mongoose.Schema({
       },
       telNumber: {
         type: String,
-        required: true,
+       
       },
       created: {
         type: Date,
