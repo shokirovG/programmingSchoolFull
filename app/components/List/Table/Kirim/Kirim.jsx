@@ -25,6 +25,7 @@ import { hisobotFetched } from "@/app/redux/features/hisobotSlice";
 import { fetchedStudents } from "@/app/redux/features/studentSlice";
 import axios from "axios";
 const Kirim = (props) => {
+  console.log("prop", props);
   const months = [
     "Yanvar",
     "Fevral",
@@ -62,7 +63,7 @@ const Kirim = (props) => {
   const [addValid, setAddValid] = useState(false);
   const [tolovValue, setTolovValue] = useState(0);
   const [currentDay, setCurrentDay] = useState("");
-
+  console.log("currentStudent", currentStudent);
   const setDay = () => {
     setCurrentDay(props.kun);
   };
@@ -149,22 +150,35 @@ const Kirim = (props) => {
           //   dispatch(loaded());
           // });
 
+          // await axios
+          //   .post(
+          //     `${process.env.NEXT_PUBLIC_URL}/api/studentprice`,
+
+          //     {
+          //       month: localStorage.getItem("currentMonth"),
+          //       tolovValue,
+          //       studentValue,
+
+          //       students: store.student.students,
+          //     }
+          //   )
+          //   .then((res) => {
+          //     dispatch(fetchedStudents(res.data.data.students));
+          //     toast.info("student to`lov o`zgardi!");
+          //   });
+
+          //!! tepadagini o`rniga
           await axios
-            .post(
-              `${process.env.NEXT_PUBLIC_URL}/api/studentprice`,
-
-              {
-                month: localStorage.getItem("currentMonth"),
-                tolovValue,
-                studentValue,
-
-                students: store.student.students,
-              }
-            )
+            .post(`${process.env.NEXT_PUBLIC_URL}/api/studentprice`, {
+              month: localStorage.getItem("currentMonth"),
+              tolovValue,
+              studentId: currentStudent._id, // bu studentning _id si
+            })
             .then((res) => {
               dispatch(fetchedStudents(res.data.data.students));
-              toast.info("student to`lov o`zgardi!");
+              toast.info("Talabaning to`lovi yangilandi!");
             });
+
           toast.success("bazaga qo`shildi!");
           dispatch(spinnerLoaded());
           setAddValid(false);
