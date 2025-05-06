@@ -9,7 +9,7 @@ const ChiqimItem = (props) => {
     localStorage.setItem("currentDay", props.kun);
     setShow(true);
   };
-
+  console.log("aaa", numberTrim(costValue));
   return (
     <>
       <tr onClick={handleShow}>
