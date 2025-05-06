@@ -1,5 +1,14 @@
 const mongoose = require("mongoose");
 
+const courseAttendanceSchema = new mongoose.Schema({
+  date: { type: Date, required: true },
+  lessonStartTime: { type: String, required: true },
+  lessonEndTime: { type: String, required: true },
+  checkInTime: { type: Date },
+  checkOutTime: { type: Date }
+}, { _id: false });
+
+
 const todosSchema = new mongoose.Schema({
   month: {
     type: String,
@@ -31,6 +40,7 @@ const todosSchema = new mongoose.Schema({
       },
       telNumber: {
         type: String,
+       
       },
       created: {
         type: Date,
@@ -40,6 +50,13 @@ const todosSchema = new mongoose.Schema({
         type: Date,
         default: new Date(),
       },
+      attendance:[
+       {
+        courseName:{type:String,required:[true,"Kurs nomi tanlanishi kerak!"]},
+        data:[courseAttendanceSchema]
+       }
+      ]
+     
     },
   ],
 });

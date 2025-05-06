@@ -5,6 +5,8 @@ class UserController {
   async reg(req, res, next) {
     try {
       const { email, password, rol } = req.body;
+      console.log(email,password,rol);
+      
       const userData = await userService.reg(email, password, rol);
       res.cookie("refreshToken", userData.refreshToken, {
         SameSite: "None",
@@ -68,7 +70,7 @@ class UserController {
     }
   }
 
-  async getUsers(req, res, next) {
+  async  getUsers(req, res, next) {
     try {
       res.json({});
     } catch (error) {}

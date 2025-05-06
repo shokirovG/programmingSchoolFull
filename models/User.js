@@ -3,8 +3,10 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    unique: true,
-    required: true,
+    unique: [true,"email unikalni bo'lishi shart"],
+    required: [true,"email kiritishingiz shart!"],
+    minLength:[5,"Email kamida 5harfdan iborat bo'lishi kerak"],
+    lowercase:true
   },
   password: {
     type: String,
