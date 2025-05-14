@@ -3,36 +3,47 @@ const StudentsData = require("../models/Todos");
 class AttendanceGroupController {
   async updateGroupAttendance(req, res) {
     try {
-      const { groupname, date } = req.body;
+      const { month, groupname, date } = req.body;
 
-      if (!groupname || !Array.isArray(date) || date.length === 0) {
-        return res.status(400).json({ message: "Ma'lumot to'liq emas!" });
+      if (!month || !groupname || !Array.isArray(date) || date.length === 0) {
+        return res.status(400).json({ message: "Ma'lumotlar to'liq emas!" });
       }
 
-      // 1. Ushbu guruhda o‘qiyotgan o‘quvchilarni topamiz
-      const studentDoc = await StudentsData.findOne({ 'students.group': groupname });
+      const monthDoc = await StudentsData.findOne({ month });
 
-      if (!studentDoc) {
-        return res.status(404).json({ message: "Bu guruhda o‘quvchilar topilmadi!" });
+      if (!monthDoc) {
+        return res.status(404).json({ message: `Bu oy (${month}) uchun ma'lumotlar topilmadi!` });
       }
 
-      // 2. Har bir studentga attendance yozuvlarini qo‘shamiz
-      studentDoc.students.forEach(student => {
+      let affectedStudents = 0;
+
+      monthDoc.students.forEach(student => {
         if (student.group === groupname) {
-          // date array ichidagi har bir darsni attendance ga qo‘shish
+        
+          if (!student.attendanceGroup) {
+            student.attendanceGroup = [];
+          }
+
           date.forEach(entry => {
             student.attendanceGroup.push({
               lessonDate: entry.lessonDate,
               isCome: entry.isCome
             });
           });
+
+          affectedStudents++;
         }
       });
 
-      // 3. O'zgarishlarni saqlaymiz
-      await studentDoc.save();
+      if (affectedStudents === 0) {
+        return res.status(404).json({ message: `Guruh "${groupname}" uchun o‘quvchi topilmadi!` });
+      }
 
-      res.status(200).json({ message: "Davomat muvaffaqiyatli qo‘shildi!" });
+      await monthDoc.save();
+
+      res.status(200).json({
+        message: `Davomat qo‘shildi. ${affectedStudents} ta o‘quvchiga yozildi.`,
+      });
 
     } catch (error) {
       console.error("Davomatda xatolik:", error);
