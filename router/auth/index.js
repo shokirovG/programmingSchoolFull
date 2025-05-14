@@ -4,7 +4,8 @@ const markazController = require("../../controllers/markaz-controller");
 const roomController = require("../../controllers/room-controller");
 const studentController = require("../../controllers/student-controller");
 const userController = require("../../controllers/user-controller");
-const StudentAttendance = require('../../controllers/attendance-controller')
+const StudentAttendance = require('../../controllers/attendance-controller');
+const GroupAttendanceController = require("../../controllers/GroupAttendanceController");
 const Router = require("express").Router;
 
 const router = new Router();
@@ -43,3 +44,4 @@ router.post("/studentprice", studentController.studentPrice);
 
 //davomat tekshirish
 router.post("/attendance",StudentAttendance.CheckAttendance)
+router.post('/aaa',GroupAttendanceController.updateGroupAttendance)

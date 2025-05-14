@@ -10,7 +10,7 @@ const workerSchema = new mongoose.Schema({
       price: {
         type: Number,
         default: 0,
-      },
+      },  
       priceFoiz: {
         type: Number,
         default: 0,

@@ -8,7 +8,10 @@ const courseAttendanceSchema = new mongoose.Schema({
   checkOutTime: { type: Date }
 }, { _id: false });
 
-
+const AttendanceGroupSchema= new mongoose.Schema({
+  lessonDate:{type:String,required:true},
+  isCome:{type:String,required:true}
+})
 const todosSchema = new mongoose.Schema({
   month: {
     type: String,
@@ -50,11 +53,14 @@ const todosSchema = new mongoose.Schema({
         type: Date,
         default: new Date(),
       },
-      attendance:[
-       {
-        courseName:{type:String,required:[true,"Kurs nomi tanlanishi kerak!"]},
-        data:[courseAttendanceSchema]
-       }
+      // attendance:[
+      //  {
+      //   courseName:{type:String,required:[true,"Kurs nomi tanlanishi kerak!"]},
+      //   data:[courseAttendanceSchema]
+      //  }
+      // ],
+      attendanceGroup:[
+AttendanceGroupSchema
       ]
      
     },
