@@ -19,17 +19,11 @@ class AttendanceGroupController {
 
       monthDoc.students.forEach(student => {
         if (student.group === groupname) {
-        
-          if (!student.attendanceGroup) {
-            student.attendanceGroup = [];
-          }
-
-          date.forEach(entry => {
-            student.attendanceGroup.push({
-              lessonDate: entry.lessonDate,
-              isCome: entry.isCome
-            });
-          });
+          // Eski attendanceGroup o'chiriladi va yangi ma'lumotlar yoziladi
+          student.attendanceGroup = date.map(entry => ({
+            lessonDate: entry.lessonDate,
+            isCome: entry.isCome
+          }));
 
           affectedStudents++;
         }
@@ -42,7 +36,7 @@ class AttendanceGroupController {
       await monthDoc.save();
 
       res.status(200).json({
-        message: `Davomat qo‘shildi. ${affectedStudents} ta o‘quvchiga yozildi.`,
+        message: `Davomat yangilandi. ${affectedStudents} ta o‘quvchining davomat ma'lumotlari almashtirildi.`,
       });
 
     } catch (error) {
